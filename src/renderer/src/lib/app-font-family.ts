@@ -4,6 +4,7 @@ const APP_FONT_FALLBACKS = [
   DEFAULT_APP_FONT_FAMILY,
   '-apple-system',
   'BlinkMacSystemFont',
+  'Geist',
   'Segoe UI',
   'sans-serif'
 ] as const
