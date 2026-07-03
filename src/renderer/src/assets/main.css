@@ -170,7 +170,12 @@
   --color-git-graph-lane-4: var(--git-graph-lane-4);
   --color-git-graph-lane-5: var(--git-graph-lane-5);
   --color-annotation-highlight: var(--annotation-highlight);
-  --shadow-floating: 0 10px 24px rgb(0 0 0 / 0.18);
+  --color-team-accent: var(--team-accent);
+  --color-presence-online: var(--presence-online);
+  --color-collision-overlap: var(--collision-overlap);
+  --color-collision-conflict: var(--collision-conflict);
+  --shadow-floating: 0 0 0 0.5px rgb(0 0 0 / 0.12), 0 12px 32px rgb(0 0 0 / 0.16);
+  --shadow-card: 0 0 0 0.5px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.06);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -187,20 +192,21 @@
 }
 
 :root {
-  --app-font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --app-font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Geist', 'Segoe UI', system-ui, sans-serif;
   --font-sans: var(--app-font-family);
   --font-mono:
     'SF Mono', SFMono-Regular, ui-monospace, 'Cascadia Code', Menlo, Consolas, 'Liberation Mono',
     monospace;
-  --radius: 0.625rem;
+  --radius: 0.7rem;
   --orca-security-background: #fff;
   --orca-security-foreground: #0a0a0a;
   --orca-security-card: #fff;
   --orca-security-card-foreground: #0a0a0a;
   --orca-security-popover: #fff;
   --orca-security-popover-foreground: #0a0a0a;
-  --orca-security-primary: #171717;
-  --orca-security-primary-foreground: #fafafa;
+  --orca-security-primary: #0071e3;
+  --orca-security-primary-foreground: #ffffff;
   --orca-security-secondary: #f5f5f5;
   --orca-security-secondary-foreground: #171717;
   --orca-security-muted: #f5f5f5;
@@ -212,9 +218,9 @@
   --orca-security-ring: #a1a1a1;
   --orca-security-floating-surface: rgba(255, 255, 255, 0.82);
   --orca-security-dialog-surface: rgba(255, 255, 255, 0.96);
-  --background: #fff;
+  --background: #ffffff;
   --editor-surface: #ffffff;
-  --foreground: #0a0a0a;
+  --foreground: #1d1d1f;
   --chat-canvas-mix: 0%;
   --chat-foreground-mix: 82%;
   --chat-strong-mix: 92%;
@@ -230,24 +236,24 @@
   --chat-composer-base: var(--chat-canvas);
   --chat-composer-border-mix: 11%;
   --chat-content-max-width: 46rem;
-  --card: #fff;
-  --card-foreground: #0a0a0a;
-  --popover: #fff;
-  --popover-foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #1d1d1f;
+  --popover: #ffffff;
+  --popover-foreground: #1d1d1f;
   /* Glass tints for menus and dialogs; a plugin theme replaces both with its --popover. */
-  --floating-surface: rgba(255, 255, 255, 0.82);
+  --floating-surface: rgba(250, 250, 252, 0.78);
   --dialog-surface: color-mix(in srgb, var(--background) 96%, transparent);
-  --primary: #171717;
-  --primary-foreground: #fafafa;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #171717;
-  --muted: #f5f5f5;
-  --muted-foreground: #696969;
-  --accent: #f5f5f5;
-  --accent-foreground: #171717;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #a1a1a1;
+  --primary: #0071e3;
+  --primary-foreground: #ffffff;
+  --secondary: #f2f2f7;
+  --secondary-foreground: #1d1d1f;
+  --muted: #f2f2f7;
+  --muted-foreground: #6e6e73;
+  --accent: #ececf0;
+  --accent-foreground: #1d1d1f;
+  --border: #e5e5ea;
+  --input: #d9d9de;
+  --ring: rgb(0 113 227 / 0.55);
   --terminal-pane-locate: var(--color-blue-600);
   --ai-action-accent: var(--color-violet-500);
   /* Use one question hue across surfaces, distinct from working-yellow. */
@@ -265,20 +271,20 @@
   --chart-3: var(--color-blue-600);
   --chart-4: var(--color-blue-700);
   --chart-5: var(--color-blue-800);
-  --worktree-sidebar: #f5f5f5;
-  --worktree-sidebar-foreground: #0a0a0a;
-  --worktree-sidebar-accent: #eaeaea;
-  --worktree-sidebar-accent-foreground: #171717;
-  --worktree-sidebar-border: #e5e5e5;
-  --worktree-sidebar-ring: #a1a1a1;
-  --sidebar: #fafafa;
-  --sidebar-foreground: #0a0a0a;
-  --sidebar-primary: #171717;
-  --sidebar-primary-foreground: #fafafa;
-  --sidebar-accent: #f5f5f5;
-  --sidebar-accent-foreground: #171717;
-  --sidebar-border: #e5e5e5;
-  --sidebar-ring: #a1a1a1;
+  --worktree-sidebar: #f5f5f7;
+  --worktree-sidebar-foreground: #1d1d1f;
+  --worktree-sidebar-accent: #e6e6eb;
+  --worktree-sidebar-accent-foreground: #1d1d1f;
+  --worktree-sidebar-border: #e3e3e8;
+  --worktree-sidebar-ring: rgb(0 113 227 / 0.55);
+  --sidebar: #fbfbfd;
+  --sidebar-foreground: #1d1d1f;
+  --sidebar-primary: #0071e3;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f0f0f4;
+  --sidebar-accent-foreground: #1d1d1f;
+  --sidebar-border: #e5e5ea;
+  --sidebar-ring: rgb(0 113 227 / 0.55);
   --terminal-pane-title-on-dark-fg: rgb(255 255 255 / 0.52);
   --terminal-pane-title-on-dark-input-fg: rgb(255 255 255 / 0.7);
   --terminal-pane-title-on-dark-placeholder: rgb(255 255 255 / 0.38);
@@ -311,6 +317,11 @@
   /* White --card can't be lifted, so light mode recesses inactive tabs to keep the active one lighter. */
   --tab-active: var(--tab-bar, var(--card));
   --tab-inactive: color-mix(in srgb, var(--foreground) 4%, var(--tab-bar, var(--card)));
+  /* Teamerge: team presence and collaboration, used sparingly so blue stays the action color. */
+  --team-accent: #5e5ce6;
+  --presence-online: #28a745;
+  --collision-overlap: #c27c00;
+  --collision-conflict: #d70015;
 }
 
 .dark {
@@ -320,8 +331,8 @@
   --orca-security-card-foreground: #f0f0f0;
   --orca-security-popover: #171717;
   --orca-security-popover-foreground: #f0f0f0;
-  --orca-security-primary: #e5e5e5;
-  --orca-security-primary-foreground: #171717;
+  --orca-security-primary: #0071e3;
+  --orca-security-primary-foreground: #ffffff;
   --orca-security-secondary: #262626;
   --orca-security-secondary-foreground: #f0f0f0;
   --orca-security-muted: #262626;
@@ -333,9 +344,9 @@
   --orca-security-ring: #737373;
   --orca-security-floating-surface: rgba(0, 0, 0, 0.72);
   --orca-security-dialog-surface: rgba(23, 23, 23, 0.96);
-  --background: #0a0a0a;
+  --background: #1c1c1e;
   --editor-surface: #1e1e1e;
-  --foreground: #f0f0f0;
+  --foreground: #f5f5f7;
   --chat-canvas-mix: 5%;
   --chat-foreground-mix: 78%;
   --chat-strong-mix: 90%;
@@ -351,23 +362,23 @@
   --chat-composer-base: transparent;
   --chat-composer-border-mix: 9%;
   --chat-content-max-width: 46rem;
-  --card: #171717;
-  --card-foreground: #f0f0f0;
-  --popover: #171717;
-  --popover-foreground: #f0f0f0;
-  --floating-surface: rgba(0, 0, 0, 0.72);
-  --dialog-surface: rgba(23, 23, 23, 0.96);
-  --primary: #e5e5e5;
-  --primary-foreground: #171717;
-  --secondary: #262626;
-  --secondary-foreground: #f0f0f0;
-  --muted: #262626;
-  --muted-foreground: #acacac;
-  --accent: #404040;
-  --accent-foreground: #f0f0f0;
-  --border: rgb(255 255 255 / 0.07);
-  --input: rgb(255 255 255 / 0.15);
-  --ring: #737373;
+  --card: #232325;
+  --card-foreground: #f5f5f7;
+  --popover: #2c2c2e;
+  --popover-foreground: #f5f5f7;
+  --floating-surface: rgba(36, 36, 38, 0.74);
+  --dialog-surface: rgba(35, 35, 37, 0.96);
+  --primary: #0071e3;
+  --primary-foreground: #ffffff;
+  --secondary: #2c2c2e;
+  --secondary-foreground: #f5f5f7;
+  --muted: #2c2c2e;
+  --muted-foreground: #98989d;
+  --accent: #3a3a3c;
+  --accent-foreground: #f5f5f7;
+  --border: rgb(255 255 255 / 0.09);
+  --input: rgb(255 255 255 / 0.14);
+  --ring: rgb(10 132 255 / 0.6);
   --terminal-pane-locate: var(--color-blue-400);
   --ai-action-accent: var(--color-violet-400);
   --agent-question: var(--color-orange-500);
@@ -381,22 +392,22 @@
   --chart-4: var(--color-blue-700);
   --chart-5: var(--color-blue-800);
   /* Mirror light mode’s lifted worktree sidebar above the dark canvas. */
-  --worktree-sidebar: #2a2a2a;
-  --worktree-sidebar-foreground: #f0f0f0;
-  --worktree-sidebar-accent: #353535;
-  --worktree-sidebar-accent-foreground: #f0f0f0;
+  --worktree-sidebar: #262628;
+  --worktree-sidebar-foreground: #f5f5f7;
+  --worktree-sidebar-accent: #363639;
+  --worktree-sidebar-accent-foreground: #f5f5f7;
   /* Match --border / --sidebar-border (7%) so the left sidebar's divider lines
      aren't brighter than the rest of the UI in dark mode (#5906). */
-  --worktree-sidebar-border: rgb(255 255 255 / 0.07);
-  --worktree-sidebar-ring: #737373;
-  --sidebar: #171717;
-  --sidebar-foreground: #f0f0f0;
-  --sidebar-primary: #1447e6;
-  --sidebar-primary-foreground: #f0f0f0;
-  --sidebar-accent: #262626;
-  --sidebar-accent-foreground: #f0f0f0;
-  --sidebar-border: rgb(255 255 255 / 0.07);
-  --sidebar-ring: #525252;
+  --worktree-sidebar-border: rgb(255 255 255 / 0.08);
+  --worktree-sidebar-ring: rgb(10 132 255 / 0.6);
+  --sidebar: #1f1f21;
+  --sidebar-foreground: #f5f5f7;
+  --sidebar-primary: #0a84ff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #2c2c2e;
+  --sidebar-accent-foreground: #f5f5f7;
+  --sidebar-border: rgb(255 255 255 / 0.08);
+  --sidebar-ring: rgb(10 132 255 / 0.6);
   --terminal-pane-title-on-dark-fg: rgb(255 255 255 / 0.52);
   --terminal-pane-title-on-dark-input-fg: rgb(255 255 255 / 0.7);
   --terminal-pane-title-on-dark-placeholder: rgb(255 255 255 / 0.38);
@@ -427,6 +438,10 @@
   --split-divider-hover: #a1a1aa;
   --tab-active: color-mix(in srgb, var(--foreground) 6%, var(--tab-bar, var(--card)));
   --tab-inactive: var(--tab-bar, var(--card));
+  --team-accent: #7d7aff;
+  --presence-online: #30d158;
+  --collision-overlap: #ffb340;
+  --collision-conflict: #ff6961;
 }
 
 /* Status and diff colors follow the chat scheme without copying the app palette. */
@@ -434,9 +449,9 @@
 .native-chat-appearance[data-native-chat-scheme='light'] {
   /* Native scrollbars and form controls follow the scheme instead of Chromium's light default. */
   color-scheme: light;
-  --destructive: #e40014;
+  --destructive: #d70015;
   --destructive-foreground: #fff;
-  --status-success: #147638;
+  --status-success: #1f7a35;
   --status-success-background: color-mix(in srgb, var(--status-success) 10%, transparent);
   --status-success-border: color-mix(in srgb, var(--status-success) 25%, transparent);
   /* Needs-attention states use yellow, separate from errors and working states. */
@@ -449,7 +464,7 @@
   --status-warning-background: color-mix(in srgb, var(--status-warning) 10%, transparent);
   --status-warning-border: color-mix(in srgb, var(--status-warning) 25%, transparent);
   /* GitHub's own hues for the two callout kinds no status token covers. */
-  --callout-note: #0969da;
+  --callout-note: #0071e3;
   --callout-important: #8250df;
   --git-decoration-added: #587c0c;
   --git-decoration-modified: #895503;
@@ -471,10 +486,10 @@
 .dark,
 .native-chat-appearance[data-native-chat-scheme='dark'] {
   color-scheme: dark;
-  --destructive: #ff6568;
+  --destructive: #ff6961;
   /* Dark --destructive is a light red, so its label needs dark ink to clear AA. */
   --destructive-foreground: #450a0a;
-  --status-success: #86efac;
+  --status-success: #30d158;
   --status-success-background: color-mix(in srgb, var(--status-success) 10%, transparent);
   --status-success-border: color-mix(in srgb, var(--status-success) 25%, transparent);
   --status-warning: #eab308;
@@ -484,7 +499,7 @@
   --jira-priority-low: var(--callout-note);
   --status-warning-background: color-mix(in srgb, var(--status-warning) 10%, transparent);
   --status-warning-border: color-mix(in srgb, var(--status-warning) 25%, transparent);
-  --callout-note: #4493f8;
+  --callout-note: #0a84ff;
   --callout-important: #ab7df8;
   --git-decoration-added: #81b88b;
   --git-decoration-modified: #e2c08d;
@@ -723,13 +738,14 @@ body[data-modal-overlay-open]
     height: 100dvh;
     font-family: var(
       --app-font-family,
-      'Geist',
+      system-ui,
       -apple-system,
       BlinkMacSystemFont,
+      'Geist',
       'Segoe UI',
       sans-serif
     );
-    letter-spacing: 0.01em;
+    letter-spacing: -0.003em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
