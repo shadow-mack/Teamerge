@@ -4,6 +4,7 @@ import { mainDeliveryBreadcrumbs } from './debug'
 import { recordPtyRendererDeliveryPressure } from './accounting'
 import type { PtyDataPayload, PtyIpcSession } from '../session'
 import { escapeBoundaryFields, type PtyEscapeBoundary } from './pty-escape-boundary'
+import { teamergeTapPtyOutput } from '../../../teamerge/pty-tap'
 
 export function makePtyDataPayload(
   id: string,
@@ -83,6 +84,7 @@ export function sendPtyDataToRenderer(
   }
   session.rendererInFlightTotalChars += charCount
   recordPtyRendererDeliveryPressure(session, id)
+  teamergeTapPtyOutput(id, payload.data)
   try {
     session.mainWindow.webContents.send('pty:data', payload)
   } catch (error) {
