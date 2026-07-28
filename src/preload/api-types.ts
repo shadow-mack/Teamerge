@@ -1,3 +1,4 @@
+import type { TeamergeApi } from './api/teamerge-api'
 import type {
   ClaudeAccountsApi,
   CodexAccountsApi,
@@ -77,6 +78,7 @@ import type { FolderWorkspacesApi, SparsePresetsApi, WorktreeApi } from './api/w
 type Merged<T> = { [K in keyof T]: T[K] }
 
 export type PreloadApi = {
+  teamerge: TeamergeApi
   app: AppApi
   orcaProfiles: OrcaProfileApi
   platform: PlatformApi
