@@ -12,6 +12,7 @@ import { wslDriveProjectApi } from './api/wsl-drive-project-bridge'
 import { wslDriveUncConversionApi } from './api/wsl-drive-unc-conversion-bridge'
 import { pwshApi } from './api/pwsh-bridge'
 import { gitBashApi } from './api/git-bash-bridge'
+import { teamergeApi } from './api/teamerge-bridge'
 import { pluginsApi } from './api/plugins-bridge'
 import { reposApi } from './api/repos-bridge'
 import { projectsApi } from './api/projects-bridge'
@@ -195,7 +196,8 @@ const api = {
   e2e: e2eApi,
   mobile: mobileApi,
   agentStatus: agentStatusApi,
-  speech: speechApi
+  speech: speechApi,
+  teamerge: teamergeApi
 } satisfies PreloadApi
 
 if (process.contextIsolated) {
