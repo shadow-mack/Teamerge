@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { SetupGuideSidebarEntry } from './SetupGuideSidebarEntry'
 import { SidebarTaskNavButton } from './SidebarTaskNavButton'
+import { SidebarTeamButton } from '../teamerge/SidebarTeamButton'
 import { HideSidebarMenu } from './sidebar-nav-controls'
 import { translate } from '@/i18n/i18n'
 import { lazyWithRetry } from '@/lib/lazy-with-retry'
@@ -118,6 +119,7 @@ const SidebarNav = React.memo(function SidebarNav() {
       </button>
       <SetupGuideSidebarEntry />
       <SidebarTaskNavButton />
+      <SidebarTeamButton />
       {showArtifactsButton ? (
         <ContextMenu>
           <ContextMenuTrigger asChild>
@@ -238,7 +240,7 @@ const SidebarNav = React.memo(function SidebarNav() {
                   strokeWidth={mobileActive ? 2.25 : 1.75}
                 />
                 <span className="min-w-0 flex-1 truncate">
-                  {translate('auto.components.sidebar.SidebarNav.1b5c41caee', 'Orca Mobile')}
+                  {translate('auto.components.sidebar.SidebarNav.teamergeMobile', 'Mobile')}
                 </span>
                 {mobileOnboardingBadge.visible ? (
                   <span className="shrink-0 rounded-full bg-primary px-1.5 py-px text-[10px] font-semibold text-primary-foreground">
