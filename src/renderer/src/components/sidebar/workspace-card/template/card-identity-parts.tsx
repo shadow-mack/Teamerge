@@ -1,5 +1,6 @@
 import React from 'react'
 import { DetachedHeadBadge } from '@/components/DetachedHeadBadge'
+import { CollisionChip } from '@/components/teamerge/CollisionChip'
 import { useWslHostDistro, WslHostMark } from '@/components/wsl-host-mark/WslHostMark'
 import { getWorktreeExecutionHostId } from '../../../../../../shared/execution-host'
 import CacheTimer from '../activity/CacheTimer'
@@ -150,6 +151,9 @@ export const CARD_IDENTITY_PARTS = {
   ConflictBadge: part([], (_props, _children, { conflictOperation }) =>
     conflictOperation ? <WorktreeCardConflictBadge operation={conflictOperation} /> : null
   ),
+  TeamCollision: part([], (_props, _children, { worktree }) => (
+    <CollisionChip taskId={worktree.path} />
+  )),
   CacheTimer: part([], (_props, _children, { cacheStartedAt, cacheTtlMs }) =>
     cacheStartedAt != null ? <CacheTimer startedAt={cacheStartedAt} ttlMs={cacheTtlMs} /> : null
   )

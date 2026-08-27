@@ -139,6 +139,7 @@
                   "when": "!vars.identityInMeta && !(vars.folder && !vars.newStyle) && !vars.branch && vars.detachedInMeta"
                 },
                 { "el": "ConflictBadge", "when": "vars.conflict" },
+                { "el": "TeamCollision" },
                 { "el": "CacheTimer", "when": "git.cacheTimerActive" }
               ]
             },
