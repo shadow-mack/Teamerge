@@ -12,6 +12,7 @@ import PinnedTabCloseDialog from './components/terminal-pane/PinnedTabCloseDialo
 import RunningTerminalCloseDialog from './components/terminal-pane/RunningTerminalCloseDialog'
 import WorktreeBaseFallbackDialog from './components/WorktreeBaseFallbackDialog'
 import ClaudeAccountSwitchDialog from './components/ClaudeAccountSwitchDialog'
+import TeamergeRoot from './components/teamerge/TeamergeRoot'
 import { useUnreadDockBadge } from './hooks/useUnreadDockBadge'
 import { AppBackgroundServices } from './app-shell/AppBackgroundServices'
 import { AppRootSurfaces } from './app-shell/AppRootSurfaces'
@@ -116,6 +117,7 @@ function App(): React.JSX.Element {
             />
             <BrowserWebAuthnAccountDialog />
             <BrowserExtensionInstallDialog />
+            <TeamergeRoot />
           </LinkRoutingPreferenceDialogProvider>
         </ConfirmationDialogProvider>
         {createPortal(
