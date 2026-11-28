@@ -49,7 +49,7 @@ vi.mock('@/lib/runtime-workspace-file-route', () => ({
 installTerminalLinkTestEnvironment(doubles)
 
 describe('handleOscLink', () => {
-  it('opens local .html file paths in Orca browser tabs when links route to Orca', async () => {
+  it('opens local .html file paths in Teamerge browser tabs when links route to Teamerge', async () => {
     setPlatform('Macintosh')
     storeState.settings = { openLinksInApp: true }
 
@@ -175,7 +175,7 @@ describe('handleOscLink', () => {
     )
   })
 
-  it('falls back to Orca when shift+cmd/ctrl-click system default open fails', async () => {
+  it('falls back to Teamerge when shift+cmd/ctrl-click system default open fails', async () => {
     setPlatform('Macintosh')
     openFilePathMock.mockResolvedValueOnce(false)
 
@@ -222,7 +222,7 @@ describe('handleOscLink', () => {
     expect(setPendingEditorRevealMock).toHaveBeenCalledWith(null)
   })
 
-  it('ignores stale async completion so latest local click wins for Orca open and reveal', async () => {
+  it('ignores stale async completion so latest local click wins for Teamerge open and reveal', async () => {
     setPlatform('Macintosh')
     const firstStat = createDeferred<{ isDirectory: boolean }>()
     const secondStat = createDeferred<{ isDirectory: boolean }>()

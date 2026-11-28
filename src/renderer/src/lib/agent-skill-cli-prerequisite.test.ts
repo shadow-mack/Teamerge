@@ -18,7 +18,7 @@ function cliStatus(overrides: Partial<CliInstallStatus> = {}): CliInstallStatus 
     commandPath: '/usr/local/bin/orca',
     pathDirectory: '/usr/local/bin',
     pathConfigured: true,
-    launcherPath: '/Applications/Orca.app/Contents/MacOS/orca',
+    launcherPath: '/Applications/Teamerge.app/Contents/MacOS/orca',
     installMethod: 'symlink',
     supported: true,
     state: 'installed',
@@ -40,7 +40,7 @@ describe('ensureOrcaCliAvailableForAgentSkillTerminal', () => {
     const initial = cliStatus({
       platform: 'win32',
       pathConfigured: null,
-      detail: 'Orca could not read the Windows user PATH registry value.'
+      detail: 'Teamerge could not read the Windows user PATH registry value.'
     })
     const install = vi.fn()
     vi.stubGlobal('window', {

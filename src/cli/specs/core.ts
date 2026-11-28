@@ -11,7 +11,7 @@ import { TERMINAL_SET_PANE_TITLE_COMMAND_SPEC } from './terminal-set-pane-title'
 export const CORE_COMMAND_SPECS: CommandSpec[] = [
   {
     path: ['open'],
-    summary: 'Launch Orca and wait for the runtime to be reachable',
+    summary: 'Launch Teamerge and wait for the runtime to be reachable',
     usage: 'orca open [--json]',
     allowedFlags: [...GLOBAL_FLAGS],
     examples: ['orca open', 'orca open --json']
@@ -23,26 +23,26 @@ export const CORE_COMMAND_SPECS: CommandSpec[] = [
     usage: 'orca status [--json]',
     allowedFlags: [...GLOBAL_FLAGS],
     notes: [
-      "caller.orcaSessionId is this agent's Orca session ID, as Orca resolved it, when the agent runs as an Orca session; otherwise caller is omitted."
+      "caller.orcaSessionId is this agent's Teamerge session ID, as Teamerge resolved it, when the agent runs as a Teamerge session; otherwise caller is omitted."
     ],
     examples: ['orca status', 'orca status --json']
   },
   {
     path: ['claude-teams'],
     argumentMode: 'passthrough',
-    summary: 'Start Claude Code Agent Teams in the current Orca terminal',
+    summary: 'Start Claude Code Agent Teams in the current Teamerge terminal',
     usage: 'orca claude-teams [claude args...]',
     allowedFlags: [...GLOBAL_FLAGS],
     notes: [
       'Passes all following arguments through to Claude Code after enabling Agent Teams native panes.',
-      'Must be run from inside an Orca terminal. Starts Claude Code Agent Teams in the current pane and opens teammates as native Orca splits.'
+      'Must be run from inside a Teamerge terminal. Starts Claude Code Agent Teams in the current pane and opens teammates as native Teamerge splits.'
     ],
     examples: ['orca claude-teams', 'orca claude-teams --resume <session-id>']
   },
   ...REPO_COMMAND_SPECS,
   {
     path: ['worktree', 'list'],
-    summary: 'List Orca-managed worktrees',
+    summary: 'List Teamerge-managed worktrees',
     usage: 'orca worktree list [--repo <selector>] [--limit <n>] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'repo', 'limit'],
     notes: [...WORKTREE_LISTING_SCOPE_NOTES]
@@ -59,24 +59,24 @@ export const CORE_COMMAND_SPECS: CommandSpec[] = [
     usage: 'orca worktree activate --worktree <selector> [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'worktree'],
     notes: [
-      'With --environment naming a recipe VM that is asleep, Orca on this computer wakes the VM first and waits for it.'
+      'With --environment naming a recipe VM that is asleep, Teamerge on this computer wakes the VM first and waits for it.'
     ],
     examples: ['orca worktree activate --worktree branch:fix-login --environment sandbox']
   },
   {
     path: ['worktree', 'current'],
-    summary: 'Show the Orca-managed worktree for the current directory',
+    summary: 'Show the Teamerge-managed worktree for the current directory',
     usage: 'orca worktree current [--json]',
     allowedFlags: [...GLOBAL_FLAGS],
     notes: [
-      'Resolves the current shell directory to a path: selector so agents can target the enclosing Orca worktree without spelling out $PWD.'
+      'Resolves the current shell directory to a path: selector so agents can target the enclosing Teamerge worktree without spelling out $PWD.'
     ],
     examples: ['orca worktree current', 'orca worktree current --json']
   },
   {
     path: ['worktree', 'create'],
     repeatableFlags: ['reference'],
-    summary: 'Create a new Orca-managed worktree',
+    summary: 'Create a new Teamerge-managed worktree',
     usage:
       'orca worktree create --name <name> [--repo <selector>|--project <id-or-name> [--host <host>]|--project-host-setup <id>] [--agent <id>] [--prompt <text>] [--model <id>] [--effort <level>] [--surface chat|terminal] [--setup run|skip|inherit] [--base-branch <ref>] [--branch <name>] [--reference <url-or-jira-key>...] [--reference-site <id>] [--issue <number>] [--pr <number>] [--linear-issue <identifier-or-url>] [--gitlab-issue <number-or-url>] [--gitlab-mr <number-or-url>] [--comment <text>] [--parent-worktree <selector>] [--no-parent] [--run-hooks] [--activate] [--retry-launch <operationId>] [--json]',
     allowedFlags: [
@@ -111,19 +111,19 @@ export const CORE_COMMAND_SPECS: CommandSpec[] = [
     notes: [
       'Repeat --reference to attach full issue or review URLs, or Jira issue keys, before setup or agent startup. Use --reference-site to choose the Jira site for keys. Other providers require full URLs. Cannot combine with legacy link flags.',
       'This creates a new checkout. For a fresh agent in an existing worktree, use `orca agent launch` instead.',
-      'By default, Orca records the new worktree as a child of the caller context when it can infer one from the Orca terminal or current directory.',
-      'If --repo is omitted, Orca infers the repo from the current Orca-managed worktree.',
+      'By default, Teamerge records the new worktree as a child of the caller context when it can infer one from the Teamerge terminal or current directory.',
+      'If --repo is omitted, Teamerge infers the repo from the current Teamerge-managed worktree.',
       'Use --project to create on a ready project host setup without spelling the backing repo id. --project takes the project id or the display name from `orca project list`.',
-      '--host is only needed when the project is set up on more than one host; with a single setup Orca uses it. When it is ambiguous the error names every host the project is set up on.',
+      '--host is only needed when the project is set up on more than one host; with a single setup Teamerge uses it. When it is ambiguous the error names every host the project is set up on.',
       '--host takes local, ssh:<target-id>, runtime:<environment-id>, or the bare host name `orca host list` prints for any of them.',
       'For related work, use the inferred parent or pass --parent-worktree active, folder:<id>, or worktree:<worktreeId> to make the relationship explicit. Worktree ids are the full <repo-id>::<path> values returned by `orca worktree list --json`.',
       'Use --no-parent when the new worktree should be independent of the current context.',
       'Pass --branch to name the Git branch without the configured prefix (a taken name gets a numeric suffix); --base-branch selects the starting ref instead.',
-      '--no-parent only affects Orca lineage; omit --base-branch to use the repo default base, or pass the default base ref explicitly for independent top-level work.',
-      'By default this creates the worktree and its first terminal without switching the active Orca view.',
+      '--no-parent only affects Teamerge lineage; omit --base-branch to use the repo default base, or pass the default base ref explicitly for independent top-level work.',
+      'By default this creates the worktree and its first terminal without switching the active Teamerge view.',
       'Pass --agent to start an agent with the worktree, as a chat or a terminal per your Chat | CLI choice for that agent, exactly as a new agent tab does; --prompt sends initial work to it. --model and --effort pick its model and reasoning effort, and --surface chat|terminal picks chat or terminal for this launch instead of your setting.',
       'After a lost agent launch reply, re-issue the same command from the same directory on the same host with --retry-launch <operationId> from the error. Never retry as a fresh launch; older hosts require inspecting the workspace first.',
-      'With --agent --json, result.launch says what started: launch.outcome.kind (structured chat or terminal), launch.outcome.handle, and launch.receipt.detail for why. An Orca host older than this returns the terminal agent handle in result.agentTerminalHandle instead.',
+      'With --agent --json, result.launch says what started: launch.outcome.kind (structured chat or terminal), launch.outcome.handle, and launch.receipt.detail for why. A Teamerge host older than this returns the terminal agent handle in result.agentTerminalHandle instead.',
       'Repo-defined setup hooks follow the repository setup policy; pass --setup run to force them.',
       'Pass --activate when the CLI caller intentionally wants to reveal the new worktree in the app.',
       'Passing --run-hooks is kept as a legacy alias for --setup run and reveals the worktree.',
@@ -149,7 +149,7 @@ export const CORE_COMMAND_SPECS: CommandSpec[] = [
       ['worktree', 'delete']
     ],
     destructive: true,
-    summary: 'Remove a Git worktree or a folder workspace entry from Orca',
+    summary: 'Remove a Git worktree or a folder workspace entry from Teamerge',
     usage:
       'orca worktree rm --worktree <selector> [--force] [--delete-branch] [--run-hooks] [--allow-failed-archive-hook] [--json]',
     allowedFlags: [
@@ -161,12 +161,12 @@ export const CORE_COMMAND_SPECS: CommandSpec[] = [
       'allow-failed-archive-hook'
     ],
     notes: [
-      'For a non-root folder workspace, removes its Orca entry and stops its sessions without deleting the folder or touching Git. The folder project root cannot be removed with this command.',
+      'For a non-root folder workspace, removes its Teamerge entry and stops its sessions without deleting the folder or touching Git. The folder project root cannot be removed with this command.',
       'Use --worktree "id:<full-instance-id>" with the full id from orca worktree list --json to select one folder workspace; several entries can share the same path.',
       'Repo-defined orca.yaml archive hooks are skipped unless --run-hooks is passed.',
       'With --run-hooks, a failed archive hook blocks the removal: nothing is stopped, deleted or deregistered, and the command exits non-zero with error code worktree_archive_hook_failed. --force does not waive this.',
       'Pass --allow-failed-archive-hook to delete anyway after the hook has run and failed; the waived failure is reported back on result.archiveHookOverride. It requires --run-hooks and is rejected without it, because with no hook running there is no failure to waive.',
-      'On newer hosts with branch-choice support, Git worktree removal keeps the local branch, including with --force. Pass --delete-branch to attempt safe branch deletion, including branches that predated the worktree. Branches whose changes Orca cannot prove are already merged are retained. Older hosts keep their existing branch policy and print a warning; keep-by-default and --delete-branch do not apply there. A removal result without branch evidence does not confirm branch deletion.'
+      'On newer hosts with branch-choice support, Git worktree removal keeps the local branch, including with --force. Pass --delete-branch to attempt safe branch deletion, including branches that predated the worktree. Branches whose changes Teamerge cannot prove are already merged are retained. Older hosts keep their existing branch policy and print a warning; keep-by-default and --delete-branch do not apply there. A removal result without branch evidence does not confirm branch deletion.'
     ]
   },
   {
@@ -181,7 +181,7 @@ export const CORE_COMMAND_SPECS: CommandSpec[] = [
   },
   {
     path: ['terminal', 'list'],
-    summary: 'List live Orca-managed terminals',
+    summary: 'List live Teamerge-managed terminals',
     usage:
       'orca terminal list [--worktree <selector>] [--limit <n>] [--include-visual-layouts] [--json]',
     allowedFlags: [...GLOBAL_FLAGS, 'worktree', 'limit', 'include-visual-layouts'],
@@ -249,7 +249,7 @@ export const CORE_COMMAND_SPECS: CommandSpec[] = [
       'Creates a visible terminal tab without switching focus when possible; falls back to a background handle if the UI cannot adopt it. Pass --focus to switch to it.',
       'This creates a terminal and runs --command in it. To start an agent, use `orca agent launch` (or `orca worktree create --agent` for a new checkout), which follows your Chat | CLI choice.',
       '--shell picks the shell the terminal IS on a Windows host (cmd.exe, powershell.exe, pwsh.exe, wsl.exe, bash.exe, git-bash); --command is typed into whatever shell the host started, so `--command cmd.exe` leaves a cmd running INSIDE the default shell and exiting it drops back to that shell.',
-      'A host that cannot apply --shell refuses the create rather than quietly spawning its default shell: macOS and Linux execution hosts spawn the login shell, terminals routed over SSH resolve their shell on the SSH host, a --shell that contradicts the project execution runtime (WSL vs Windows host) is refused, and an Orca host older than --shell is refused by the CLI.'
+      'A host that cannot apply --shell refuses the create rather than quietly spawning its default shell: macOS and Linux execution hosts spawn the login shell, terminals routed over SSH resolve their shell on the SSH host, a --shell that contradicts the project execution runtime (WSL vs Windows host) is refused, and a Teamerge host older than --shell is refused by the CLI.'
     ],
     examples: [
       'orca terminal create --json',

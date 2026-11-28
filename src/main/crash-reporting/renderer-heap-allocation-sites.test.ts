@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { summarizeSamplingProfile, trustedScriptPrefixFor } from './renderer-heap-allocation-sites'
 
-const PAGE = 'file:///Users/someone/Orca.app/Contents/Resources/app.asar/out/renderer/index.html'
+const PAGE =
+  'file:///Users/someone/Teamerge.app/Contents/Resources/app.asar/out/renderer/index.html'
 const BUNDLE = trustedScriptPrefixFor(PAGE)
 
 function frame(functionName: string, url: string, scriptId = '7', lineNumber = 9) {

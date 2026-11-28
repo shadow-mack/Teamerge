@@ -86,7 +86,9 @@ describe('clearBrowserExtensionSessionData', () => {
     await clearBrowserExtensionSessionData(opened, ID)
     // Chromium still holds the open database, so the launch sweep deletes it instead.
     expect(existsSync(folder)).toBe(true)
-    expect(() => throwIfBrowserExtensionStorageAwaitingRestart(opened, ID)).toThrow('Restart Orca')
+    expect(() => throwIfBrowserExtensionStorageAwaitingRestart(opened, ID)).toThrow(
+      'Restart Teamerge'
+    )
 
     const sess = fakeSession(false, partition)
     await clearBrowserExtensionSessionData(sess, ID)
@@ -121,8 +123,8 @@ describe('removeUninstalledBrowserExtensionData', () => {
   })
 })
 
-describe('uninstall while another Orca profile is inactive', () => {
-  it('clears native and origin data and grants after uninstall and reinstall in another Orca profile', async () => {
+describe('uninstall while another Teamerge profile is inactive', () => {
+  it('clears native and origin data and grants after uninstall and reinstall in another Teamerge profile', async () => {
     const personalDirectory = mkdtempSync(join(tmpdir(), 'orca-extension-personal-'))
     const workDirectory = mkdtempSync(join(tmpdir(), 'orca-extension-work-'))
     async function openOrcaProfile(directory: string) {

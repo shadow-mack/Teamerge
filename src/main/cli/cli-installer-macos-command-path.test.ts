@@ -34,7 +34,7 @@ async function makeBundledLauncherFixture() {
       isPackaged: true,
       resourcesPath,
       userDataPath: fixture.userDataPath,
-      execPath: '/Applications/Orca.app/Contents/MacOS/Orca',
+      execPath: '/Applications/Teamerge.app/Contents/MacOS/Teamerge',
       appPath: fixture.appPath,
       homePath: join(fixture.root, 'home')
     },
@@ -77,7 +77,7 @@ describe('CliInstaller', () => {
         isPackaged: true,
         resourcesPath,
         userDataPath: fixture.userDataPath,
-        execPath: '/Applications/Orca.app/Contents/MacOS/Orca',
+        execPath: '/Applications/Teamerge.app/Contents/MacOS/Teamerge',
         appPath: fixture.appPath,
         homePath,
         defaultMacCommandPath: defaultInstallPath,
@@ -87,7 +87,7 @@ describe('CliInstaller', () => {
       const status = await installer.getStatus()
       expect(status.commandPath).toBe(userInstallPath)
       expect(status.state).toBe('conflict')
-      await expect(installer.install()).rejects.toThrow('Refusing to replace non-Orca command')
+      await expect(installer.install()).rejects.toThrow('Refusing to replace non-Teamerge command')
       await expect(lstat(defaultInstallPath)).rejects.toMatchObject({ code: 'ENOENT' })
       await expect(readFile(userInstallPath, 'utf8')).resolves.toContain('other-orca')
     }

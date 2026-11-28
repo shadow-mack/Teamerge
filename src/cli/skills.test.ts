@@ -201,7 +201,7 @@ describe('orca skills CLI', () => {
     expect(errorSpy).toHaveBeenCalledWith('Flag --skill requires a value.')
   })
 
-  it('refuses a real run when the shell forwards orca to the Orca host', async () => {
+  it('refuses a real run when the shell forwards orca to the Teamerge host', async () => {
     vi.stubEnv('ORCA_CLI_CWD', '/home/alice/wt')
     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 

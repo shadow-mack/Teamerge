@@ -67,7 +67,7 @@ it("runs every agent's real remover, including Claude's agent view and status-li
 
   const { AGENT_HOOKS_UNINSTALL_FLAG, runAgentHooksUninstallPreflight } =
     await import('./agent-hooks-uninstall-preflight')
-  expect(runAgentHooksUninstallPreflight(['Orca.exe', AGENT_HOOKS_UNINSTALL_FLAG])).toBe(true)
+  expect(runAgentHooksUninstallPreflight(['Teamerge.exe', AGENT_HOOKS_UNINSTALL_FLAG])).toBe(true)
 
   await vi.waitFor(() => expect(fixture.exit).toHaveBeenCalled(), { timeout: 20_000 })
   // No remover failed, so none hit an uninitialised singleton.

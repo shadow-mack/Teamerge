@@ -32,6 +32,8 @@ import { openRemoteRuntimeWebSocket } from './remote-runtime-request-websocket'
 import { sendRemoteRuntimeTokenAuth } from '../remote-runtime-client-handshake'
 import { remoteRuntimeClientCapabilities } from '../remote-runtime-client-capabilities'
 import type { RuntimeCapability } from '../../protocol-version'
+
+const UNDECRYPTABLE_FRAME_MESSAGE = 'Remote Teamerge runtime returned an undecryptable frame.'
 type ConnectionState = 'closed' | 'awaiting_ready' | 'awaiting_authenticated' | 'ready'
 const IDLE_CLOSE_MS = 60_000
 
@@ -206,9 +208,7 @@ export class RemoteRuntimeRequestConnection {
     }
     const plaintext = handshake.channel.openText(frame)
     if (plaintext === null) {
-      this.close(
-        invalidRemoteRuntimeResponseError('Remote Orca runtime returned an undecryptable frame.')
-      )
+      this.close(invalidRemoteRuntimeResponseError(UNDECRYPTABLE_FRAME_MESSAGE))
       return
     }
 

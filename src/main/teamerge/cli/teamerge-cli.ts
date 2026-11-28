@@ -36,6 +36,10 @@ Team
   whoami                     This machine's member id and name
   team                       Team roster and relay
   relay [--port <n>]         Run the end-to-end encrypted relay for your team (default ${RELAY_DEFAULT_PORT})
+
+Workspaces
+  Every other command (worktree, terminal, project, ...) runs the full workspace CLI,
+  for example: teamerge worktree list
 `
 
 async function main(): Promise<void> {

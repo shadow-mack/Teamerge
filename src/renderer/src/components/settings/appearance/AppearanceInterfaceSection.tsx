@@ -378,7 +378,7 @@ export function AppearanceInterfaceSection({
                   // Explain the non-obvious platform restriction and keep-running consequence.
                   description={translate(
                     'auto.components.settings.AppearancePane.b707773a0d',
-                    'When enabled, closing the window keeps Orca running in the system tray instead of quitting.'
+                    'When enabled, closing the window keeps Teamerge running in the system tray instead of quitting.'
                   )}
                   checked={settings.minimizeToTrayOnClose === true}
                   onChange={() =>
@@ -399,7 +399,7 @@ export function AppearanceInterfaceSection({
                   // Hiding the status item preserves Dock activation and close-keeps-running behavior.
                   description={translate(
                     'settings.appearance.menuBarIcon.description',
-                    'Keep an Orca shortcut and activity indicator in the macOS menu bar.'
+                    'Keep a Teamerge shortcut and activity indicator in the macOS menu bar.'
                   )}
                   checked={settings.showMenuBarIcon !== false}
                   onChange={() =>

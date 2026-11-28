@@ -14,7 +14,7 @@ import { extractLegacyAppImageCliWrapperTarget } from './legacy-appimage-cli-wra
 // Match after-install.sh's electron-builder name variants when reclaiming packaged launchers.
 const PACKAGED_LINUX_LAUNCHER_DIRECTORIES = [
   '/opt/Teamerge',
-  '/opt/Orca',
+  '/opt/Teamerge',
   '/opt/orca-ide',
   '/opt/orca'
 ]
@@ -46,7 +46,7 @@ export class CliCommandInspection extends CliInstallLocation {
               supported: true,
               state: 'stale',
               currentTarget: managedTarget,
-              detail: `${commandPath} contains an older Orca launcher.`
+              detail: `${commandPath} contains an older Teamerge launcher.`
             })
           }
         }
@@ -58,7 +58,7 @@ export class CliCommandInspection extends CliInstallLocation {
           supported: true,
           state: 'conflict',
           currentTarget: null,
-          detail: `${commandPath} exists but is not an Orca symlink.`
+          detail: `${commandPath} exists but is not a Teamerge symlink.`
         })
       }
 
@@ -97,8 +97,8 @@ export class CliCommandInspection extends CliInstallLocation {
         detail: isInstalled
           ? `Registered at ${commandPath}.`
           : isManagedStaleTarget
-            ? `${commandPath} points to an older Orca launcher.`
-            : `${commandPath} points to a non-Orca launcher.`
+            ? `${commandPath} points to an older Teamerge launcher.`
+            : `${commandPath} points to a non-Teamerge launcher.`
       })
     } catch (error) {
       if (isMissingError(error)) {
@@ -109,7 +109,7 @@ export class CliCommandInspection extends CliInstallLocation {
           supported: true,
           state: 'not_installed',
           currentTarget: null,
-          detail: `Register ${commandPath} to use Orca from the terminal.`
+          detail: `Register ${commandPath} to use Teamerge from the terminal.`
         })
       }
       throw error
@@ -207,7 +207,7 @@ export class CliCommandInspection extends CliInstallLocation {
           supported: true,
           state: 'conflict',
           currentTarget: null,
-          detail: `${commandPath} exists but is not an Orca launcher script.`
+          detail: `${commandPath} exists but is not a Teamerge launcher script.`
         })
       }
 
@@ -246,7 +246,7 @@ export class CliCommandInspection extends CliInstallLocation {
           supported: true,
           state: 'not_installed',
           currentTarget: null,
-          detail: `Register ${commandPath} to use Orca from Command Prompt or PowerShell.`
+          detail: `Register ${commandPath} to use Teamerge from Command Prompt or PowerShell.`
         })
       }
       throw error

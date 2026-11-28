@@ -115,7 +115,10 @@ it('writes only revalidated split bytes, sanitizing controls without Enter and s
       { ...first, label: 'Zoë\r\n\u001b[31m\u2028\u0085' }
     ])
   ).toBe(true)
-  expect(sendInputAccepted).toHaveBeenCalledWith('Zoë  [31m  (Orca agent term_first) ', 'driving')
+  expect(sendInputAccepted).toHaveBeenCalledWith(
+    'Zoë  [31m  (Teamerge agent term_first) ',
+    'driving'
+  )
   expect(sendInput).not.toHaveBeenCalled()
   leaf = 'leaf-replaced'
   expect(await insertTerminalCrewMention(manager, transports, target, [first])).toBe(false)

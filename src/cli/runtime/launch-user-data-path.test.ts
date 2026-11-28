@@ -42,15 +42,15 @@ describe('pinLaunchUserDataPath', () => {
 
 describe('getMacOpenArgs', () => {
   it('reopens the bundle as before on the default profile', () => {
-    expect(getMacOpenArgs('/Applications/Orca.app', getPlatformUserDataPath())).toEqual([
-      '/Applications/Orca.app'
+    expect(getMacOpenArgs('/Applications/Teamerge.app', getPlatformUserDataPath())).toEqual([
+      '/Applications/Teamerge.app'
     ])
   })
 
   it('starts a new instance on another profile instead of activating the running app', () => {
-    expect(getMacOpenArgs('/Applications/Orca.app', '/isolated/p')).toEqual([
+    expect(getMacOpenArgs('/Applications/Teamerge.app', '/isolated/p')).toEqual([
       '-n',
-      '/Applications/Orca.app',
+      '/Applications/Teamerge.app',
       '--args',
       '--user-data-dir=/isolated/p'
     ])

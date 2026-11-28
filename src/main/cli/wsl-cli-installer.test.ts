@@ -14,13 +14,13 @@ vi.mock('../wsl/execution/wsl-runner', () => ({
 import { WslCliInstaller, _internals } from './wsl-cli-installer'
 
 function makeHostStatus(
-  launcherPath = 'C:\\Users\\me\\AppData\\Local\\Programs\\Orca\\resources\\bin\\orca.exe'
+  launcherPath = 'C:\\Users\\me\\AppData\\Local\\Programs\\Teamerge\\resources\\bin\\orca.exe'
 ) {
   return {
     platform: 'win32',
     commandName: 'orca',
     commandPath: launcherPath,
-    pathDirectory: 'C:\\Users\\me\\AppData\\Local\\Programs\\Orca\\resources\\bin',
+    pathDirectory: 'C:\\Users\\me\\AppData\\Local\\Programs\\Teamerge\\resources\\bin',
     pathConfigured: true,
     launcherPath,
     installMethod: 'wrapper',
@@ -36,16 +36,16 @@ function makeHostStatus(
 // persisted managed script still names the pre-native Windows batch launcher.
 const PRE_RC4_MANAGED_WSL_LAUNCHER = `#!/usr/bin/env bash
 set -euo pipefail
-# Orca managed WSL CLI launcher
+# Teamerge managed WSL CLI launcher
 # ORCA_WIN_LAUNCHER_B64=QzpcUHJvZ3JhbSBGaWxlc1xPcmNhXHJlc291cmNlc1xiaW5cb3JjYS5jbWQ=
-ORCA_WIN_LAUNCHER='C:\\Program Files\\Orca\\resources\\bin\\orca.cmd'
+ORCA_WIN_LAUNCHER='C:\\Program Files\\Teamerge\\resources\\bin\\orca.cmd'
 ORCA_BRIDGE_PS1='/home/alice/.local/share/orca/orca-wsl-bridge.ps1'
 if command -v powershell.exe >/dev/null 2>&1; then
   ORCA_POWERSHELL=powershell.exe
 elif [ -x /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe ]; then
   ORCA_POWERSHELL=/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
 else
-  echo "Orca WSL CLI requires Windows interop and could not find powershell.exe." >&2
+  echo "Teamerge WSL CLI requires Windows interop and could not find powershell.exe." >&2
   exit 1
 fi
 ORCA_BRIDGE_PS1_WIN=$(wslpath -w "$ORCA_BRIDGE_PS1")
@@ -97,7 +97,8 @@ describe('WslCliInstaller', () => {
         platform: 'win32',
         distro: 'Ubuntu',
         hostInstaller: {
-          getStatus: async () => makeHostStatus('C:\\Program Files\\Orca\\resources\\bin\\orca.exe')
+          getStatus: async () =>
+            makeHostStatus('C:\\Program Files\\Teamerge\\resources\\bin\\orca.exe')
         },
         wslRunner: runner
       })

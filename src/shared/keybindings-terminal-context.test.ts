@@ -6,7 +6,7 @@ import {
 } from './keybindings'
 
 describe('keybindings', () => {
-  it('keeps Orca-first terminal context backward compatible', () => {
+  it('keeps Teamerge-first terminal context backward compatible', () => {
     const ctrlP = {
       key: 'p',
       code: 'KeyP',

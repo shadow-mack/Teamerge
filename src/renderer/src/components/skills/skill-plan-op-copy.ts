@@ -42,7 +42,10 @@ export function leaveReasonText(reason: string | null | undefined): string {
   }
   switch (reason) {
     case 'edited':
-      return translate('auto.components.skills.skillPlanOpCopy.edited', 'Skill edited outside Orca')
+      return translate(
+        'auto.components.skills.skillPlanOpCopy.edited',
+        'Skill edited outside Teamerge'
+      )
     case 'other':
       return translate(
         'auto.components.skills.skillPlanOpCopy.other',
@@ -51,12 +54,12 @@ export function leaveReasonText(reason: string | null | undefined): string {
     case 'unwritable':
       return translate(
         'auto.components.skills.skillPlanOpCopy.unwritable',
-        "Orca can't write to this folder"
+        "Teamerge can't write to this folder"
       )
     case 'unreadable':
       return translate(
         'auto.components.skills.skillPlanOpCopy.unreadable',
-        "Orca can't read every file"
+        "Teamerge can't read every file"
       )
     case 'busy':
       return translate(
@@ -66,7 +69,7 @@ export function leaveReasonText(reason: string | null | undefined): string {
     case 'shared-not-current':
       return translate(
         'auto.components.skills.skillPlanOpCopy.sharedNotCurrent',
-        "The shared copy isn't Orca's"
+        "The shared copy isn't Teamerge's"
       )
   }
 }

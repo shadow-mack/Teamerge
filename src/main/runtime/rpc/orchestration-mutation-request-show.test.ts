@@ -140,7 +140,7 @@ describe('orchestration.requestShow', () => {
     const result = (response as { result: { state: string; interpretation: string } }).result
     expect(result.state).toBe('pending')
     expect(result.interpretation).toContain('may still be running')
-    expect(result.interpretation).not.toContain('so Orca restarted')
+    expect(result.interpretation).not.toContain('so Teamerge restarted')
 
     finishMutation?.()
     await runningMutation

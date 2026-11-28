@@ -52,7 +52,7 @@ function pluginGuestHarness(browserPage = false) {
   return { send, press }
 }
 
-describe('Orca shortcuts while a plugin guest has focus', () => {
+describe('Teamerge shortcuts while a plugin guest has focus', () => {
   it.each([false, true])('forwards collapse-all with browserPage=%s', (browserPage) => {
     const { send, press } = pluginGuestHarness(browserPage)
     const consumed = press({
@@ -67,7 +67,7 @@ describe('Orca shortcuts while a plugin guest has focus', () => {
     expect(consumed).toHaveBeenCalled()
   })
 
-  it('forwards app shortcuts to Orca and keeps them from the guest', () => {
+  it('forwards app shortcuts to Teamerge and keeps them from the guest', () => {
     const { send, press } = pluginGuestHarness()
     const consumed = press(keyDown(',', 'Comma'))
     expect(send).toHaveBeenCalledWith('ui:openSettings')

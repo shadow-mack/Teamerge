@@ -150,7 +150,10 @@ function MobileNativeChatPermissionContext({
       ) : null}
       {newerSubject ? (
         <Text testID="native-chat-approval-needs-newer-orca" style={styles.detail}>
-          {t('chat.permission.newerVersionRequired', 'This request needs a newer version of Orca.')}
+          {t(
+            'chat.permission.newerVersionRequired',
+            'This request needs a newer version of Teamerge.'
+          )}
         </Text>
       ) : null}
     </ScrollView>

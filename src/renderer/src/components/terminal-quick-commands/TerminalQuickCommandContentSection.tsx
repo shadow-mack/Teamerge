@@ -76,7 +76,7 @@ function getBodyRefusalLabel(belowCurrentPromptCap: boolean): string {
   return belowCurrentPromptCap
     ? translate(
         'auto.components.terminal.quick.commands.TerminalQuickCommandDialog.prompt_over_host_limit',
-        'Too long for this host. Update Orca on the host to save longer prompts.'
+        'Too long for this host. Update Teamerge on the host to save longer prompts.'
       )
     : translate(
         'auto.components.terminal.quick.commands.TerminalQuickCommandDialog.length_over_limit',

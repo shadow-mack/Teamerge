@@ -35,9 +35,9 @@ describe('electron-builder config', () => {
         ? ['notes']
         : [
             'notes/build.log',
-            'notes/installed-orca-backup/Orca.exe',
+            'notes/installed-orca-backup/Teamerge.exe',
             'notes/installed-orca-backup/resources/app.asar',
-            'notes/orca-windows-setup.exe',
+            'notes/teamerge-windows-setup.exe',
             'notes/.recovery/state.json'
           ]
     try {
@@ -122,7 +122,7 @@ describe('electron-builder config', () => {
   it('validates each AppImage before electron-builder publishes it', async () => {
     const root = await mkdtemp(join(tmpdir(), 'orca-electron-builder-appimage-'))
     try {
-      const appImage = join(root, 'orca-linux.AppImage')
+      const appImage = join(root, 'teamerge-linux.AppImage')
       await writeFile(appImage, 'not an ELF')
       await chmod(appImage, 0o755)
 

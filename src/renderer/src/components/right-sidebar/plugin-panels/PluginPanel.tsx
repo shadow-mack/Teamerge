@@ -135,7 +135,7 @@ function PluginPanel({ tabKey }: PluginPanelProps): React.JSX.Element {
         {isWebClientLocation()
           ? translate(
               'auto.components.right.sidebar.PluginPanel.needsDesktop',
-              'This panel runs only in the Orca desktop app.'
+              'This panel runs only in the Teamerge desktop app.'
             )
           : translate(
               'auto.components.right.sidebar.PluginPanel.needsIsolatedFrames',

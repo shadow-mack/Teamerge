@@ -3,7 +3,7 @@ import { reexecHeadlessServeOnX11IfNeeded } from './headless-serve-x11-reexec'
 
 vi.mock('electron', () => ({ app: { commandLine: { getSwitchValue: () => 'wayland' } } }))
 
-const EXEC_PATH = '/opt/Orca/orca-ide'
+const EXEC_PATH = '/opt/Teamerge/orca-ide'
 
 describe('reexecHeadlessServeOnX11IfNeeded', () => {
   afterEach(() => {

@@ -21,7 +21,7 @@ export function pluginInstallErrorMessage(cause: unknown): string {
   if (detail.includes('requires orca')) {
     return translate(
       'auto.components.settings.pluginError.incompatible',
-      'This plugin requires a different Orca version.'
+      'This plugin requires a different Teamerge version.'
     )
   }
   if (/(symlink|outside|absolute|path traversal|drive prefix)/.test(detail)) {
@@ -33,13 +33,13 @@ export function pluginInstallErrorMessage(cause: unknown): string {
   if (/(exceeds|too many)/.test(detail)) {
     return translate(
       'auto.components.settings.pluginError.installLimit',
-      "The plugin exceeds Orca's install size or file-count limits."
+      "The plugin exceeds Teamerge's install size or file-count limits."
     )
   }
   if (detail.includes('moved after it was checked')) {
     return translate(
       'auto.components.settings.pluginError.installGitMoved',
-      'The repository changed after Orca checked it. Try again.'
+      'The repository changed after Teamerge checked it. Try again.'
     )
   }
   if (/(git|repository|fetch|clone|checkout|remote)/.test(detail)) {
@@ -61,7 +61,7 @@ export function invalidPluginErrorMessage(detailValue: string, installed = false
   if (installed && !detail.includes('requires orca')) {
     return translate(
       'auto.components.settings.pluginError.installedManifestUnloadable',
-      "This version can't load in this Orca. Update or reinstall it."
+      "This version can't load in this Teamerge. Update or reinstall it."
     )
   }
   if (detail.includes('missing orca-plugin.json')) {
@@ -85,7 +85,7 @@ export function invalidPluginErrorMessage(detailValue: string, installed = false
   if (detail.includes('requires orca')) {
     return translate(
       'auto.components.settings.pluginError.incompatible',
-      'This plugin requires a different Orca version.'
+      'This plugin requires a different Teamerge version.'
     )
   }
   return translate(

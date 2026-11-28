@@ -25,7 +25,7 @@ function purgeWithMeta(meta: Record<string, unknown> = {}) {
     runtime.removeWorktreeMetadataAndHistory(store as never, worktreeId, hostId, { dropAgentTrust })
 }
 
-describe('worktree removal drops the workspace trust Orca wrote', () => {
+describe('worktree removal drops the workspace trust Teamerge wrote', () => {
   let userDataDir: string
   let configPath: string
   let previousUserDataPath: string | undefined
@@ -55,7 +55,7 @@ describe('worktree removal drops the workspace trust Orca wrote', () => {
     expect(readFileSync(configPath, 'utf-8')).not.toContain(`[projects."${PROJECT}"]`)
   })
 
-  it('removes only the Antigravity trustedWorkspaces entry Orca appended', async () => {
+  it('removes only the Antigravity trustedWorkspaces entry Teamerge appended', async () => {
     const agyHome = join(userDataDir, 'agy-home')
     const settingsPath = join(agyHome, '.gemini', 'antigravity-cli', 'settings.json')
     mkdirSync(join(agyHome, '.gemini', 'antigravity-cli'), { recursive: true })
@@ -86,7 +86,7 @@ describe('worktree removal drops the workspace trust Orca wrote', () => {
     expect(JSON.parse(readFileSync(settingsPath, 'utf-8')).trustedWorkspaces).toEqual([])
   })
 
-  it('keeps an Antigravity entry that was trusted before Orca saw the path', async () => {
+  it('keeps an Antigravity entry that was trusted before Teamerge saw the path', async () => {
     const agyHome = join(userDataDir, 'agy-home')
     const settingsPath = join(agyHome, '.gemini', 'antigravity-cli', 'settings.json')
     mkdirSync(join(agyHome, '.gemini', 'antigravity-cli'), { recursive: true })

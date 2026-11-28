@@ -72,7 +72,7 @@ describe('FullDiskAccessSetupPrompt state helpers', () => {
     })
   })
 
-  it('refreshes macOS Full Disk Access status when Orca regains focus', async () => {
+  it('refreshes macOS Full Disk Access status when Teamerge regains focus', async () => {
     setUserAgent('Macintosh')
     const getStatus = vi
       .fn()

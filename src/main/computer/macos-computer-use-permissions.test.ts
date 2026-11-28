@@ -13,7 +13,7 @@ import {
 const resolveHelperAppPathMock = vi.hoisted(() => vi.fn())
 const resolveHelperExecutablePathMock = vi.hoisted(() => vi.fn())
 const permissionStatusTempDir = '/tmp/orca-computer-use-permissions-test'
-const helperAppPath = '/Applications/Orca Computer Use.app'
+const helperAppPath = '/Applications/Teamerge Computer Use.app'
 let monotonicOffset = 0
 const gate = vi.hoisted((): { current: PermissionStatusGate | null } => ({ current: null }))
 

@@ -25,7 +25,7 @@ const unixLauncherFixtures = [
   {
     name: 'Linux',
     asset: linuxLauncherAsset,
-    appDir: ['Orca'],
+    appDir: ['Teamerge'],
     launcher: ['resources', 'bin', 'orca-ide'],
     executable: ['orca-ide'],
     cli: ['resources', 'app.asar.unpacked', 'out', 'cli', 'index.js']

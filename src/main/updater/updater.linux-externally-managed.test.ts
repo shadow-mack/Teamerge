@@ -38,7 +38,7 @@ vi.mock('../local-builds/local-build-switch', () => moduleFactories.localBuildSw
 vi.mock('../local-builds/local-build-feed-server', () => moduleFactories.localBuildFeedServer())
 
 const EXTERNALLY_MANAGED_MESSAGE =
-  'This copy of Orca is managed by your system package manager, so Orca cannot install updates itself. Update Orca through your distribution instead.'
+  'This copy of Teamerge is managed by your system package manager, so Teamerge cannot install updates itself. Update Teamerge through your distribution instead.'
 
 // Repackaged installs can retain the deb marker without a usable package manager.
 warmUpdaterModule()

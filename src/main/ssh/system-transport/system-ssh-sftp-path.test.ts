@@ -12,7 +12,7 @@ describe('toSftpRemotePath', () => {
     expect(toSftpRemotePath('C:/Users/dev/f.bin')).toBe('/C:/Users/dev/f.bin')
   })
 
-  it('converts the separators Orca stores paths with', () => {
+  it('converts the separators Teamerge stores paths with', () => {
     expect(toSftpRemotePath('C:\\Users\\dev\\f.bin')).toBe('/C:/Users/dev/f.bin')
   })
 

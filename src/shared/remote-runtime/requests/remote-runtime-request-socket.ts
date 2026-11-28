@@ -112,7 +112,7 @@ export async function sendRemoteRuntimeRequestOnSocket<TResult>(
       finishError(
         new RemoteRuntimeClientError(
           'runtime_timeout',
-          'Timed out waiting for the remote Orca runtime to respond.',
+          'Timed out waiting for the remote Teamerge runtime to respond.',
           { pairingStage: router.pairingStage }
         )
       )
@@ -168,7 +168,7 @@ export async function sendRemoteRuntimeRequestOnSocket<TResult>(
         if (request === null) {
           throw new RemoteRuntimeClientError(
             'remote_runtime_unavailable',
-            'Remote Orca runtime request was released before it could be sent.'
+            'Remote Teamerge runtime request was released before it could be sent.'
           )
         }
         const frame = handshake.channel.sealText(request)
@@ -251,7 +251,7 @@ export async function sendRemoteRuntimeRequestOnSocket<TResult>(
         finishError(
           new RemoteRuntimeClientError(
             'invalid_runtime_response',
-            'Remote Orca runtime returned an unexpected binary frame.',
+            'Remote Teamerge runtime returned an unexpected binary frame.',
             {
               pairingStage:
                 router.state === 'awaiting_ready' ? 'host-identity' : router.pairingStage

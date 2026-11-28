@@ -1447,8 +1447,8 @@ jobs:
               $list.Add($relative)
             }
 
-          if (-not ($list -contains 'Orca.exe')) {
-            throw 'Orca.exe was not staged for signing; unpacked layout changed?'
+          if (-not ($list -contains 'Teamerge.exe')) {
+            throw 'Teamerge.exe was not staged for signing; unpacked layout changed?'
           }
           if (-not ($list | Where-Object { $_ -like '*conpty_console_list.node' })) {
             throw 'node-pty conpty_console_list.node was not staged; this is the file from issue #7785.'
@@ -1460,7 +1460,7 @@ jobs:
           Write-Host "Skipped $($skipped.Count) already-signed files:"
           $skipped | ForEach-Object { Write-Host "  $_" }
 
-          # Include MDE-flagged old-uninstaller.exe/Uninstall Orca.exe in this approval without another wait.
+          # Include MDE-flagged old-uninstaller.exe/Uninstall Teamerge.exe in this approval without another wait.
           # Exclude it from win-unpacked’s copy-back list; the sign hook re-injects it during rebuild.
           $exportedUninstaller = Join-Path $env:RUNNER_TEMP 'uninstaller-signing\unsigned\orca-uninstaller.exe'
           if (-not (Test-Path -LiteralPath $exportedUninstaller)) {
@@ -1697,8 +1697,8 @@ jobs:
         run: |
           pnpm exec electron-builder --config config/electron-builder.config.cjs --win --publish never --prepackaged "$env:GITHUB_WORKSPACE\dist\win-unpacked"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          if (-not (Test-Path 'dist/orca-windows-setup.exe')) {
-            throw 'electron-builder --prepackaged did not produce dist/orca-windows-setup.exe'
+          if (-not (Test-Path 'dist/teamerge-windows-setup.exe')) {
+            throw 'electron-builder --prepackaged did not produce dist/teamerge-windows-setup.exe'
           }
 
       # ── End Windows inner-binary signing ───────────────────────────────
@@ -1708,7 +1708,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: orca-windows-unsigned-${{ needs.cut.outputs.tag }}
-          path: dist/orca-windows-setup.exe
+          path: dist/teamerge-windows-setup.exe
           compression-level: 0
           if-no-files-found: error
 
@@ -1813,17 +1813,17 @@ jobs:
         if: matrix.platform == 'win' && github.run_attempt == 1
         shell: pwsh
         run: |
-          $signedInstaller = Get-ChildItem -Path signed-windows -Recurse -File -Filter 'orca-windows-setup.exe' | Select-Object -First 1
+          $signedInstaller = Get-ChildItem -Path signed-windows -Recurse -File -Filter 'teamerge-windows-setup.exe' | Select-Object -First 1
           if ($null -eq $signedInstaller) {
             throw 'Signed Windows installer was not returned by SignPath.'
           }
 
-          Copy-Item -Path $signedInstaller.FullName -Destination 'dist/orca-windows-setup.exe' -Force
-          node config/scripts/desktop-distribution/windows/generate-windows-blockmap.mjs 'dist/orca-windows-setup.exe' 'dist/orca-windows-setup.exe.blockmap'
+          Copy-Item -Path $signedInstaller.FullName -Destination 'dist/teamerge-windows-setup.exe' -Force
+          node config/scripts/desktop-distribution/windows/generate-windows-blockmap.mjs 'dist/teamerge-windows-setup.exe' 'dist/teamerge-windows-setup.exe.blockmap'
           if ($LASTEXITCODE -ne 0) { throw "blockmap generation failed with exit code $LASTEXITCODE" }
 
-          $installer = Get-Item 'dist/orca-windows-setup.exe'
-          $blockmap = Get-Item 'dist/orca-windows-setup.exe.blockmap'
+          $installer = Get-Item 'dist/teamerge-windows-setup.exe'
+          $blockmap = Get-Item 'dist/teamerge-windows-setup.exe.blockmap'
           $stream = [System.IO.File]::OpenRead($installer.FullName)
           try {
             $sha512 = [System.Security.Cryptography.SHA512]::Create()
@@ -1844,13 +1844,13 @@ jobs:
           $latestYml = $latestYml -replace '(?m)^    blockMapSize: \d+$', "    blockMapSize: $($blockmap.Length)"
           Set-Content -Path 'dist/latest.yml' -Value $latestYml -NoNewline
 
-          Get-Item 'dist/orca-windows-setup.exe', 'dist/orca-windows-setup.exe.blockmap', 'dist/latest.yml'
+          Get-Item 'dist/teamerge-windows-setup.exe', 'dist/teamerge-windows-setup.exe.blockmap', 'dist/latest.yml'
 
       - name: Verify signed Windows installer
         if: matrix.platform == 'win' && github.run_attempt == 1
         shell: pwsh
         run: |
-          $signature = Get-AuthenticodeSignature -FilePath 'dist/orca-windows-setup.exe'
+          $signature = Get-AuthenticodeSignature -FilePath 'dist/teamerge-windows-setup.exe'
           if ($signature.Status -ne 'Valid') {
             throw ($signature | Format-List * | Out-String)
           }
@@ -1924,14 +1924,14 @@ jobs:
               throw "The 7za resolver returned an invalid path for the inner-binary evidence gate: $7za"
             }
             New-Item -ItemType Directory -Path inner-evidence-extract -Force | Out-Null
-            & $7za x 'dist/orca-windows-setup.exe' '-oinner-evidence-extract' -y | Out-Null
+            & $7za x 'dist/teamerge-windows-setup.exe' '-oinner-evidence-extract' -y | Out-Null
             if ($LASTEXITCODE -ne 0) { throw 'Could not extract the shipped installer payload.' }
 
             $root = Resolve-Path 'inner-evidence-extract'
             # Verify the CLI even when a cached signed copy bypassed staging (#23383).
             # Always verify elevate.exe, even when cached signatures skipped staging; NSIS rebuild can clobber it.
             $targets = @(Get-Content 'inner-signing-list.txt')
-            foreach ($requiredTarget in @('Orca.exe', 'resources\bin\orca.exe', 'resources\bin\orca-agent-hook.exe')) {
+            foreach ($requiredTarget in @('Teamerge.exe', 'resources\bin\orca.exe', 'resources\bin\orca-agent-hook.exe')) {
               if ($targets -notcontains $requiredTarget) { $targets += $requiredTarget }
             }
             if ($targets -notcontains 'resources\elevate.exe') {
@@ -1950,13 +1950,13 @@ jobs:
                 $actual = (Get-FileHash -LiteralPath $signedUninstaller -Algorithm SHA256).Hash.ToLowerInvariant()
                 $signature = Get-AuthenticodeSignature -FilePath $signedUninstaller
                 $subject = if ($null -eq $signature.SignerCertificate) { '<none>' } else { $signature.SignerCertificate.Subject }
-                $line = "{0,-14} {1}  <{2}>" -f $signature.Status, 'Uninstall Orca.exe (embedded)', $subject
+                $line = "{0,-14} {1}  <{2}>" -f $signature.Status, 'Uninstall Teamerge.exe (embedded)', $subject
                 $report.Add($line)
                 Write-Host $line
                 if ($embedded -ne $actual) {
                   $failures.Add("the rebuilt installer embedded different uninstaller bytes than the signed one ($embedded vs $actual)")
                 } elseif ($signature.Status -ne 'Valid' -or $subject -notlike '*CN=SignPath Foundation*') {
-                  $failures.Add("not signed by SignPath Foundation: Uninstall Orca.exe ($($signature.Status), $subject)")
+                  $failures.Add("not signed by SignPath Foundation: Uninstall Teamerge.exe ($($signature.Status), $subject)")
                 }
               }
             } else {
@@ -2056,7 +2056,7 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           retry_wait_seconds: 30
-          command: gh release upload "${{ needs.cut.outputs.tag }}" "dist/orca-windows-setup.exe" "dist/orca-windows-setup.exe.blockmap" "dist/latest.yml" --clobber --repo "${{ github.repository }}"
+          command: gh release upload "${{ needs.cut.outputs.tag }}" "dist/teamerge-windows-setup.exe" "dist/teamerge-windows-setup.exe.blockmap" "dist/latest.yml" --clobber --repo "${{ github.repository }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

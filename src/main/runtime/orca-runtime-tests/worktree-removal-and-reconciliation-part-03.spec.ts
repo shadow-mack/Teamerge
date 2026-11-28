@@ -256,7 +256,7 @@ describe('OrcaRuntimeService', () => {
     }
   })
 
-  it('force-removes a legacy Orca-created runtime orphaned worktree directory after Git tracking is gone', async () => {
+  it('force-removes a legacy Teamerge-created runtime orphaned worktree directory after Git tracking is gone', async () => {
     const parentDir = await mkdtemp(join(tmpdir(), 'orca-runtime-orphan-'))
     const repoPath = join(parentDir, 'repo')
     const orphanPath = join(parentDir, 'orphan')
@@ -318,7 +318,7 @@ describe('OrcaRuntimeService', () => {
     }
   })
 
-  it('refuses an Orca-created runtime unregistered directory with no git marker, even forced, until the user removes it', async () => {
+  it('refuses a Teamerge-created runtime unregistered directory with no git marker, even forced, until the user removes it', async () => {
     const parentDir = await mkdtemp(join(tmpdir(), 'orca-runtime-leftover-'))
     const repoPath = join(parentDir, 'repo')
     const leftoverPath = join(parentDir, 'leftover')
@@ -391,7 +391,7 @@ describe('OrcaRuntimeService', () => {
     }
   })
 
-  it('rejects an Orca-created runtime unregistered local directory with a git directory', async () => {
+  it('rejects a Teamerge-created runtime unregistered local directory with a git directory', async () => {
     const parentDir = await mkdtemp(join(tmpdir(), 'orca-runtime-standalone-'))
     const repoPath = join(parentDir, 'repo')
     const standalonePath = join(parentDir, 'standalone')

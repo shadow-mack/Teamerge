@@ -29,7 +29,7 @@ const session: OrcaCloudSession = {
   capabilities: { flags: { share: true }, refreshedAt: 1 }
 }
 
-describe('Orca cloud client', () => {
+describe('Teamerge cloud client', () => {
   beforeEach(() => {
     fetchMock.mockReset()
     vi.stubGlobal('fetch', fetchMock)

@@ -174,7 +174,7 @@ afterEach(() => {
   clearNativeChatComposerDraftsForTests()
 })
 
-describe('Continue on a reply an Orca stop cut off', () => {
+describe('Continue on a reply a Teamerge stop cut off', () => {
   it('replaces an older composer error with its own failure, and clears it when it goes through', async () => {
     mocks.call.mockResolvedValueOnce({ outcome: 'refused', reason: 'agent_session_conflict' })
     mocks.call.mockResolvedValueOnce({ outcome: 'pending' })

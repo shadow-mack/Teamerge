@@ -78,7 +78,7 @@ describe('runWslHolderUninstallPreflight', () => {
   })
 
   it('leaves the servers alone unless the uninstaller says this is the last install', async () => {
-    expect(runWslHolderUninstallPreflight(['Orca.exe', WSL_HOLDER_UNINSTALL_FLAG])).toBe(true)
+    expect(runWslHolderUninstallPreflight(['Teamerge.exe', WSL_HOLDER_UNINSTALL_FLAG])).toBe(true)
     await vi.waitFor(() => expect(exit).toHaveBeenCalledWith(0))
 
     expect(stopServers).not.toHaveBeenCalled()
@@ -86,7 +86,7 @@ describe('runWslHolderUninstallPreflight', () => {
 
   it('stops the servers when the uninstaller adds the server flag', async () => {
     runWslHolderUninstallPreflight([
-      'Orca.exe',
+      'Teamerge.exe',
       WSL_HOLDER_UNINSTALL_FLAG,
       WSL_SERVER_UNINSTALL_FLAG
     ])

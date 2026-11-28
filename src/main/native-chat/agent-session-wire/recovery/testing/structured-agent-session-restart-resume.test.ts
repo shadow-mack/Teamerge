@@ -190,7 +190,7 @@ describe('the resumable set', () => {
     expect(set.superseded).toEqual([forked])
   })
 
-  it("neither offers nor spends a newer Orca's chat, and offers it once this build can open it", () => {
+  it("neither offers nor spends a newer Teamerge's chat, and offers it once this build can open it", () => {
     const offer = marker()
     expect(resumableSet({ markers: [offer], savedByNewerOrca: [SESSION] })).toEqual({
       candidates: [],

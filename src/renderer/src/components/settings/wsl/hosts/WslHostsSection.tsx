@@ -150,7 +150,7 @@ export function WslHostsSection({
                 ? getWslHostsPausedLabel()
                 : translate(
                     'auto.components.settings.wslHosts.description',
-                    'Orca runs a server inside each distro. Opening a project never starts a stopped distro: click Start, open a new terminal, or connect it here.'
+                    'Teamerge runs a server inside each distro. Opening a project never starts a stopped distro: click Start, open a new terminal, or connect it here.'
                   ))}
           </p>
         </div>

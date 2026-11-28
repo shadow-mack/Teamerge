@@ -106,7 +106,7 @@ export function openSharedControlSocket(
       }
       callbacks.onSocketClosed(
         remoteRuntimeUnavailableError(
-          'Remote Orca runtime stopped responding; resetting the control connection.'
+          'Remote Teamerge runtime stopped responding; resetting the control connection.'
         ),
         cause
       )

@@ -97,7 +97,7 @@ describe('what a started Claude session says ended it', () => {
     ).toMatchObject({ kind: 'cliMissing' })
   })
 
-  it('blames Orca when a journal fault makes Orca close the child', async () => {
+  it('blames Teamerge when a journal fault makes Teamerge close the child', async () => {
     const { connection, ended } = await startedClaude({
       appendItem: () => {},
       appendTombstone: () => {},

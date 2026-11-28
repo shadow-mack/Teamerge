@@ -16,7 +16,7 @@ function environment(
   return {
     platform: 'win32',
     isPackaged: true,
-    executablePath: "C:\\Users\\O'Brien\\Orca\\Orca.exe",
+    executablePath: "C:\\Users\\O'Brien\\Teamerge\\Teamerge.exe",
     systemRoot: 'C:\\Windows',
     runPowerShell,
     ...overrides
@@ -29,10 +29,12 @@ describe('windows mobile firewall', () => {
     await inspectWindowsMobileFirewall(
       6768,
       '192.168.0.108',
-      environment(runPowerShell, { executablePath: 'C:\\Users\\O\u2019Brien\\Orca\\Orca.exe' })
+      environment(runPowerShell, {
+        executablePath: 'C:\\Users\\O\u2019Brien\\Teamerge\\Teamerge.exe'
+      })
     )
     expect(runPowerShell.mock.calls[0]![0]).toContain(
-      "-Program 'C:\\Users\\O\u2019\u2019Brien\\Orca\\Orca.exe'"
+      "-Program 'C:\\Users\\O\u2019\u2019Brien\\Teamerge\\Teamerge.exe'"
     )
   })
 
@@ -92,7 +94,7 @@ describe('windows mobile firewall', () => {
     const runPowerShell = vi.fn().mockResolvedValue('{"launched":true,"exitCode":0}')
     await repairWindowsMobileFirewall(
       6769,
-      environment(runPowerShell, { executablePath: 'C:\\My  App\\Orca.exe' })
+      environment(runPowerShell, { executablePath: 'C:\\My  App\\Teamerge.exe' })
     )
 
     const outerScript = runPowerShell.mock.calls[0]![0] as string
@@ -102,7 +104,7 @@ describe('windows mobile firewall', () => {
 
     const encoded = outerScript.match(/'-EncodedCommand', '([^']+)'/)?.[1]
     const repairScript = Buffer.from(encoded!, 'base64').toString('utf16le')
-    expect(repairScript).toContain("-Program 'C:\\My  App\\Orca.exe'")
+    expect(repairScript).toContain("-Program 'C:\\My  App\\Teamerge.exe'")
   })
 
   it('runs the local PowerShell over argv with a plain -Command script', async () => {
@@ -116,7 +118,7 @@ describe('windows mobile firewall', () => {
     await inspectWindowsMobileFirewall(6768, undefined, {
       platform: 'win32',
       isPackaged: true,
-      executablePath: 'C:\\My  App\\Orca.exe',
+      executablePath: 'C:\\My  App\\Teamerge.exe',
       systemRoot: 'C:\\Windows'
     })
 
@@ -127,7 +129,7 @@ describe('windows mobile firewall', () => {
     expect(args).not.toContain('-ExecutionPolicy')
     // The script travels as ONE argv element, so its spaces and newlines survive verbatim.
     expect(args).toHaveLength(4)
-    expect(args![3]).toContain("-Program 'C:\\My  App\\Orca.exe'")
+    expect(args![3]).toContain("-Program 'C:\\My  App\\Teamerge.exe'")
     expect(args![3]).toContain('\n')
   })
 

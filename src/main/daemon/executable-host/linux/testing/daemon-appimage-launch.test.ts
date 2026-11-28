@@ -11,12 +11,12 @@ vi.mock('../../../../updater/linux-package/appimage-runtime-identity', () => ({
 }))
 
 const APPDIR = '/tmp/.mount_orcaAbC'
-const FUSE_MOUNTINFO = `953 65 0:108 / ${APPDIR} ro,nosuid,nodev,relatime shared:1 - fuse.Orca.AppImage Orca.AppImage ro,user_id=1000`
+const FUSE_MOUNTINFO = `953 65 0:108 / ${APPDIR} ro,nosuid,nodev,relatime shared:1 - fuse.Teamerge.AppImage Teamerge.AppImage ro,user_id=1000`
 const INPUT = {
   entryPath: `${APPDIR}/resources/app.asar.unpacked/out/main/daemon-entry.js`,
   appPath: `${APPDIR}/resources/app.asar`,
   appVersion: '1.4.215',
-  environment: { APPIMAGE: '/apps/Orca.AppImage', APPDIR },
+  environment: { APPIMAGE: '/apps/Teamerge.AppImage', APPDIR },
   readMountInfo: () => FUSE_MOUNTINFO
 }
 
@@ -24,13 +24,13 @@ afterEach(() => resolveIdentity.mockReset())
 
 describe('resolveAppImageDaemonLaunch', () => {
   it('keeps the in-mount launch for extract-and-run payloads', () => {
-    resolveIdentity.mockReturnValue({ appImagePath: '/apps/Orca.AppImage' })
+    resolveIdentity.mockReturnValue({ appImagePath: '/apps/Teamerge.AppImage' })
     const extracted = `953 65 0:34 / /tmp rw - tmpfs tmpfs rw`
     expect(resolveAppImageDaemonLaunch({ ...INPUT, readMountInfo: () => extracted })).toBeNull()
   })
 
   it('decodes escaped mount points', () => {
-    resolveIdentity.mockReturnValue({ appImagePath: '/apps/Orca.AppImage' })
+    resolveIdentity.mockReturnValue({ appImagePath: '/apps/Teamerge.AppImage' })
     const spaced = '/tmp/a b'
     const launch = resolveAppImageDaemonLaunch({
       ...INPUT,
@@ -45,7 +45,7 @@ describe('resolveAppImageDaemonLaunch', () => {
 
 describe('buildAppImageDaemonCommand', () => {
   const launch = {
-    appImagePath: '/apps/Orca.AppImage',
+    appImagePath: '/apps/Teamerge.AppImage',
     entryPathInAppDir: 'resources/entry.js',
     appPathInAppDir: 'resources/app.asar',
     appVersion: '1.4.215'
@@ -65,12 +65,12 @@ describe('buildAppImageDaemonCommand', () => {
     () => {
       const { command, args, env } = buildAppImageDaemonCommand(launch, ['--socket', '/s'], {
         APPDIR,
-        APPIMAGE: '/apps/Orca.AppImage',
+        APPIMAGE: '/apps/Teamerge.AppImage',
         PATH: `${APPDIR}:${APPDIR}/usr/sbin:/usr/bin`,
         LD_LIBRARY_PATH: `${APPDIR}/usr/lib`,
         HOME: '/home/u'
       })
-      expect(command).toBe('/apps/Orca.AppImage')
+      expect(command).toBe('/apps/Teamerge.AppImage')
       expect(args.slice(2)).toEqual(['--', '--socket', '/s', '--no-sandbox'])
       expect(env).toEqual({ PATH: '/usr/bin', HOME: '/home/u' })
     }

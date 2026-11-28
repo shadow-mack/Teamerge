@@ -98,7 +98,7 @@ export function SshHostDeltaMoveDialog({
           <DialogDescription>
             {translate(
               'auto.components.settings.deltaMove.description',
-              'An older version of Orca changed this host after its projects moved to Orca on the host. This adds what it created to the server; it never merges over what the server already has.'
+              'An older version of Teamerge changed this host after its projects moved to Teamerge on the host. This adds what it created to the server; it never merges over what the server already has.'
             )}
           </DialogDescription>
         </DialogHeader>

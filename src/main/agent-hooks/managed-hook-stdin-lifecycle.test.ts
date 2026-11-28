@@ -274,7 +274,7 @@ describe('Windows managed hook stdin structure', () => {
   }, 60_000)
 
   it.skipIf(process.platform !== 'win32')(
-    'exits 0 for every local script and missing-script launcher, dropping stdin only without Orca env',
+    'exits 0 for every local script and missing-script launcher, dropping stdin only without Teamerge env',
     async () => {
       const home = mkdtempSync(join(tmpdir(), 'orca-hook-stdin-windows-live-'))
       homedirMock.mockReturnValue(home)
@@ -423,9 +423,9 @@ describe('Windows managed hook stdin structure', () => {
           { name: 'Git Bash', executable: gitBash, args: ['-c', entry.command] }
         ]
         const environments = [
-          { name: 'no Orca env', env: hookEnvironment({ USERPROFILE: home }) },
+          { name: 'no Teamerge env', env: hookEnvironment({ USERPROFILE: home }) },
           {
-            name: 'Orca env with dead listener',
+            name: 'Teamerge env with dead listener',
             env: hookEnvironment({
               USERPROFILE: home,
               ORCA_AGENT_HOOK_PORT: '59999',

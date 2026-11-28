@@ -36,7 +36,7 @@ declare module 'orca/testing' {
   }
   /**
    * Every field given must match; `text` and `label` match exactly (whitespace folded) or by RegExp.
-   * Finders see what Orca draws: not the content of unselected tabs or closed Collapsibles.
+   * Finders see what Teamerge draws: not the content of unselected tabs or closed Collapsibles.
    */
   export type TestQuery = {
     type?: string
@@ -51,11 +51,11 @@ declare module 'orca/testing' {
     props?: Record<string, unknown>
     children?: (TreeSnapshot | string)[]
   }
-  /** `plugin`: the panel threw. `refused`: Orca would refuse what it drew or persisted. */
+  /** `plugin`: the panel threw. `refused`: Teamerge would refuse what it drew or persisted. */
   export type PanelIssue = { kind: 'plugin' | 'refused'; message: string; stack?: string }
   export type HostError = Error & { code: string; retryable: boolean; retryAfterMs?: number }
 
-  /** A call Orca itself would refuse, recorded even when the plugin caught the error. */
+  /** A call Teamerge itself would refuse, recorded even when the plugin caught the error. */
   export type MockHostRefusal = { method: string; code: string; message: string }
   export type MockHost = {
     /** Every call that reached the host, in order, refused ones included. */
@@ -92,7 +92,7 @@ declare module 'orca/testing' {
     secrets?: Record<string, string>
   }
   /**
-   * A stand-in Orca host that refuses what Orca refuses, with the same codes: a missing
+   * A stand-in Teamerge host that refuses what Teamerge refuses, with the same codes: a missing
    * capability, bad params, a method panels cannot call, and a user-gesture method
    * (`shell.openExternal`, `files.saveAs`) without a press first.
    */
@@ -112,13 +112,13 @@ declare module 'orca/testing' {
   export type MockEditorEdit = {
     baseVersion: number
     content: EditorContent
-    /** The refusal's code, such as `conflict`; absent when Orca applied the edit. */
+    /** The refusal's code, such as `conflict`; absent when Teamerge applied the edit. */
     refused?: string
   }
   export type MockEditorHost = {
     /** The frame API, also installed as `globalThis.orca`. */
     readonly orca: OrcaFrameApi
-    /** The file as Orca holds it now; undefined for a bytes file. */
+    /** The file as Teamerge holds it now; undefined for a bytes file. */
     readonly text: string | undefined
     readonly bytes: Uint8Array | undefined
     /** Rises with each document sent to the editor. */
@@ -130,14 +130,14 @@ declare module 'orca/testing' {
     /** Refuses the next edit with `conflict`, after landing `outside` first when given. */
     conflictNext(outside?: string | ArrayBuffer | Uint8Array): void
     /** As a save does: asks the editor for pending edits and waits for its answer (1 s);
-     *  rejects, as Orca refuses to save, after an edit too large to apply. */
+     *  rejects, as Teamerge refuses to save, after an edit too large to apply. */
     flush(): Promise<void>
     setTheme(colorScheme: 'light' | 'dark'): void
     /** Removes `globalThis.orca`. */
     dispose(): void
   }
   /**
-   * A stand-in for Orca's custom editor host, backed by an in-memory file: installs
+   * A stand-in for Teamerge's custom editor host, backed by an in-memory file: installs
    * `globalThis.orca` with the real frame shell's document API and `session()`, so sync logic
    * tests in Node. Answers only document calls. One at a time: a new one disposes the last.
    */
@@ -166,9 +166,9 @@ declare module 'orca/testing' {
   export type TestPanel = {
     readonly host: MockHost
     readonly errors: readonly PanelIssue[]
-    /** Props and components Orca would drop, as Orca would warn. */
+    /** Props and components Teamerge would drop, as Teamerge would warn. */
     readonly warnings: readonly string[]
-    /** Host calls Orca would refuse (a missing capability, no press), even ones the panel caught. */
+    /** Host calls Teamerge would refuse (a missing capability, no press), even ones the panel caught. */
     readonly refusals: readonly MockHostRefusal[]
     /** What persisted atoms hold now, by scope and key; `storage` is the plugin's storage. */
     readonly persisted: {
@@ -211,15 +211,15 @@ declare module 'orca/testing' {
     collapse(target: Target, key: string): Promise<void>
     selectItem(target: Target, key: string): Promise<void>
     activateItem(target: Target, key: string): Promise<void>
-    /** Tree: the items Orca shows expanded. */
+    /** Tree: the items Teamerge shows expanded. */
     expandedOf(target: Target): string[]
-    /** Table: the column keys Orca shows at `width` px (wide when omitted), after `hideBelow`. */
+    /** Table: the column keys Teamerge shows at `width` px (wide when omitted), after `hideBelow`. */
     columnsOf(target: Target, view?: { width?: number }): string[]
-    /** Table: row keys in the order Orca draws them. */
+    /** Table: row keys in the order Teamerge draws them. */
     rowsOf(target: Target): string[]
-    /** What Orca shows in a value control: text, a flag, a number, a tab, or selected keys. */
+    /** What Teamerge shows in a value control: text, a flag, a number, a tab, or selected keys. */
     valueOf(target: Target): unknown
-    /** An Orca event: `theme`, or a workspace or agent event the panel subscribed to. */
+    /** An Teamerge event: `theme`, or a workspace or agent event the panel subscribed to. */
     emit<E extends keyof OrcaEvents>(event: E, payload: OrcaEvents[E]): Promise<void>
     /** What the plugin's worker posts with `orca.panels.post`; `plugin.on` handlers hear it. */
     post<K extends keyof PluginPanelEvents>(event: K, payload: PluginPanelEvents[K]): Promise<void>
@@ -235,7 +235,7 @@ declare module 'orca/testing' {
   }
   /**
    * Mounts a panel module (`import * as panel from './panel'`) or its component, with the real
-   * runtime and Orca's own checks, and resolves once it has drawn. Mounting again starts over:
+   * runtime and Teamerge's own checks, and resolves once it has drawn. Mounting again starts over:
    * every atom goes back to its initial value.
    */
   export function mount(
@@ -255,11 +255,11 @@ declare module 'orca/testing' {
     events?: readonly string[]
     /** Commands it may register; defaults to the manifest's `contributes.commands`. */
     commands?: readonly string[]
-    /** Hooks Orca runs through it (a name, or `{ event, onError }`); defaults to the manifest's
+    /** Hooks Teamerge runs through it (a name, or `{ event, onError }`); defaults to the manifest's
      *  `contributes.hooks`. */
     hooks?: readonly (string | { event: string; onError?: 'pass' | 'deny' })[]
   }
-  /** What a hook chain decided: Orca goes on with `event` (as changed), or a handler refused. */
+  /** What a hook chain decided: Teamerge goes on with `event` (as changed), or a handler refused. */
   export type HookDecision<H extends PluginHookName> =
     | { kind: 'continue'; event: PluginHooks[H]['event'] }
     | { kind: 'deny'; reason: string }
@@ -270,10 +270,10 @@ declare module 'orca/testing' {
     readonly refusals: readonly MockHostRefusal[]
     /** What the worker sent with `orca.panels.post`, in order. */
     readonly posts: readonly { event: string; payload?: unknown; panel?: string }[]
-    /** Delivers an event as Orca would (checked against Orca's payload schema) and waits for every handler. */
+    /** Delivers an event as Teamerge would (checked against Teamerge's payload schema) and waits for every handler. */
     emit<E extends PluginEventName>(event: E, payload: PluginEvents[E]): Promise<void>
     readonly hooks: {
-      /** Runs a hook as Orca would, with this worker as the only plugin: the same deadline, the
+      /** Runs a hook as Teamerge would, with this worker as the only plugin: the same deadline, the
        *  fields `next` may change, and the same checks on its result. A throw or timeout counts as
        *  passing and lands in `logs`. */
       fire<H extends PluginHookName>(
@@ -299,15 +299,15 @@ declare module 'orca/testing' {
     deactivate(): Promise<void>
   }
   /**
-   * Calls the worker's default-exported `activate(orca)` with the `orca` object Orca passes, backed
-   * by `mockHost` (worker methods, the manifest's capabilities). `.ts` mains load as Orca loads them.
+   * Calls the worker's default-exported `activate(orca)` with the `orca` object Teamerge passes, backed
+   * by `mockHost` (worker methods, the manifest's capabilities). `.ts` mains load as Teamerge loads them.
    */
   export function mountWorker(
     module: WorkerModule,
     options?: MountWorkerOptions
   ): Promise<TestWorker>
 
-  /** One render `orca plugin check` makes: the host it runs on, persisted values, and Orca events
+  /** One render `orca plugin check` makes: the host it runs on, persisted values, and Teamerge events
    *  delivered after it first draws. */
   export type CheckScenario = MockHostOptions & {
     persisted?: MountOptions['persisted']

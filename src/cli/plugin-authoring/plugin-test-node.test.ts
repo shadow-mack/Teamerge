@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { ProcessResult, ProcessSpec } from '@orca/process-host/process-spec'
 import { selectPluginTestNode } from './plugin-test-node'
 
-const ORCA = { execPath: '/Applications/Orca.app/Contents/MacOS/Orca', version: 'v22.9.0' }
+const ORCA = { execPath: '/Applications/Teamerge.app/Contents/MacOS/Teamerge', version: 'v22.9.0' }
 
 function answering(stdout: string | Error, code = 0) {
   const specs: ProcessSpec[] = []
@@ -41,7 +41,7 @@ describe('selectPluginTestNode', () => {
     ['not on PATH', answering(new Error('spawn node ENOENT'))],
     ['failing', answering('', 1)],
     ['answering garbage', answering('nope')]
-  ])('falls back to Orca as Node when the system node is %s', async (_reason, probe) => {
+  ])('falls back to Teamerge as Node when the system node is %s', async (_reason, probe) => {
     const node = await selectPluginTestNode({ ...ORCA, electron: '38.0.0', run: probe.run })
     expect(node).toEqual({
       program: ORCA.execPath,

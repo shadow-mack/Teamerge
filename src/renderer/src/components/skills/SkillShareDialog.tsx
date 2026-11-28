@@ -33,11 +33,11 @@ function operationError(status: string): string {
   return status === 'reconnect-required'
     ? translate(
         'auto.components.skills.SkillShareDialog.reconnect',
-        'Reconnect your Orca account before sharing.'
+        'Reconnect your Teamerge account before sharing.'
       )
     : translate(
         'auto.components.skills.SkillShareDialog.unconfigured',
-        'Connect an Orca Cloud account before sharing.'
+        'Connect a Teamerge Cloud account before sharing.'
       )
 }
 
@@ -248,7 +248,7 @@ export function SkillShareDialog({
       setError(
         translate(
           'auto.components.skills.SkillShareDialog.cancelRequestFailed',
-          'Orca could not send the cancellation request. The upload may still finish.'
+          'Teamerge could not send the cancellation request. The upload may still finish.'
         )
       )
     }

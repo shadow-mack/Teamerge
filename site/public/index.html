@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Teamerge — parallel coding agents, together</title>
+    <meta
+      name="description"
+      content="Teamerge is a desktop app for teams that run coding agents in parallel. Every task in its own git worktree, every teammate's agents in one window, end-to-end encrypted."
+    />
+    <meta property="og:title" content="Teamerge" />
+    <meta
+      property="og:description"
+      content="Parallel coding agents, together — across every teammate's machine."
+    />
+    <meta property="og:image" content="apple-touch-icon.png" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-soft: #f5f5f7;
+        --fg: #1d1d1f;
+        --muted: #5f5f64;
+        --line: #e3e3e8;
+        --accent: #0071e3;
+        --accent-2: #5e5ce6;
+        --card: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #0f0f11;
+          --bg-soft: #18181b;
+          --fg: #f5f5f7;
+          --muted: #a5a5aa;
+          --line: #2c2c2e;
+          --accent: #3b8cff;
+          --accent-2: #8e8dff;
+          --card: #1c1c1e;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font:
+          17px/1.5 -apple-system,
+          BlinkMacSystemFont,
+          'SF Pro Text',
+          'Segoe UI',
+          system-ui,
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+      header.nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        color: var(--fg);
+      }
+      .brand img {
+        width: 28px;
+        height: 28px;
+      }
+      .hero {
+        text-align: center;
+        padding: 72px 0 56px;
+      }
+      .hero img {
+        width: 120px;
+        height: 120px;
+      }
+      h1 {
+        font-size: clamp(36px, 6vw, 60px);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        margin: 20px 0 16px;
+      }
+      .lede {
+        max-width: 640px;
+        margin: 0 auto;
+        color: var(--muted);
+        font-size: 19px;
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 32px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 22px;
+        border-radius: 980px;
+        font-weight: 600;
+        font-size: 16px;
+      }
+      .btn.primary {
+        background: linear-gradient(135deg, var(--accent-2), var(--accent));
+        color: #fff;
+      }
+      .btn.secondary {
+        border: 1px solid var(--line);
+        color: var(--fg);
+      }
+      .note {
+        margin-top: 14px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      section {
+        padding: 56px 0;
+      }
+      section.soft {
+        background: var(--bg-soft);
+      }
+      h2 {
+        font-size: clamp(26px, 4vw, 36px);
+        letter-spacing: -0.02em;
+        margin: 0 0 8px;
+        text-align: center;
+      }
+      .sub {
+        text-align: center;
+        color: var(--muted);
+        margin: 0 auto 36px;
+        max-width: 600px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 22px;
+      }
+      .card h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      ol.steps {
+        max-width: 640px;
+        margin: 0 auto;
+        padding-left: 22px;
+        color: var(--muted);
+      }
+      ol.steps li {
+        margin: 10px 0;
+      }
+      ol.steps b {
+        color: var(--fg);
+      }
+      pre {
+        max-width: 640px;
+        margin: 0 auto;
+        overflow-x: auto;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 18px;
+        font:
+          14px/1.6 ui-monospace,
+          'SF Mono',
+          Menlo,
+          monospace;
+      }
+      footer {
+        padding: 32px 0 48px;
+        color: var(--muted);
+        font-size: 14px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="nav">
+        <a class="brand" href="./"><img src="icon.svg" alt="" />Teamerge</a>
+        <a href="https://github.com/shadow-mack/Teamerge">GitHub</a>
+      </header>
+    </div>
+
+    <main>
+      <div class="wrap hero">
+        <img src="icon.svg" alt="Teamerge app icon" />
+        <h1>Parallel coding agents,<br />together.</h1>
+        <p class="lede">
+          Teamerge is a desktop app for teams that run coding agents in parallel. Every task gets
+          its own git worktree, and every teammate’s agents show up in one window, live, from their
+          own laptops.
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="https://github.com/shadow-mack/Teamerge/releases/latest"
+            >Download for macOS</a
+          >
+          <a class="btn secondary" href="https://github.com/shadow-mack/Teamerge"
+            >Source on GitHub</a
+          >
+        </div>
+        <p class="note">Open source · MIT · macOS · no account needed</p>
+      </div>
+
+      <section class="soft">
+        <div class="wrap">
+          <h2>Built for the hard part of parallel work.</h2>
+          <p class="sub">
+            Starting agents is easy. Knowing who is changing what, handing work between people and
+            landing it all without conflicts is not.
+          </p>
+          <div class="grid">
+            <div class="card">
+              <h3>Every agent, its own worktree</h3>
+              <p>
+                Claude Code, Codex and the rest each work in a real checkout, so attempts never
+                overwrite each other.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Your whole team in one window</h3>
+              <p>Teammates’ agents appear in the Team hub while they run on their own machines.</p>
+            </div>
+            <div class="card">
+              <h3>Hand off and take over</h3>
+              <p>
+                Hand a task to a teammate with a drafted brief. They press Take and their agent
+                continues on the same branch.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Review, typed into the agent</h3>
+              <p>
+                Reviewers comment on lines from their machine, and the comments go straight to your
+                agent.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Warnings before tasks collide</h3>
+              <p>
+                See the files each task shares with others, claim files, and get warned before a
+                merge would conflict.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Race, then land</h3>
+              <p>
+                Give one task to several agents, keep the best run, and land finished work in order
+                with Land All.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <h2>No account. End-to-end encrypted.</h2>
+          <p class="sub">
+            Your identity is a key pair on your Mac, and the team roster is a file in your
+            repository. Traffic goes through a relay your team hosts, which only ever sees sealed
+            envelopes.
+          </p>
+          <ol class="steps">
+            <li><b>Create a team</b> from the Team hub, or host the relay on your Mac.</li>
+            <li>
+              <b>Push <code>.teamerge/team.json</code></b> so teammates can find it.
+            </li>
+            <li>
+              <b>Teammates join</b> from the same repository, and their agents appear in your
+              window.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="soft">
+        <div class="wrap">
+          <h2>A CLI your agents use too.</h2>
+          <p class="sub">The app puts <code>teamerge</code> on every agent’s PATH.</p>
+          <pre>
+teamerge context        # who is working on what, here and on teammates' machines
+teamerge why src/app.ts # who is changing a file, and why
+teamerge risk           # exit code 3 when merging this task would conflict
+teamerge claim src/db/  # tell other agents you're on it
+teamerge send alex "rebased on main, take a look"</pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      Teamerge · MIT ·
+      <a href="https://github.com/shadow-mack/Teamerge">github.com/shadow-mack/Teamerge</a>
+    </footer>
+  </body>
+</html>

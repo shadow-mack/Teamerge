@@ -574,7 +574,7 @@ describe('which server an SSH host runs on connect', () => {
       expect(d.recordUpdateFailure).not.toHaveBeenCalled()
     })
 
-    it('never downgrades a host a newer Orca activated', async () => {
+    it('never downgrades a host a newer Teamerge activated', async () => {
       const d = managed({
         autoUpdate: async () => ({ outcome: 'skipped', reason: 'host-newer' })
       })

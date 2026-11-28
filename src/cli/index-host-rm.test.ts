@@ -156,7 +156,9 @@ describe('orca host rm', () => {
 
   it('reports a stopped runtime instead of an unknown target', async () => {
     const { RuntimeClientError } = await import('./runtime/types.js')
-    callMock.mockRejectedValue(new RuntimeClientError('runtime_unavailable', 'Orca is not running'))
+    callMock.mockRejectedValue(
+      new RuntimeClientError('runtime_unavailable', 'Teamerge is not running')
+    )
     const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
     await main(['host', 'rm', '--host', `ssh:${STALE.id}`, '--json'], '/tmp/repo')

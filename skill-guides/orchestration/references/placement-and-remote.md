@@ -24,11 +24,11 @@ ORCA orchestration worker-start --task <task_id> --on <environment> --worktree n
 
 With `--on`, both `new-child` and `new-top-level` need `--repo` naming a
 project on that server. `new-child` nests the server's worktree under your
-workspace on this machine. A server whose Orca is too old to nest across
+workspace on this machine. A server whose Teamerge is too old to nest across
 machines still starts the worker, top-level, and the receipt's `warning` says
 so; the worker is fine to use. `current` is not valid with `--on`.
 
-`--name` is optional: without it Orca picks a name as it does for an unnamed
+`--name` is optional: without it Teamerge picks a name as it does for an unnamed
 workspace, and the start output names the workspace it created.
 
 After start, address a remote worker only by Dispatch ID, never by a terminal

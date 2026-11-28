@@ -118,7 +118,7 @@ function isInside(parent, child) {
 // Seed legacy JSON for first-launch SQLite migration; never copy live databases or write to sourceDir.
 export async function seedDevProfile({ sourceDir, targetDir, report = console.error }) {
   if (!profileHasState(sourceDir)) {
-    throw new Error(`Seed source has no Orca profile state: ${sourceDir}`)
+    throw new Error(`Seed source has no Teamerge profile state: ${sourceDir}`)
   }
   if (isInside(sourceDir, targetDir) || isInside(targetDir, sourceDir)) {
     throw new Error('Seed source and target must be separate directories')
@@ -208,7 +208,7 @@ async function main() {
       [
         'Usage: pnpm dev:seed-profile [--from=<profile dir>] [--to=<profile dir>] [--reset]',
         '',
-        'Copies projects, workspaces, settings, SSH targets, and the Orca account session into an empty',
+        'Copies projects, workspaces, settings, SSH targets, and the Teamerge account session into an empty',
         "dev profile. Default --from: orca-dev, else the installed app's profile. Default --to: this",
         "worktree's `pnpm dev` profile. --reset first deletes an existing per-worktree profile."
       ].join('\n')

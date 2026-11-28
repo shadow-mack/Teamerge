@@ -62,7 +62,7 @@ export function assertCrossStoreLineageSupported(
 ): void {
   if (!supportsCrossStoreLineage(capabilities)) {
     throw new Error(
-      `Update Orca on ${hostLabel} to nest workspaces under a parent on another machine. Nothing was changed.`
+      `Update Teamerge on ${hostLabel} to nest workspaces under a parent on another machine. Nothing was changed.`
     )
   }
 }

@@ -228,7 +228,9 @@ describe('worker-start honours the settings default', () => {
     expect(createStructuredWorkerSessionForWorktree).toHaveBeenCalledTimes(1)
     expect(createExistingWorktreeWorkerTerminal).not.toHaveBeenCalled()
     const preamble = sendStructuredWorkerPreamble.mock.calls[0]![0].preamble
-    expect(preamble).toContain(`Your Orca session ID is: orca_session_id:${STRUCTURED_SESSION_ID}`)
+    expect(preamble).toContain(
+      `Your Teamerge session ID is: orca_session_id:${STRUCTURED_SESSION_ID}`
+    )
     expect(preamble).toContain('The coordinator cannot see this chat')
     expect(preamble).toContain('More supervised work arrives in this chat')
     expect(preamble).not.toContain('this terminal')

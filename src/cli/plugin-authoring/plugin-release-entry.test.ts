@@ -24,7 +24,7 @@ async function git(cwd: string, args: string[]): Promise<string> {
   const result = await runProcess({
     program: 'git',
     args: [
-      ...['user.name=Orca Test', 'user.email=test@example.com', 'commit.gpgsign=false'].flatMap(
+      ...['user.name=Teamerge Test', 'user.email=test@example.com', 'commit.gpgsign=false'].flatMap(
         (setting) => ['-c', setting]
       ),
       ...args

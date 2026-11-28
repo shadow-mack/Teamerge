@@ -7,7 +7,7 @@ import {
 } from '../managed-server/activation/orcad-activation-record'
 import { planManagedOrcadAutoUpdate } from '../managed-server/lifecycle/orcad-managed-update-decision'
 
-describe('redeploying a host another desktop stopped, across Orca versions', () => {
+describe('redeploying a host another desktop stopped, across Teamerge versions', () => {
   const servedBy = (appVersion: string, active: string): OrcadActivationRecord => ({
     schemaVersion: 1,
     active,

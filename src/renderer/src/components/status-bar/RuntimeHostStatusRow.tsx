@@ -27,7 +27,7 @@ function runtimeStatusLabel(state: RuntimeHostConnectionState): string {
     case 'runtime-unavailable':
       return translate(
         'auto.components.status.bar.SshStatusSegment.runtime_unavailable_transport_up',
-        'Orca unavailable'
+        'Teamerge unavailable'
       )
     case 'workspace-window-closed':
       return translate(
@@ -104,22 +104,22 @@ function runtimeFailureSummary(state: RuntimeHostConnectionState): string {
     case 'runtime-unavailable':
       return translate(
         'auto.components.status.bar.RuntimeHostStatusRow.runtime_unavailable',
-        'SSH transport is connected, but the Orca runtime is unavailable'
+        'SSH transport is connected, but the Teamerge runtime is unavailable'
       )
     case 'checking':
       return translate(
         'auto.components.status.bar.RuntimeHostStatusRow.checking_host',
-        'Orca is checking whether this host is reachable'
+        'Teamerge is checking whether this host is reachable'
       )
     case 'reconnecting':
       return translate(
         'auto.components.status.bar.RuntimeHostStatusRow.restoring_connection',
-        'Orca is trying to restore the connection'
+        'Teamerge is trying to restore the connection'
       )
     case 'disconnected':
       return translate(
         'auto.components.status.bar.RuntimeHostStatusRow.host_unreachable',
-        'Orca isn’t reachable on this host'
+        'Teamerge isn’t reachable on this host'
       )
   }
 }
@@ -131,12 +131,12 @@ function runtimeFailureExplanation(state: RuntimeHostConnectionState): string | 
   if (state === 'runtime-unavailable') {
     return translate(
       'auto.components.status.bar.RuntimeHostStatusRow.runtime_unavailable_explanation',
-      'The remote host may still be running; only the Orca runtime connection is unavailable.'
+      'The remote host may still be running; only the Teamerge runtime connection is unavailable.'
     )
   }
   return translate(
     'auto.components.status.bar.RuntimeHostStatusRow.contact_note',
-    'The host may still be running; only the Orca connection is unavailable.'
+    'The host may still be running; only the Teamerge connection is unavailable.'
   )
 }
 

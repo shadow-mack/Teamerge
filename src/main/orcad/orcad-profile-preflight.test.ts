@@ -92,7 +92,7 @@ afterEach(() => {
   vi.resetAllMocks()
 })
 
-describe('bundled Orca startup readiness', () => {
+describe('bundled Teamerge startup readiness', () => {
   it.each(['missing artifact', 'corrupt build target'])(
     'classifies %s as a configuration fault before testing SQLite',
     async (message) => {

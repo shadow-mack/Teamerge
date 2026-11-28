@@ -85,11 +85,11 @@ jobs:
           mkdir -p dmgs
           gh release download "$TAG" \
             --repo "${{ github.repository }}" \
-            --pattern 'orca-macos-arm64.dmg' \
-            --pattern 'orca-macos-x64.dmg' \
+            --pattern 'teamerge-macos-arm64.dmg' \
+            --pattern 'teamerge-macos-x64.dmg' \
             --dir dmgs
-          arm=$(sha256sum dmgs/orca-macos-arm64.dmg | awk '{print $1}')
-          intel=$(sha256sum dmgs/orca-macos-x64.dmg  | awk '{print $1}')
+          arm=$(sha256sum dmgs/teamerge-macos-arm64.dmg | awk '{print $1}')
+          intel=$(sha256sum dmgs/teamerge-macos-x64.dmg  | awk '{print $1}')
           echo "arm=$arm"     >>"$GITHUB_OUTPUT"
           echo "intel=$intel" >>"$GITHUB_OUTPUT"
 

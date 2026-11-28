@@ -590,7 +590,7 @@ describe('what the lane remembers about settled mailboxes', () => {
 describe('structured mailbox delivery across a real database close and reopen', () => {
   it.each([
     ['still waits as a card', { kind: 'waiting' }, true, 0],
-    ['was handed over while Orca was down', { kind: 'accepted' }, true, 0],
+    ['was handed over while Teamerge was down', { kind: 'accepted' }, true, 0],
     // Reserved, then Orca stopped before the host call: the same id is admitted.
     ['was reserved but never admitted', { kind: 'absent' }, true, 1],
     // Admitted, then Orca stopped before an older build stamped it: never sent again.

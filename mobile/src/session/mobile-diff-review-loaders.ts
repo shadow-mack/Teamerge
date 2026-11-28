@@ -120,7 +120,7 @@ export async function loadMobileDiffReviewSnapshot(
       kind: 'unavailable',
       message: translate(
         'session.diffReviewLoaders.desktopUpdateRequired',
-        'Update Orca desktop to review changes on mobile.'
+        'Update Teamerge desktop to review changes on mobile.'
       )
     }
   }

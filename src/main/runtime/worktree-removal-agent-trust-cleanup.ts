@@ -22,6 +22,6 @@ export function dropOrcaCreatedAgentTrustForRemovedWorktree(worktreeId: string):
   }
   removeOrcaCreatedAntigravityTrust(worktreePath)
   return removeOrcaCreatedProjectTrustEntries(worktreePath).catch((error) => {
-    console.warn('[codex-config] Failed to drop an Orca-created project trust entry:', error)
+    console.warn('[codex-config] Failed to drop a Teamerge-created project trust entry:', error)
   })
 }

@@ -47,8 +47,8 @@ function runHook(dir: string, extraEnv: NodeJS.ProcessEnv = {}) {
   })
 }
 
-describe.skipIf(process.platform === 'win32')('managed hook outside an Orca terminal', () => {
-  it('no Orca env at all: silent, exit 0, writes nothing', () => {
+describe.skipIf(process.platform === 'win32')('managed hook outside a Teamerge terminal', () => {
+  it('no Teamerge env at all: silent, exit 0, writes nothing', () => {
     const dir = createTempDir('orca-outside-')
     const res = runHook(dir)
     expect(res.status).toBe(0)

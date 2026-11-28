@@ -50,7 +50,7 @@ it.each([
     })
     renderStatus({
       kind: 'status',
-      text: 'Claude sent content Orca cannot display yet',
+      text: 'Claude sent content Teamerge cannot display yet',
       providerFrame: {
         provider: 'claude',
         kind: 'message:assistant:content:fallback',
@@ -58,7 +58,7 @@ it.each([
       }
     })
     expect(screen.getByText(words)).toBeInTheDocument()
-    expect(screen.queryByText('Claude sent content Orca cannot display yet')).toBeNull()
+    expect(screen.queryByText('Claude sent content Teamerge cannot display yet')).toBeNull()
     expect(screen.queryByText(head)).toBeNull()
   }
 )

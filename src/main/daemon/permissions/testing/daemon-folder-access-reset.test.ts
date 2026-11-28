@@ -11,7 +11,7 @@ const {
   refreshProbeMock
 } = vi.hoisted(() => ({
   trackMock: vi.fn(),
-  getPathMock: vi.fn(() => '/Applications/Orca.app/Contents/MacOS/Orca'),
+  getPathMock: vi.fn(() => '/Applications/Teamerge.app/Contents/MacOS/Teamerge'),
   opendirMock: vi.fn(),
   readMacosBundleIdMock: vi.fn<() => Promise<string | null>>(async () => 'com.stablyai.orca'),
   resetMacosTccPermissionMock: vi.fn<() => Promise<{ ok: boolean; detail?: string }>>(async () => ({
@@ -54,7 +54,7 @@ function fakeDir(): { read: ReturnType<typeof vi.fn>; close: ReturnType<typeof v
 beforeEach(() => {
   setPlatform('darwin')
   trackMock.mockReset()
-  getPathMock.mockReset().mockReturnValue('/Applications/Orca.app/Contents/MacOS/Orca')
+  getPathMock.mockReset().mockReturnValue('/Applications/Teamerge.app/Contents/MacOS/Teamerge')
   opendirMock.mockReset().mockResolvedValue(fakeDir())
   readMacosBundleIdMock.mockReset().mockResolvedValue('com.stablyai.orca')
   resetMacosTccPermissionMock.mockReset().mockResolvedValue({ ok: true })

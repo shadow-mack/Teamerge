@@ -59,14 +59,16 @@ describeRender(
       expect(fontUrl.origin).toBe(new URL(page.url()).origin)
       expect(fontUrl.pathname).toMatch(/^\/assets\/[^/]+\.woff2$/)
       expect(
-        await page.evaluate(() => document.fonts.check('13px "Orca Nerd Font Symbols"', '\ue0b0'))
+        await page.evaluate(() =>
+          document.fonts.check('13px "Teamerge Nerd Font Symbols"', '\ue0b0')
+        )
       ).toBe(true)
       // Android has no system glyph for Claude Code's \u23f5\u23f5; a face still loading here would paint boxes.
       expect(
         await page.evaluate(
           () =>
             [...document.fonts].find(
-              (face) => face.family.replaceAll('"', '') === 'Orca Terminal Symbols'
+              (face) => face.family.replaceAll('"', '') === 'Teamerge Terminal Symbols'
             )?.status
         )
       ).toBe('loaded')

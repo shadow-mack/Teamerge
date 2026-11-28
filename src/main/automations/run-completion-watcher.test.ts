@@ -130,7 +130,7 @@ describe('authority-owned automation run completion', () => {
     expect(readRun(store, automation.id, dispatching.id).error).toContain('agent started')
     expect(readRun(store, automation.id, pendingManual.id)).toMatchObject({
       status: 'dispatch_failed',
-      error: 'Orca stopped before this manual run could launch.'
+      error: 'Teamerge stopped before this manual run could launch.'
     })
     expect(readRun(store, automation.id, pendingScheduled.id).status).toBe('pending')
     service.stop()

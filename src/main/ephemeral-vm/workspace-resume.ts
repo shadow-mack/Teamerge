@@ -51,7 +51,7 @@ export async function resumeEphemeralVmWorkspace(
   if (!result.skipped && connection.type !== 'ssh' && runtime.runtimeEnvironmentId) {
     const pairingCode = getEphemeralVmRecipeResultPairingCode(result.runtime.recipeResult)
     if (!pairingCode) {
-      throw new Error('Resume result did not include an Orca Server pairing code.')
+      throw new Error('Resume result did not include a Teamerge Server pairing code.')
     }
     const repaired = updateEnvironmentFromPairingCode(userDataPath, runtime.runtimeEnvironmentId, {
       pairingCode

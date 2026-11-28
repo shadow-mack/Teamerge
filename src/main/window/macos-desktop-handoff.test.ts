@@ -5,7 +5,7 @@ const { spawnProcessMock } = vi.hoisted(() => ({ spawnProcessMock: vi.fn() }))
 
 vi.mock('electron', () => ({
   app: {
-    getPath: () => '/Applications/Orca.app/Contents/MacOS/Orca',
+    getPath: () => '/Applications/Teamerge.app/Contents/MacOS/Teamerge',
     dock: { hide: vi.fn() },
     setActivationPolicy: vi.fn()
   }
@@ -36,7 +36,7 @@ describe('handOffToDesktopApp', () => {
 
     expect(spawnProcessMock).toHaveBeenCalledWith({
       program: '/usr/bin/open',
-      args: ['-n', '/Applications/Orca.app'],
+      args: ['-n', '/Applications/Teamerge.app'],
       env: {},
       detached: true,
       stdio: 'ignore'
@@ -50,13 +50,13 @@ describe('handOffToDesktopApp', () => {
     handOffToDesktopApp(['orca://skills/share/abc', '/Users/me/notes.md'], {
       platform: 'darwin',
       env: {},
-      executablePath: '/Users/me/Applications/Orca.app/Contents/MacOS/Orca',
+      executablePath: '/Users/me/Applications/Teamerge.app/Contents/MacOS/Teamerge',
       reapplyActivationPolicy: vi.fn()
     })
 
     expect(spawnProcessMock.mock.calls[0][0].args).toEqual([
       '-n',
-      '/Users/me/Applications/Orca.app',
+      '/Users/me/Applications/Teamerge.app',
       '--args',
       'orca://skills/share/abc',
       '/Users/me/notes.md'

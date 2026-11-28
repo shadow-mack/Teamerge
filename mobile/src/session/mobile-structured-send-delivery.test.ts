@@ -106,7 +106,10 @@ describe('mobileStructuredSendDelivery', () => {
   })
 
   it('lets a kept queued card hold the text after a provider rejection', () => {
-    const value = structuredSendResultFixture('rejected', 'Orca restarted before this was sent.')
+    const value = structuredSendResultFixture(
+      'rejected',
+      'Teamerge restarted before this was sent.'
+    )
     if (!('submission' in value)) {
       throw new Error('expected a submission answer')
     }

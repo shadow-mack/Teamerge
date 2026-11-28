@@ -160,7 +160,7 @@ function renderTesting({ testing }) {
   return document(
     'Test kit (`orca/testing`)',
     [
-      '`ORCA plugin test` runs `*.test.ts(x)` files in Node with `orca` and `orca/testing` resolved to what this Orca ships, and plugin sources (panels and the worker `main`) loaded as Orca loads them. Every act resolves once the panel or worker has settled: `await` it and never add sleeps.',
+      '`ORCA plugin test` runs `*.test.ts(x)` files in Node with `orca` and `orca/testing` resolved to what this Teamerge ships, and plugin sources (panels and the worker `main`) loaded as Teamerge loads them. Every act resolves once the panel or worker has settled: `await` it and never add sleeps.',
       ''
     ],
     [
@@ -232,7 +232,7 @@ function renderHostApi(sources, { frame, worker }) {
   return document(
     'Host API by surface',
     [
-      `Host API ${hostVersion(sources, hostApi.PLUGIN_HOST_API_MINOR)} (\`"pluginApi": 1\`). Call \`host.call(method, params, { signal })\`; a surface not listed for a method gets \`not_permitted\`. Params are strict: a field this Orca does not know is refused with \`invalid_params\`, so check \`host.has(method)\` or \`api.minor\` before using a method newer than your \`engines.orca\` floor. Each call also needs the manifest capability and the user's approval.`,
+      `Host API ${hostVersion(sources, hostApi.PLUGIN_HOST_API_MINOR)} (\`"pluginApi": 1\`). Call \`host.call(method, params, { signal })\`; a surface not listed for a method gets \`not_permitted\`. Params are strict: a field this Teamerge does not know is refused with \`invalid_params\`, so check \`host.has(method)\` or \`api.minor\` before using a method newer than your \`engines.orca\` floor. Each call also needs the manifest capability and the user's approval.`,
       ''
     ],
     [
@@ -255,7 +255,7 @@ function renderHostApi(sources, { frame, worker }) {
       [
         '## Theme variables in frames',
         '',
-        "HTML panels and custom editors get these CSS variables from Orca's active theme, plus a `light` or `dark` class on `<html>`. A theme change updates them in place and emits `theme` (`orca.on('theme', ...)`); the frame is not reloaded. Style from them, not fixed colours.",
+        "HTML panels and custom editors get these CSS variables from Teamerge's active theme, plus a `light` or `dark` class on `<html>`. A theme change updates them in place and emits `theme` (`orca.on('theme', ...)`); the frame is not reloaded. Style from them, not fixed colours.",
         '',
         ...sources.themeTokens.pluginFrameThemeVariables().map(({ variable, paints }) => {
           // Name the frame's own variables, not the app theme tokens behind them.
@@ -382,7 +382,7 @@ function renderManifest({ schema, fieldDocs }) {
   return document(
     'orca-plugin.json fields',
     [
-      `\`Since\` is the first Orca release that reads a field: raise \`engines.orca\` to the newest one you use. Orca refuses unknown keys at every level. File paths are ${pathRules.replace(/^Relative/u, 'relative')}`,
+      `\`Since\` is the first Teamerge release that reads a field: raise \`engines.orca\` to the newest one you use. Teamerge refuses unknown keys at every level. File paths are ${pathRules.replace(/^Relative/u, 'relative')}`,
       ''
     ],
     [
@@ -425,7 +425,7 @@ function renderCli({ cli, cliView }) {
     'Plugin CLI commands',
     [
       [
-        '`ORCA` is the Orca executable you resolved. Every command takes `--json`; branch on `error.code`.',
+        '`ORCA` is the Teamerge executable you resolved. Every command takes `--json`; branch on `error.code`.',
         exitCodes,
         ...otherExitCodes.map((note) => `Except ${note}`),
         "Run `ORCA <command> --help` for a command's notes."

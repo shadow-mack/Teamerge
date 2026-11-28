@@ -21,7 +21,7 @@ export function validateMarketplaceProvenance(
     }
     if (!official) {
       throw new Error(
-        `${entry.id} uses a name reserved for official Orca plugins; only Orca's official catalog may list it`
+        `${entry.id} uses a name reserved for official Teamerge plugins; only Teamerge's official catalog may list it`
       )
     }
     if (!isOfficialOrganizationGitSource(entry.source.url)) {

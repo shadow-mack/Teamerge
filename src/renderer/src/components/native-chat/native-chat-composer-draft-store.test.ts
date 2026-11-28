@@ -95,14 +95,14 @@ describe('native-chat composer draft store', () => {
     const uncommitted = createMemoryNativeChatComposerDraftStorage()
     uncommitted.write = () => new Promise(() => {})
     const lost = await reload({ using: uncommitted })
-    lost.drafts.writeNativeChatDraftCache('tab-1:pane', 'typed, then Orca quit')
+    lost.drafts.writeNativeChatDraftCache('tab-1:pane', 'typed, then Teamerge quit')
     window.dispatchEvent(new Event('pagehide'))
     expect(uncommitted.drafts.size).toBe(0)
 
     const reloaded = await reload()
-    expect(reloaded.drafts.readNativeChatDraftCache('tab-1:pane')).toBe('typed, then Orca quit')
+    expect(reloaded.drafts.readNativeChatDraftCache('tab-1:pane')).toBe('typed, then Teamerge quit')
     await reloaded.store.nativeChatComposerDraftWritesSettled()
-    expect(storedDraft('tab-1:pane')?.text).toBe('typed, then Orca quit')
+    expect(storedDraft('tab-1:pane')?.text).toBe('typed, then Teamerge quit')
   })
 
   it('never brings back a draft sent while storage refused, however much was given back to it', async () => {
@@ -254,7 +254,7 @@ describe('native-chat composer draft store', () => {
     ])
   })
 
-  it('saves a paste kept in Orca’s paste folder as the real image, but not one over SSH', async () => {
+  it('saves a paste kept in Teamerge’s paste folder as the real image, but not one over SSH', async () => {
     const kept = {
       id: 'p-1',
       path: '/Users/me/Library/Application Support/orca/native-chat-pastes/orca-paste-1-0f.png'

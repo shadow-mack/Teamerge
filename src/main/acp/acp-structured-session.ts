@@ -128,7 +128,7 @@ export function endAcpStructuredSession(
       ? session.journalClosed
       : `${session.spec.agent} ACP agent exited`
   const reason = session.closeRequested
-    ? `${session.spec.agent} ACP agent closed by Orca`
+    ? `${session.spec.agent} ACP agent closed by Teamerge`
     : `${lead}${how ? ` ${how}` : ''}${stderr ? `: ${stderr}` : ''}`
   // Spontaneous exit interrupts now; requested close leaves the host to revise an unverifiable turn.
   closeAcpSessionJournal(

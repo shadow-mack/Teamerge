@@ -39,7 +39,7 @@ export async function commitRepository(
     repository,
     [
       '-c',
-      'user.name=Orca Test',
+      'user.name=Teamerge Test',
       '-c',
       'user.email=orca-test@example.invalid',
       'commit',

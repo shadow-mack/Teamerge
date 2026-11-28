@@ -210,7 +210,7 @@ describe('spawnSystemSsh', () => {
     expect(args.at(-1)).toBe('echo ready')
   })
 
-  it('does not inject Orca ControlMaster flags when ssh config already owns muxing', () => {
+  it('does not inject Teamerge ControlMaster flags when ssh config already owns muxing', () => {
     const args = buildSshArgs(createTarget({ configHost: 'workbox', source: 'ssh-config' }), {
       resolvedConfig: createResolvedConfig({
         controlMaster: 'auto',
@@ -224,7 +224,7 @@ describe('spawnSystemSsh', () => {
     expect(args).toContain('workbox')
   })
 
-  it('does not inject Orca ControlMaster flags for unresolved ssh-config targets', () => {
+  it('does not inject Teamerge ControlMaster flags for unresolved ssh-config targets', () => {
     const args = buildSshArgs(createTarget({ configHost: 'workbox', source: 'ssh-config' }))
 
     expectNoOrcaControlMasterArgs(args)

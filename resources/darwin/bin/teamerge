@@ -20,8 +20,15 @@ fi
 
 CONTENTS="$APP_PATH/Contents"
 ELECTRON="$CONTENTS/MacOS/Teamerge"
-# The standalone teamerge bundle runs in Electron's Node mode; agents need no separate Node install.
-CLI="$CONTENTS/Resources/app.asar.unpacked/out/teamerge/teamerge.cjs"
+# Team commands run the standalone teamerge bundle; every other command goes to the workspace CLI.
+case "${1-}" in
+	context | why | risk | claim | release | claims | check-edit | install-hooks | send | inbox | relay | whoami | team | "" | help | -h | --help)
+		CLI="$CONTENTS/Resources/app.asar.unpacked/out/teamerge/teamerge.cjs"
+		;;
+	*)
+		CLI="$CONTENTS/Resources/app.asar.unpacked/out/cli/index.js"
+		;;
+esac
 
 export ORCA_NODE_OPTIONS="${NODE_OPTIONS-}"
 export ORCA_NODE_REPL_EXTERNAL_MODULE="${NODE_REPL_EXTERNAL_MODULE-}"

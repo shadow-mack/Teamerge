@@ -11,7 +11,7 @@ vi.mock('electron', () => ({
   }
 }))
 
-describe('Orca cloud auth config', () => {
+describe('Teamerge cloud auth config', () => {
   it('rejects loopback HTTP endpoints in packaged builds', () => {
     expect(
       getOrcaCloudAuthConfig(

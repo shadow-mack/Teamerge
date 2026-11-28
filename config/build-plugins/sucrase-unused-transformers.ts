@@ -7,7 +7,7 @@ const SUCRASE_TRANSFORMERS_DIR =
 const STUB_ID = '\0orca-sucrase-unused-transformer'
 
 export const SUCRASE_UNUSED_TRANSFORMER_STUB =
-  "export default class UnusedSucraseTransformer {\n  constructor() {\n    throw new Error('this sucrase transform is not bundled in Orca')\n  }\n}\n"
+  "export default class UnusedSucraseTransformer {\n  constructor() {\n    throw new Error('this sucrase transform is not bundled in Teamerge')\n  }\n}\n"
 
 /** The stub's id when sucrase's transformer index imports an unused transformer; else null. */
 export function resolveSucraseUnusedTransformer(

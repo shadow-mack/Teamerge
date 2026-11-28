@@ -643,7 +643,7 @@ it.each([
     }
     expect(agentMessageDisplayText(body.blocks, from)).toBe(task)
     const raw = nativeChatMessageCopyText(body)
-    expect(raw).toContain('You are working inside Orca')
+    expect(raw).toContain('You are working inside Teamerge')
     expect(raw.endsWith(task)).toBe(true)
     const items = [{ itemId: 'task', sequence: 1, revision: 1, observedAt: 1, body }]
     expect(latestStructuredAgentSessionPrompt(items)).toBe(raw)

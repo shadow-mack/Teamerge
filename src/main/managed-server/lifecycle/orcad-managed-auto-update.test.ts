@@ -59,12 +59,12 @@ describe('whether a connect updates its managed orcad', () => {
     expect(plan(record({ active: '0.1.0+new' }))).toEqual({ action: 'skip', reason: 'current' })
   })
 
-  it('updates a host an older or pre-tracking Orca activated', () => {
+  it('updates a host an older or pre-tracking Teamerge activated', () => {
     expect(plan(record({ activeAppVersion: '1.4.0' }))).toEqual({ action: 'update' })
     expect(plan(record({}))).toEqual({ action: 'update' })
   })
 
-  it('never downgrades a host a newer Orca activated', () => {
+  it('never downgrades a host a newer Teamerge activated', () => {
     expect(plan(record({ activeAppVersion: '1.6.0' }))).toEqual({
       action: 'skip',
       reason: 'host-newer'
@@ -102,7 +102,7 @@ describe('an auto-update that finds the host braked for crashing', () => {
   it('is not an update failure: the host already runs this build', async () => {
     mocks.state.record = record({})
     mocks.runUpdate.mockRejectedValueOnce(
-      new OrcadCrashLoopError('Orca stopped restarting its server on Box')
+      new OrcadCrashLoopError('Teamerge stopped restarting its server on Box')
     )
 
     expect(

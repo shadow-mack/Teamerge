@@ -9,7 +9,7 @@ import { buildPluginListEntries } from './plugin-list-entries'
 function listing(pluginKey: string, extra: Partial<PluginMarketplaceHostListing> = {}) {
   const value: PluginMarketplaceHostListing = {
     marketplaceSourceId: 'official',
-    marketplaceName: 'Orca Official Plugins',
+    marketplaceName: 'Teamerge Official Plugins',
     marketplaceOwner: 'stablyai',
     marketplaceCommit: 'abc123',
     pluginKey,
@@ -143,7 +143,7 @@ describe('plugin list entries', () => {
     expect(joined?.updateVersion).toBe('2.0.0')
   })
 
-  it('does not offer an update this Orca is too old to run', () => {
+  it('does not offer an update this Teamerge is too old to run', () => {
     const plugin = fromCatalog(installed('acme.notes', 'Notes'), 'https://official.invalid/c.git')
     const sources = [catalog('official', 'https://official.invalid/c.git')]
     const newer = listing('acme.notes', {

@@ -19,7 +19,7 @@ const PLUGINS = ['orca-review-notes', 'orca-review-tasks'] as const
 // Why: install and update review fetch Git; on a loaded runner that alone outlasts the 10s default.
 const GIT_STEP = { timeout: 60_000 }
 const FULL_ACCESS =
-  'Full access: runs as a normal program and can read your files, use the network, run other programs and control Orca, including your terminals and agents.'
+  'Full access: runs as a normal program and can read your files, use the network, run other programs and control Teamerge, including your terminals and agents.'
 
 /** Each fixture plugin's installed version and whether it waits on the page's review queue. */
 async function installedState(page: Page): Promise<{ version: string; review: boolean }[]> {
@@ -113,7 +113,7 @@ async function publishCatalog(
   )
   await writeFile(
     join(repositories, 'orca-plugins.git', 'orca-catalog.json'),
-    JSON.stringify({ catalogVersion: 2, name: 'Orca Plugins', owner: 'stablyai', plugins })
+    JSON.stringify({ catalogVersion: 2, name: 'Teamerge Plugins', owner: 'stablyai', plugins })
   )
 }
 
@@ -229,7 +229,7 @@ test('confirms card removal, reviews a lone access-growing update directly, and 
         repository,
         [
           '-c',
-          'user.name=Orca Test',
+          'user.name=Teamerge Test',
           '-c',
           'user.email=orca-test@example.invalid',
           'commit',
@@ -246,7 +246,7 @@ test('confirms card removal, reviews a lone access-growing update directly, and 
       marketplace,
       [
         '-c',
-        'user.name=Orca Test',
+        'user.name=Teamerge Test',
         '-c',
         'user.email=orca-test@example.invalid',
         'commit',

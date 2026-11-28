@@ -73,15 +73,15 @@ describe('streamed output overflow prefix', () => {
   it.each([
     { cap: 0, chunks: ['abcdef'], text: '' },
     { cap: 1, chunks: ['abcdef'], text: '\n' },
-    { cap: 33, chunks: ['x'.repeat(40)], text: marker.slice(0, 33) },
-    { cap: 34, chunks: ['x'.repeat(40)], text: marker },
-    { cap: 35, chunks: ['é', 'x'.repeat(40)], text: marker },
-    { cap: 36, chunks: ['a€', 'x'.repeat(40)], text: `a${marker}` },
-    { cap: 37, chunks: ['a€', 'x'.repeat(40)], text: `a${marker}` },
-    { cap: 38, chunks: ['a€', 'x'.repeat(40)], text: `a€${marker}` },
-    { cap: 40, chunks: ['\ud800', '', '\udc00', 'x'.repeat(40)], text: `\ufffd\ufffd${marker}` },
-    { cap: 39, chunks: ['a😀', 'x'.repeat(40)], text: `a😀${marker}` },
-    { cap: 38, chunks: ['a😀', 'x'.repeat(40)], text: `a${marker}` }
+    { cap: 37, chunks: ['x'.repeat(40)], text: marker.slice(0, 37) },
+    { cap: 38, chunks: ['x'.repeat(40)], text: marker },
+    { cap: 39, chunks: ['é', 'x'.repeat(40)], text: marker },
+    { cap: 40, chunks: ['a€', 'x'.repeat(40)], text: `a${marker}` },
+    { cap: 41, chunks: ['a€', 'x'.repeat(40)], text: `a${marker}` },
+    { cap: 42, chunks: ['a€', 'x'.repeat(40)], text: `a€${marker}` },
+    { cap: 44, chunks: ['\ud800', '', '\udc00', 'x'.repeat(40)], text: `\ufffd\ufffd${marker}` },
+    { cap: 43, chunks: ['a😀', 'x'.repeat(40)], text: `a😀${marker}` },
+    { cap: 42, chunks: ['a😀', 'x'.repeat(40)], text: `a${marker}` }
   ])('preserves chunk encoding and UTF-8 clipping at a $cap byte cap', ({ cap, chunks, text }) => {
     const instance = createAgentSessionDeltaCoalescer({
       maxRetainedBytes: cap,

@@ -256,7 +256,7 @@ function BrowserSkillInstallForRuntime({
           : installAction.kind === 'replace'
             ? translate(
                 'auto.components.settings.AgentSkillSetupPanel.replaceWithOrcaCopy',
-                "Replace with Orca's copy"
+                "Replace with Teamerge's copy"
               )
             : installAction.kind === 'run' && installAction.changes
               ? bundledSkillSetupActionLabel(installAction.changes)

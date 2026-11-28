@@ -44,7 +44,7 @@ export function skippedWslHookInstallStatus(runtimeHomePath: string): AgentHookI
     state: 'not_installed',
     configPath: pathWin32.join(runtimeHomePath, 'hooks.json'),
     managedHooksPresent: false,
-    detail: 'The WSL distro is not running; Orca installs these hooks once it runs.'
+    detail: 'The WSL distro is not running; Teamerge installs these hooks once it runs.'
   }
 }
 
@@ -145,7 +145,7 @@ async function installManagedHooksIntoWslRuntimeExclusively(
         configPath: plan.configPath,
         managedHooksPresent: true,
         detail:
-          'Hooks installed but trust is pending: the WSL distro stopped before Orca could write it. Orca writes it once the distro runs.'
+          'Hooks installed but trust is pending: the WSL distro stopped before Teamerge could write it. Teamerge writes it once the distro runs.'
       }
     }
     if (grant.lane === 'fallback') {

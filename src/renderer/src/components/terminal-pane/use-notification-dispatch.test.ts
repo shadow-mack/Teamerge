@@ -323,7 +323,7 @@ describe('dispatchTerminalNotification', () => {
     })
   })
 
-  it('marks the selected worktree unread when Orca is backgrounded', () => {
+  it('marks the selected worktree unread when Teamerge is backgrounded', () => {
     mockState.settings.experimentalTerminalAttention = false
     mockState.activeWorktreeId = 'wt-primary'
     stubDocumentFocus({ visibilityState: 'hidden', focused: false })

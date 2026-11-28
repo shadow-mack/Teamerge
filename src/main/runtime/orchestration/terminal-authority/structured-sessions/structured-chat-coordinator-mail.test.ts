@@ -224,7 +224,7 @@ describe('a worker result reaches the structured chat that coordinates it', () =
     expect(unread(`run:${runId}`)).toHaveLength(1)
   })
 
-  it('keeps a report in doubt across an Orca restart without restarting its agent', async () => {
+  it('keeps a report in doubt across a Teamerge restart without restarting its agent', async () => {
     observationClock.start()
     await openChat(COORDINATOR)
     const { runId, taskId } = await coordinatorRunAndTask()

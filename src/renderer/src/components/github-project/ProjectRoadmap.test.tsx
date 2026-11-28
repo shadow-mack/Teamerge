@@ -72,7 +72,7 @@ function table(
       owner: 'stablyai',
       ownerType: 'organization',
       number: 3,
-      title: 'Orca',
+      title: 'Teamerge',
       url: 'https://github.com/orgs/stablyai/projects/3'
     },
     selectedView: {

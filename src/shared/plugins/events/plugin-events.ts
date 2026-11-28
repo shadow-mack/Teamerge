@@ -85,7 +85,7 @@ export const PLUGIN_EVENT_SUMMARIES: Record<PluginEventName, string> = {
   'workspace.created': 'A worktree workspace was created.',
   'workspace.removed': 'A worktree workspace was removed.',
   'agent.status.changed':
-    'An agent in a terminal pane changed status; `workspaceId` is null when Orca cannot tie the pane to a workspace, and `terminalId` names its terminal when Orca lists it.',
+    'An agent in a terminal pane changed status; `workspaceId` is null when Teamerge cannot tie the pane to a workspace, and `terminalId` names its terminal when Teamerge lists it.',
   'workspace.changed':
     'The focused workspace changed, or its terminals were opened, closed or renamed; `context` is what `workspace.readContext` now answers. Each new subscriber first gets the current context.'
 }

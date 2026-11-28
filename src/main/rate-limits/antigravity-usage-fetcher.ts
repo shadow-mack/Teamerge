@@ -46,7 +46,7 @@ const FAILURE_REASONS: Partial<Record<UsageRateLimitFailureKind, string>> = {
 }
 
 const UNSUPPORTED_USAGE_COMMAND_REASON =
-  'Antigravity usage is not available. This version of the Antigravity CLI answers `/usage` as a prompt instead of a command, so Orca stopped asking rather than spend quota on it. Update `agy` and restart Orca.'
+  'Antigravity usage is not available. This version of the Antigravity CLI answers `/usage` as a prompt instead of a command, so Teamerge stopped asking rather than spend quota on it. Update `agy` and restart Teamerge.'
 
 // Unsupported /usage spends quota; latch each runtime for the process lifetime.
 const unsupportedUsageRuntimes = new Set<string>()

@@ -1,4 +1,4 @@
-export const BUNDLED_SYMBOLS_FONT_FAMILY = 'Orca Nerd Font Symbols'
+export const BUNDLED_SYMBOLS_FONT_FAMILY = 'Teamerge Nerd Font Symbols'
 
 // Cross-platform monospace chain: browsers skip fonts absent on the current OS, so listing all is safe.
 // Nerd Fonts come last to cover PUA glyphs (U+E000–U+F8FF) from OMP/Powerline that standard monospace fonts lack.

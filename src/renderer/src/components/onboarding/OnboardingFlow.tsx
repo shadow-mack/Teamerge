@@ -122,7 +122,7 @@ export default function OnboardingFlow({
           role="dialog"
           aria-label={translate(
             'auto.components.onboarding.OnboardingFlow.277ba45540',
-            'Orca onboarding'
+            'Teamerge onboarding'
           )}
           aria-modal="true"
           data-onboarding-modal
@@ -141,7 +141,7 @@ export default function OnboardingFlow({
                   className="h-7 w-auto shrink-0 invert dark:invert-0"
                 />
                 <span>
-                  {translate('auto.components.onboarding.OnboardingFlow.a249f81538', 'Orca')}
+                  {translate('auto.components.onboarding.OnboardingFlow.a249f81538', 'Teamerge')}
                 </span>
               </div>
               <OnboardingLanguageSwitcher
@@ -198,7 +198,7 @@ export default function OnboardingFlow({
                 <div className="mb-2 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
                   {translate(
                     'auto.components.onboarding.OnboardingFlow.1b5e182e9f',
-                    'Welcome to Orca'
+                    'Welcome to Teamerge'
                   )}
                 </div>
               )}

@@ -52,7 +52,7 @@ afterEach(() => {
   renderer = null
 })
 
-it('continues an Orca-stopped turn, shows a refusal, and drops it once another client continues', async () => {
+it('continues a Teamerge-stopped turn, shows a refusal, and drops it once another client continues', async () => {
   let listener: ((value: unknown) => void) | null = null
   const sendRequest = vi.fn(async (method: string): Promise<RpcResponse> => ({
     id: 'response-1',

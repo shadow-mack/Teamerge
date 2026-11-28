@@ -155,7 +155,7 @@ describe('orca serve service', () => {
     await chmod(join(scoped, 'orca'), 0o755)
     await expect(
       installServeService({ command: null, dryRun: false }, serverCli('linux', scoped))
-    ).rejects.toThrow(/install the Orca app.*`orca-ide serve service install`/i)
+    ).rejects.toThrow(/install the Teamerge app.*`orca-ide serve service install`/i)
     await expect(
       installServeService({ command: null, dryRun: true }, serverCli('darwin', scoped))
     ).rejects.toThrow(/`orca serve service install`/)
@@ -190,7 +190,7 @@ describe('orca serve service', () => {
     expect(String(result.content)).toContain(`Environment=PATH=/usr/local/bin:${bin}\n`)
   })
 
-  it('refuses a --command tied to one Orca version', async () => {
+  it('refuses a --command tied to one Teamerge version', async () => {
     const scoped = join(home, 'profile', 'cli', 'bin')
     await mkdir(scoped, { recursive: true })
     await writeFile(join(scoped, 'orca'), '#!/bin/sh\n')
@@ -200,7 +200,7 @@ describe('orca serve service', () => {
         platform: 'darwin',
         env: { ORCA_USER_DATA_PATH: join(home, 'profile') }
       })
-    ).toThrow(/one Orca version/)
+    ).toThrow(/one Teamerge version/)
   })
 
   it('refuses a --command inside an extract-and-run AppImage copy', async () => {
@@ -213,6 +213,6 @@ describe('orca serve service', () => {
         platform: 'linux',
         env: { ORCA_USER_DATA_PATH: join(home, 'profile') }
       })
-    ).toThrow(/one Orca version/)
+    ).toThrow(/one Teamerge version/)
   })
 })

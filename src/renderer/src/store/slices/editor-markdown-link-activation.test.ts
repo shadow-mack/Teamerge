@@ -453,7 +453,7 @@ describe('createEditorSlice activateMarkdownLink', () => {
     })
   })
 
-  it('opens explicit file URLs outside the worktree in Orca as user-named tabs', async () => {
+  it('opens explicit file URLs outside the worktree in Teamerge as user-named tabs', async () => {
     const store = createEditorStore()
     await store.getState().activateMarkdownLink('file:///tmp/image.png', {
       sourceFilePath: '/repo/docs/note.md',

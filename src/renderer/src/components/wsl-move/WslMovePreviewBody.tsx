@@ -194,7 +194,7 @@ export function wslMoveNotMovingLines(
       name: nameOf(ref),
       why: translate(
         'wslMove.preview.changed',
-        'Moved earlier, then changed here by an older version of Orca. It is not moved again.'
+        'Moved earlier, then changed here by an older version of Teamerge. It is not moved again.'
       )
     })),
     ...preview.refused.map((entry) => ({

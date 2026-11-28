@@ -60,7 +60,7 @@ const DENY =
 describe.skipIf(process.platform === 'win32')(
   'Claude PreToolUse decisions in the hook script',
   () => {
-    it('prints Orca’s decision for PreToolUse, over either transport', async () => {
+    it('prints Teamerge’s decision for PreToolUse, over either transport', async () => {
       const { port, seen } = await hookServer(() => DENY)
       expect(await runHook(PRE, { ORCA_AGENT_HOOK_PORT: String(port) })).toBe(`${DENY}\n`)
       expect(
@@ -75,7 +75,7 @@ describe.skipIf(process.platform === 'win32')(
       ])
     })
 
-    it('prints {} with no decision, for other events, and when Orca is unreachable', async () => {
+    it('prints {} with no decision, for other events, and when Teamerge is unreachable', async () => {
       const { port, seen } = await hookServer(() => null)
       expect(await runHook(PRE, { ORCA_AGENT_HOOK_PORT: String(port) })).toBe('{}\n')
       expect(await runHook(POST, { ORCA_AGENT_HOOK_PORT: String(port) })).toBe('{}\n')
