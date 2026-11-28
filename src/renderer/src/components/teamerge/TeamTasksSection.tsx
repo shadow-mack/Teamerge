@@ -156,7 +156,6 @@ export function TeamTasksSection({ tasks }: { tasks: TeamergeRepoTasks }): React
           return `Queued ${task.taskName} to land on ${task.parentBranch ?? tasks.mainBranch}.`
         })
         break
-      default:
     }
   }
 

@@ -153,8 +153,8 @@ export class RelayClient {
     }
   }
 
-  /** Seals separately for each recipient so only that member can read it. */
-  send(to: string | 'everyone', payload: TeamPayload): void {
+  /** Seals separately for each recipient so only that member can read it; `to` is a member id or 'everyone'. */
+  send(to: string, payload: TeamPayload): void {
     const recipients =
       to === 'everyone'
         ? this.team.members.filter(
