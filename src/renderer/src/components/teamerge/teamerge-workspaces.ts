@@ -110,12 +110,16 @@ export async function removeTeamergeWorkspace(worktree: Worktree): Promise<void>
   }
 }
 
-export function slugForBranch(text: string): string {
-  return (
-    text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '')
-      .slice(0, 40) || 'task'
-  )
+/** Branch-safe slug of at most `maxLength` characters, cut at a word boundary so names stay readable. */
+export function slugForBranch(text: string, maxLength = 40): string {
+  const slug = text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+  if (slug.length <= maxLength) {
+    return slug || 'task'
+  }
+  const cut = slug.slice(0, maxLength + 1)
+  const boundary = cut.lastIndexOf('-')
+  return (boundary > 0 ? cut.slice(0, boundary) : slug.slice(0, maxLength)) || 'task'
 }

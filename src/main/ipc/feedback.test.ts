@@ -25,11 +25,14 @@ function requestInit(callIndex = 0): RequestInit {
   return fetchMock.mock.calls[callIndex]?.[1] as RequestInit
 }
 
+const TEST_FEEDBACK_URL = 'https://feedback.test/v1/feedback'
+
 describe('submitFeedback', () => {
   beforeEach(() => {
     vi.useRealTimers()
     handlers.clear()
     fetchMock.mockReset()
+    vi.stubEnv('TEAMERGE_FEEDBACK_URL', TEST_FEEDBACK_URL)
     fetchMock.mockResolvedValue(okResponse())
   })
 

@@ -127,14 +127,22 @@ export function joinTeamFile(team: TeamFile, identity: TeamIdentity): TeamFile {
 
 export type SealedEnvelope = { from: string; nonce: string; box: string }
 
+/** How old a sealed message may be; older ones (and repeated nonces inside it) are treated as replays. */
+export const ENVELOPE_MAX_AGE_MS = 5 * 60 * 1000
+
+type SealedBody = { teamId: string; to: string; sentAt: number; payload: unknown }
+
 /** Encrypts and authenticates for one recipient (X25519 + XSalsa20-Poly1305). The relay sees only this. */
 export function seal(
   identity: TeamIdentity,
+  team: Pick<TeamFile, 'teamId'>,
   recipient: TeamMember,
-  payload: unknown
+  payload: unknown,
+  now = Date.now()
 ): SealedEnvelope {
   const nonce = nacl.randomBytes(nacl.box.nonceLength)
-  const message = new TextEncoder().encode(JSON.stringify(payload))
+  const body: SealedBody = { teamId: team.teamId, to: recipient.id, sentAt: now, payload }
+  const message = new TextEncoder().encode(JSON.stringify(body))
   const box = nacl.box(
     message,
     nonce,
@@ -144,12 +152,36 @@ export function seal(
   return { from: identity.memberId, nonce: b64(nonce), box: b64(box) }
 }
 
-/** Opens an envelope only if its sender is a member of this team's committed roster. */
-export function open<T>(
+function isFreshBodyFor(
+  body: unknown,
+  teamId: string,
+  memberId: string,
+  now: number
+): body is SealedBody {
+  return (
+    typeof body === 'object' &&
+    body !== null &&
+    'teamId' in body &&
+    body.teamId === teamId &&
+    'to' in body &&
+    body.to === memberId &&
+    'sentAt' in body &&
+    typeof body.sentAt === 'number' &&
+    Math.abs(now - body.sentAt) <= ENVELOPE_MAX_AGE_MS &&
+    'payload' in body
+  )
+}
+
+/**
+ * Opens an envelope only if its sender is on this team's committed roster and it was sealed for
+ * this team and this member within the last few minutes. Callers still drop repeated nonces.
+ */
+export function open(
   identity: TeamIdentity,
   team: TeamFile,
-  envelope: SealedEnvelope
-): { sender: TeamMember; payload: T } | null {
+  envelope: SealedEnvelope,
+  now = Date.now()
+): { sender: TeamMember; payload: unknown } | null {
   const sender = team.members.find((member) => member.id === envelope.from)
   if (!sender) {
     return null
@@ -163,11 +195,16 @@ export function open<T>(
   if (!opened) {
     return null
   }
+  let body: unknown
   try {
-    return { sender, payload: JSON.parse(new TextDecoder().decode(opened)) as T }
+    body = JSON.parse(new TextDecoder().decode(opened))
   } catch {
     return null
   }
+  if (!isFreshBodyFor(body, team.teamId, identity.memberId, now)) {
+    return null
+  }
+  return { sender, payload: body.payload }
 }
 
 export function helloSignature(identity: TeamIdentity, teamId: string, ts: number): string {

@@ -1,9 +1,15 @@
 import WebSocket from 'ws'
 import type { RelayConnectionState, TeamFile } from '../../../shared/teamerge/teamerge-types'
-import { helloSignature, open, seal, type TeamIdentity } from './identity'
+import { ENVELOPE_MAX_AGE_MS, helloSignature, open, seal, type TeamIdentity } from './identity'
 import type { ClientToRelay, RelayToClient } from './relay-protocol'
 
 export type TeamPayload = { kind: string } & Record<string, unknown>
+
+function isTeamPayload(value: unknown): value is TeamPayload {
+  return (
+    typeof value === 'object' && value !== null && 'kind' in value && typeof value.kind === 'string'
+  )
+}
 
 export type RelayClientEvents = {
   onState: (state: RelayConnectionState, error?: string) => void
@@ -19,6 +25,8 @@ export class RelayClient {
   private retryTimer: ReturnType<typeof setTimeout> | null = null
   private pingTimer: ReturnType<typeof setInterval> | null = null
   private peers: string[] = []
+  /** Nonces opened within the envelope age window; a repeat is a replay. */
+  private seenNonces = new Map<string, number>()
 
   constructor(
     private readonly identity: TeamIdentity,
@@ -80,8 +88,13 @@ export class RelayClient {
         this.peers = message.peers.filter((id) => id !== this.identity.memberId)
         this.events.onPeers(this.peers)
       } else if (message.t === 'msg') {
-        const opened = open<TeamPayload>(this.identity, this.team, message.env)
-        if (opened && opened.sender.id === message.from) {
+        const opened = open(this.identity, this.team, message.env)
+        if (
+          opened &&
+          opened.sender.id === message.from &&
+          isTeamPayload(opened.payload) &&
+          this.firstSighting(message.env.nonce)
+        ) {
           this.events.onPayload(opened.sender.id, opened.sender.name, opened.payload)
         }
       } else if (message.t === 'error') {
@@ -106,6 +119,21 @@ export class RelayClient {
         this.events.onState('disconnected')
       }
     })
+  }
+
+  private firstSighting(nonce: string): boolean {
+    const now = Date.now()
+    if (this.seenNonces.has(nonce)) {
+      return false
+    }
+    for (const [seen, at] of this.seenNonces) {
+      if (now - at <= ENVELOPE_MAX_AGE_MS * 2) {
+        break
+      }
+      this.seenNonces.delete(seen)
+    }
+    this.seenNonces.set(nonce, now)
+    return true
   }
 
   private scheduleReconnect(): void {
@@ -134,7 +162,7 @@ export class RelayClient {
           )
         : this.team.members.filter((member) => member.id === to)
     for (const member of recipients) {
-      this.raw({ t: 'send', to: member.id, env: seal(this.identity, member, payload) })
+      this.raw({ t: 'send', to: member.id, env: seal(this.identity, this.team, member, payload) })
     }
   }
 

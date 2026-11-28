@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { subscribePaneStream, useTeamergeStore } from './teamerge-store'
 import { MemberAvatar, StatusPill } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 const KEY_BATCH_MS = 250
 
@@ -25,11 +26,12 @@ export function RemotePaneViewer(): React.JSX.Element | null {
     }
   }, [typing])
 
+  const ownerId = watching?.ownerId
+  const paneId = watching?.paneId
   useEffect(() => {
-    if (!watching || !hostRef.current) {
+    if (!ownerId || !paneId || !hostRef.current) {
       return
     }
-    const { ownerId, paneId } = watching
     const dark = document.documentElement.classList.contains('dark')
     const term = new Terminal({
       fontFamily:
@@ -116,7 +118,7 @@ export function RemotePaneViewer(): React.JSX.Element | null {
       termRef.current = null
       term.dispose()
     }
-  }, [watching?.ownerId, watching?.paneId])
+  }, [ownerId, paneId])
 
   if (!watching) {
     return null
@@ -126,7 +128,11 @@ export function RemotePaneViewer(): React.JSX.Element | null {
     <div
       className="absolute inset-0 z-30 flex flex-col bg-background/70 p-4 backdrop-blur-sm reduce-effects:backdrop-blur-none"
       role="dialog"
-      aria-label={`${watching.ownerName}'s ${watching.taskName}`}
+      aria-label={translate(
+        'auto.components.teamerge.RemotePaneViewer.ddfb7f442a',
+        "{{value0}}'s {{value1}}",
+        { value0: watching.ownerName, value1: watching.taskName }
+      )}
     >
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-floating">
         <div className="flex items-center gap-3 border-b border-border/70 px-4 py-2.5">
@@ -141,12 +147,17 @@ export function RemotePaneViewer(): React.JSX.Element | null {
               {watching.ownerName} · {watching.taskName}
             </div>
             <div className="text-2xs text-muted-foreground">
-              {watching.ended ? 'Sharing ended' : 'Live from their machine · end-to-end encrypted'}
+              {watching.ended
+                ? translate('auto.components.teamerge.RemotePaneViewer.34004d8cba', 'Sharing ended')
+                : translate(
+                    'auto.components.teamerge.RemotePaneViewer.551dd6678d',
+                    'Live from their machine · end-to-end encrypted'
+                  )}
             </div>
           </div>
           {watching.muted ? (
             <StatusPill tone="red" icon={<ShieldAlert />}>
-              Muted by owner
+              {translate('auto.components.teamerge.RemotePaneViewer.6f1e8685aa', 'Muted by owner')}
             </StatusPill>
           ) : (
             <Button
@@ -157,17 +168,44 @@ export function RemotePaneViewer(): React.JSX.Element | null {
               aria-pressed={typing}
             >
               <Keyboard className="size-3.5" />
-              {typing ? 'Typing Requests On' : 'Request to Type'}
+              {typing
+                ? translate(
+                    'auto.components.teamerge.RemotePaneViewer.37c1aa01bc',
+                    'Typing Requests On'
+                  )
+                : translate(
+                    'auto.components.teamerge.RemotePaneViewer.6a96a8a865',
+                    'Request to Type'
+                  )}
             </Button>
           )}
-          <Button variant="ghost" size="icon-sm" aria-label="Stop watching" onClick={close}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label={translate(
+              'auto.components.teamerge.RemotePaneViewer.edf9e2c7dc',
+              'Stop watching'
+            )}
+            onClick={close}
+          >
             <X className="size-4" />
           </Button>
         </div>
         {typing && !watching.muted ? (
           <div className="border-b border-border/70 bg-primary/8 px-4 py-1.5 text-xs text-foreground/80">
-            Keystrokes go to {watching.ownerName} for approval before they reach the agent.{' '}
-            {sent > 0 ? `${sent} sent.` : ''}
+            {translate('auto.components.teamerge.RemotePaneViewer.9233290cac', 'Keystrokes go to')}{' '}
+            {watching.ownerName}{' '}
+            {translate(
+              'auto.components.teamerge.RemotePaneViewer.63e595678d',
+              'for approval before they reach the agent.'
+            )}{' '}
+            {sent > 0
+              ? translate(
+                  'auto.components.teamerge.RemotePaneViewer.d4367c18e7',
+                  '{{value0}} sent.',
+                  { value0: sent }
+                )
+              : ''}
           </div>
         ) : null}
         <div

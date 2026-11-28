@@ -23,27 +23,38 @@ import { Textarea } from '@/components/ui/textarea'
 import { useTeamergeStore } from './teamerge-store'
 import type { TeamergeTask } from './use-teamerge-tasks'
 import { errorMessage } from './team-ui'
+import { translate } from '@/i18n/i18n'
+import { shortRefName } from '@/lib/git-utils'
 
 function TeammatePicker({
+  id,
   value,
   onChange
 }: {
+  id: string
   value: string
-  onChange: (id: string) => void
+  onChange: (memberId: string) => void
 }): React.JSX.Element {
   const status = useTeamergeStore((s) => s.status)
   const members = (status?.team?.members ?? []).filter((m) => m.id !== status?.identity?.memberId)
   const online = new Set(status?.onlineMemberIds ?? [])
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="Choose a teammate" />
+      <SelectTrigger id={id} className="w-full">
+        <SelectValue
+          placeholder={translate(
+            'auto.components.teamerge.team.dialogs.715ba00f0b',
+            'Choose a teammate'
+          )}
+        />
       </SelectTrigger>
       <SelectContent>
         {members.map((member) => (
           <SelectItem key={member.id} value={member.id}>
             {member.name}
-            {online.has(member.id) ? '' : ' (offline)'}
+            {online.has(member.id)
+              ? ''
+              : ` ${translate('auto.components.teamerge.team.dialogs.13ee72ef12', '(offline)')}`}
           </SelectItem>
         ))}
       </SelectContent>
@@ -60,7 +71,7 @@ async function draftBrief(task: TeamergeTask): Promise<string> {
     `Continue the task “${task.taskName}” on branch ${task.branch}.`,
     '',
     'Where it stands:',
-    `- Started from ${task.baseRef}; last agent: ${task.agent} (${task.agentState}).`,
+    `- Started from ${shortRefName(task.baseRef)}; last agent: ${task.agent} (${task.agentState}).`,
     files.length
       ? `- Files changed so far (${files.length}): ${files.slice(0, 12).join(', ')}${files.length > 12 ? ', …' : ''}`
       : '- No changes yet.',
@@ -106,13 +117,17 @@ export function HandoffDialog({
         toMemberId: to,
         title: task.taskName,
         branch: task.branch,
-        baseBranch: task.baseRef,
+        baseBranch: shortRefName(task.baseRef),
         brief,
         agent: task.agent,
         worktreePath: task.worktreePath,
         push
       })
-      toast.success(`Handed off “${task.taskName}”.`)
+      toast.success(
+        translate('auto.components.teamerge.team.dialogs.46446c16af', 'Handed off “{{value0}}”.', {
+          value0: task.taskName
+        })
+      )
       onOpenChange(false)
     } catch (error) {
       toast.error(errorMessage(error))
@@ -125,18 +140,29 @@ export function HandoffDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Hand Off “{task?.taskName}”</DialogTitle>
+          <DialogTitle>
+            {translate('auto.components.teamerge.team.dialogs.c899f28b93', 'Hand Off “')}
+            {task?.taskName}”
+          </DialogTitle>
           <DialogDescription>
-            Your teammate presses Take and their agent continues from this brief on {task?.branch}.
+            {translate(
+              'auto.components.teamerge.team.dialogs.84dcb1ae90',
+              'Your teammate presses Take and their agent continues from this brief on'
+            )}{' '}
+            {task?.branch}.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4">
           <div className="grid gap-1.5">
-            <Label>To</Label>
-            <TeammatePicker value={to} onChange={setTo} />
+            <Label htmlFor="teamerge-handoff-to">
+              {translate('auto.components.teamerge.team.dialogs.3946d7660d', 'To')}
+            </Label>
+            <TeammatePicker id="teamerge-handoff-to" value={to} onChange={setTo} />
           </div>
           <div className="grid gap-1.5">
-            <Label htmlFor="teamerge-brief">Brief</Label>
+            <Label htmlFor="teamerge-brief">
+              {translate('auto.components.teamerge.team.dialogs.75816e46a8', 'Brief')}
+            </Label>
             <Textarea
               id="teamerge-brief"
               className="min-h-48 font-mono text-xs leading-5"
@@ -146,15 +172,18 @@ export function HandoffDialog({
           </div>
           <label className="flex items-center gap-2 text-[13px]">
             <Checkbox checked={push} onCheckedChange={(v) => setPush(v === true)} />
-            Push {task?.branch} to origin first
+            {translate('auto.components.teamerge.team.dialogs.ad0bcb31c3', 'Push')} {task?.branch}{' '}
+            {translate('auto.components.teamerge.team.dialogs.c223c390f7', 'to origin first')}
           </label>
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
+            {translate('auto.components.teamerge.team.dialogs.3c16c98510', 'Cancel')}
           </Button>
           <Button disabled={busy || !to || !brief.trim()} onClick={() => void send()}>
-            {busy ? 'Handing Off…' : 'Hand Off'}
+            {busy
+              ? translate('auto.components.teamerge.team.dialogs.21986a2626', 'Handing Off…')
+              : translate('auto.components.teamerge.team.dialogs.af67a74854', 'Hand Off')}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -186,7 +215,9 @@ export function ReviewRequestDialog({
         baseRef: task.baseRef,
         paneId: task.paneId
       })
-      toast.success('Review requested.')
+      toast.success(
+        translate('auto.components.teamerge.team.dialogs.e011afd84a', 'Review requested.')
+      )
       onOpenChange(false)
     } catch (error) {
       toast.error(errorMessage(error))
@@ -198,24 +229,42 @@ export function ReviewRequestDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Request Review</DialogTitle>
+          <DialogTitle>
+            {translate('auto.components.teamerge.team.dialogs.295a307e49', 'Request Review')}
+          </DialogTitle>
           <DialogDescription>
-            Sends the current diff of “{task?.taskName}”. Line comments from your reviewer go
-            straight to{' '}
-            {task?.paneId ? 'this task’s agent' : 'this task (start an agent so comments reach it)'}
+            {translate(
+              'auto.components.teamerge.team.dialogs.4ccdcf9f42',
+              'Sends the current diff of “'
+            )}
+            {task?.taskName}
+            {translate(
+              'auto.components.teamerge.team.dialogs.334be087d6',
+              '”. Line comments from your reviewer go straight to'
+            )}{' '}
+            {task?.paneId
+              ? translate('auto.components.teamerge.team.dialogs.24d5a1ac76', 'this task’s agent')
+              : translate(
+                  'auto.components.teamerge.team.dialogs.bb028826c9',
+                  'this task (start an agent so comments reach it)'
+                )}
             .
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-1.5">
-          <Label>Reviewer</Label>
-          <TeammatePicker value={to} onChange={setTo} />
+          <Label htmlFor="teamerge-reviewer">
+            {translate('auto.components.teamerge.team.dialogs.2a47032dde', 'Reviewer')}
+          </Label>
+          <TeammatePicker id="teamerge-reviewer" value={to} onChange={setTo} />
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
+            {translate('auto.components.teamerge.team.dialogs.3c16c98510', 'Cancel')}
           </Button>
           <Button disabled={busy || !to} onClick={() => void send()}>
-            {busy ? 'Sending…' : 'Request Review'}
+            {busy
+              ? translate('auto.components.teamerge.team.dialogs.8fe7ba11d0', 'Sending…')
+              : translate('auto.components.teamerge.team.dialogs.295a307e49', 'Request Review')}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -286,7 +335,7 @@ export function TextPromptDialog({
         </form>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
+            {translate('auto.components.teamerge.team.dialogs.3c16c98510', 'Cancel')}
           </Button>
           <Button disabled={busy || !value.trim()} onClick={() => void submit()}>
             {confirm}

@@ -111,11 +111,11 @@ const devChannelBuildVersion = isHourlyChannel
       : undefined
 // Separate dev-channel repos: 24 hourly tags/day would evict stable/RC from the ten-entry release feed; isolate adhoc/daily from hourly subscribers too.
 const devChannelRepo = isHourlyChannel
-  ? 'orca-hourly'
+  ? 'Teamerge-hourly'
   : isDailyChannel
-    ? 'orca-daily'
+    ? 'Teamerge-daily'
     : isAdhocChannel
-      ? 'orca-adhoc'
+      ? 'Teamerge-adhoc'
       : null
 const appId = 'com.teamerge.app'
 const featureWallResources = {
@@ -340,6 +340,8 @@ module.exports = {
   asarUnpack: [
     'out/package.json',
     'out/cli/**',
+    // Agents run the teamerge CLI in Node mode, which cannot read inside app.asar.
+    'out/teamerge/**',
     'out/shared/**',
     'out/main/agent-hooks/**',
     'out/main/antigravity/**',
@@ -630,6 +632,10 @@ module.exports = {
         to: 'bin/orca'
       },
       {
+        from: 'resources/darwin/bin/teamerge',
+        to: 'bin/teamerge'
+      },
+      {
         from: 'node_modules/agent-browser/bin/agent-browser-darwin-${arch}',
         to: 'agent-browser-darwin-${arch}'
       },
@@ -761,8 +767,8 @@ module.exports = {
   npmRebuild: true,
   publish: {
     provider: 'github',
-    owner: 'stablyai',
-    repo: devChannelRepo ?? 'orca',
+    owner: 'shadow-mack',
+    repo: devChannelRepo ?? 'Teamerge',
     // Keep main-repo releases draft until release-cut verifies all assets; early --publish always would expose missing Windows installers.
     releaseType: devChannelRepo ? 'prerelease' : 'draft'
   }

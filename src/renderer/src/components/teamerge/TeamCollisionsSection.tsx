@@ -19,6 +19,7 @@ import {
   StatusPill,
   TeamSectionHeader
 } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): React.JSX.Element {
   const collisions = useTeamergeStore((s) => s.collisions)
@@ -39,7 +40,11 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
         paths: [filePath]
       })
       toast.success(
-        `Claimed ${filePath} for ${task.taskName}. Other agents are warned before editing it.`
+        translate(
+          'auto.components.teamerge.TeamCollisionsSection.3cdf8300d2',
+          'Claimed {{value0}} for {{value1}}. Other agents are warned before editing it.',
+          { value0: filePath, value1: task.taskName }
+        )
       )
       void refreshTeamergeNow(tasks)
     } catch (error) {
@@ -50,8 +55,11 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
   return (
     <div>
       <TeamSectionHeader
-        title="Collisions"
-        subtitle="Files changed by more than one task, here and on teammates’ machines. Red means merging those tasks would conflict."
+        title={translate('auto.components.teamerge.TeamCollisionsSection.56d10148d5', 'Collisions')}
+        subtitle={translate(
+          'auto.components.teamerge.TeamCollisionsSection.df9a943e7a',
+          'Files changed by more than one task, here and on teammates’ machines. Red means merging those tasks would conflict.'
+        )}
         actions={
           <Button
             size="sm"
@@ -62,7 +70,9 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
               void refreshTeamergeNow(tasks).finally(() => setRefreshing(false))
             }}
           >
-            {refreshing ? 'Checking…' : 'Check Now'}
+            {refreshing
+              ? translate('auto.components.teamerge.TeamCollisionsSection.1f403840bb', 'Checking…')
+              : translate('auto.components.teamerge.TeamCollisionsSection.7875fcf854', 'Check Now')}
           </Button>
         }
       />
@@ -70,12 +80,22 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
       {collisions.length === 0 ? (
         <EmptyState
           icon={<Flag />}
-          title="No Collisions"
-          description="No two tasks are changing the same file right now."
+          title={translate(
+            'auto.components.teamerge.TeamCollisionsSection.2f5e7f6ed3',
+            'No Collisions'
+          )}
+          description={translate(
+            'auto.components.teamerge.TeamCollisionsSection.e7fbb9a309',
+            'No two tasks are changing the same file right now.'
+          )}
         />
       ) : (
         <GroupedList
-          title={`${collisions.length} Shared ${collisions.length === 1 ? 'File' : 'Files'}`}
+          title={translate(
+            'auto.components.teamerge.TeamCollisionsSection.1dfc4d4f8c',
+            '{{count}} Shared Files',
+            { count: collisions.length, defaultValue_one: '{{count}} Shared File' }
+          )}
         >
           {collisions.map((collision) => (
             <GroupedRow
@@ -93,19 +113,36 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
                   {collision.tasks
                     .map((t) => (t.local ? t.taskName : `${t.memberName} / ${t.taskName}`))
                     .join(' · ')}
-                  {collision.claimedBy ? ` — claimed by ${collision.claimedBy.memberName}` : ''}
+                  {collision.claimedBy
+                    ? translate(
+                        'auto.components.teamerge.TeamCollisionsSection.c2ae577f1f',
+                        ' — claimed by {{value0}}',
+                        { value0: collision.claimedBy.memberName }
+                      )
+                    : ''}
                 </>
               }
               trailing={
                 <>
                   <StatusPill tone={collision.conflict ? 'red' : 'amber'}>
-                    {collision.conflict ? 'Conflict' : 'Overlap'}
+                    {collision.conflict
+                      ? translate(
+                          'auto.components.teamerge.TeamCollisionsSection.e2e6e53215',
+                          'Conflict'
+                        )
+                      : translate(
+                          'auto.components.teamerge.TeamCollisionsSection.4ce6a43877',
+                          'Overlap'
+                        )}
                   </StatusPill>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button size="xs" variant="ghost">
                         <Hand />
-                        Claim
+                        {translate(
+                          'auto.components.teamerge.TeamCollisionsSection.0f55823ce2',
+                          'Claim'
+                        )}
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -116,7 +153,11 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
                             key={t.taskId}
                             onSelect={() => void claim(collision.filePath, t.taskId)}
                           >
-                            For {t.taskName}
+                            {translate(
+                              'auto.components.teamerge.TeamCollisionsSection.6695e0757f',
+                              'For'
+                            )}{' '}
+                            {t.taskName}
                           </DropdownMenuItem>
                         ))}
                     </DropdownMenuContent>
@@ -129,17 +170,43 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
       )}
 
       <GroupedList
-        title="Claims"
+        title={translate('auto.components.teamerge.TeamCollisionsSection.06d5ec57ee', 'Claims')}
         footer={
           <>
-            Agents claim files with <code className="font-mono">teamerge claim &lt;file&gt;</code>.
-            The pre-edit hook (<code className="font-mono">teamerge install-hooks</code>) warns an
-            agent just before it edits a file another task is changing or has claimed.
+            {translate(
+              'auto.components.teamerge.TeamCollisionsSection.2a2317012f',
+              'Agents claim files with'
+            )}{' '}
+            <code className="font-mono">
+              {translate(
+                'auto.components.teamerge.TeamCollisionsSection.61ea903cfe',
+                'teamerge claim &lt;file&gt;'
+              )}
+            </code>
+            {translate(
+              'auto.components.teamerge.TeamCollisionsSection.edca8d6165',
+              '. The pre-edit hook ('
+            )}
+            <code className="font-mono">
+              {translate(
+                'auto.components.teamerge.TeamCollisionsSection.252ab7a4a8',
+                'teamerge install-hooks'
+              )}
+            </code>
+            {translate(
+              'auto.components.teamerge.TeamCollisionsSection.f2a5e03a80',
+              ') warns an agent just before it edits a file another task is changing or has claimed.'
+            )}
           </>
         }
       >
         {claims.length === 0 ? (
-          <div className="px-4 py-3 text-xs text-muted-foreground">No files are claimed.</div>
+          <div className="px-4 py-3 text-xs text-muted-foreground">
+            {translate(
+              'auto.components.teamerge.TeamCollisionsSection.8184d0c773',
+              'No files are claimed.'
+            )}
+          </div>
         ) : (
           claims.map((c) => (
             <GroupedRow
@@ -162,7 +229,10 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
                         .then(() => refreshTeamergeNow(tasks))
                     }
                   >
-                    Release
+                    {translate(
+                      'auto.components.teamerge.TeamCollisionsSection.dd34db5f7d',
+                      'Release'
+                    )}
                   </Button>
                 ) : null
               }
@@ -171,7 +241,12 @@ export function TeamCollisionsSection({ tasks }: { tasks: TeamergeRepoTasks }): 
         )}
       </GroupedList>
 
-      <GroupedList title="Ask from Any Agent">
+      <GroupedList
+        title={translate(
+          'auto.components.teamerge.TeamCollisionsSection.fa125621ab',
+          'Ask from Any Agent'
+        )}
+      >
         {[
           ['teamerge context', 'Who else is working on what, and where your task overlaps'],
           [

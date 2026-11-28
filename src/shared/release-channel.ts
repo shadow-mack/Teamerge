@@ -19,10 +19,12 @@ export const RELEASE_CHANNEL_LABELS: Readonly<Record<ReleaseChannel, string>> = 
 }
 
 /** Keep dev tags out of the 10-entry main releases feed, where hourlies would evict stable/RC updates. */
-export const HOURLY_RELEASE_REPO = 'stablyai/orca-hourly'
-export const DAILY_RELEASE_REPO = 'stablyai/orca-daily'
-export const ADHOC_RELEASE_REPO = 'stablyai/orca-adhoc'
-export const MAIN_RELEASE_REPO = 'stablyai/orca'
+export const HOURLY_RELEASE_REPO = 'shadow-mack/Teamerge-hourly'
+export const DAILY_RELEASE_REPO = 'shadow-mack/Teamerge-daily'
+export const ADHOC_RELEASE_REPO = 'shadow-mack/Teamerge-adhoc'
+export const MAIN_RELEASE_REPO = 'shadow-mack/Teamerge'
+/** Where the updater's "what's new" and nudge feeds live; both are plain JSON files in the repo. */
+export const WHATS_NEW_FEED_BASE = `https://raw.githubusercontent.com/${MAIN_RELEASE_REPO}/main/docs/whats-new`
 
 /** The dev channels, each published to its own repo rather than the main one. */
 const DEDICATED_REPO_CHANNELS = ['hourly', 'daily', 'adhoc'] as const

@@ -1,7 +1,7 @@
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { childTaskStatus, mergeAllReady, updateFromParent } from './branch-flow'
 import { assessEditRisk, claimFiles, computeCollisions } from './collisions'
 import { git, nodeGitRunner as run } from './git-runner'
@@ -11,6 +11,7 @@ import { enqueueForLanding, landAll, undoLanding } from './landing-queue'
 import { compareRace, createRace, pickRaceWinner } from './races'
 import { RelayClient, type TeamPayload } from './relay-client'
 import { startRelayServer } from './relay-server'
+import { isSafeBranchName, toTypeableLine, withoutControlChars } from './teammate-input'
 
 let root: string
 let repo: string
@@ -189,27 +190,22 @@ describe('end-to-end encryption and relay', () => {
     const bob = createIdentity('Bob')
     const mallory = createIdentity('Mallory')
     const team = joinTeamFile(createTeamFile(alice, 'Team', ''), bob)
-    const env = seal(
-      alice,
-      team.members.find((m) => m.id === bob.memberId)!,
-      { kind: 'x', secret: 's3cret' }
-    )
+    const bobMember = team.members.find((m) => m.id === bob.memberId)!
+    const env = seal(alice, team, bobMember, { kind: 'x', secret: 's3cret' })
     expect(JSON.stringify(env)).not.toContain('s3cret')
     expect(open(bob, team, env)?.payload).toEqual({ kind: 'x', secret: 's3cret' })
     expect(open(mallory, team, env)).toBeNull()
 
+    const sentAt = 1_000_000
+    const old = seal(alice, team, bobMember, { kind: 'x' }, sentAt)
+    expect(open(bob, team, old, sentAt + 60_000)).not.toBeNull()
+    expect(open(bob, team, old, sentAt + 10 * 60_000)).toBeNull()
+    const otherTeam = seal(alice, { teamId: 'another-team' }, bobMember, { kind: 'x' })
+    expect(open(bob, team, otherTeam)).toBeNull()
+
     const relay = await startRelayServer({ port: 0, host: '127.0.0.1' })
     team.relayUrl = `ws://127.0.0.1:${relay.port}`
     const received: TeamPayload[] = []
-    const connected = (client: RelayClient, peers: number): Promise<void> =>
-      new Promise((resolve) => {
-        const check = setInterval(() => {
-          if (client.onlinePeers.length >= peers) {
-            clearInterval(check)
-            resolve()
-          }
-        }, 20)
-      })
     const a = new RelayClient(alice, team, {
       onState: () => {},
       onPeers: () => {},
@@ -222,12 +218,29 @@ describe('end-to-end encryption and relay', () => {
     })
     a.connect()
     b.connect()
-    await Promise.all([connected(a, 1), connected(b, 1)])
+    await vi.waitFor(() => {
+      expect(a.onlinePeers).toHaveLength(1)
+      expect(b.onlinePeers).toHaveLength(1)
+    })
     a.send('everyone', { kind: 'hello', text: 'hi bob' })
-    await new Promise((resolve) => setTimeout(resolve, 200))
-    expect(received).toEqual([{ kind: 'hello', text: 'hi bob', name: 'Alice' }])
+    await vi.waitFor(() =>
+      expect(received).toEqual([{ kind: 'hello', text: 'hi bob', name: 'Alice' }])
+    )
     a.close()
     b.close()
     await relay.close()
+  })
+})
+
+describe('teammate input', () => {
+  it('rejects branch names git could read as options and strips control keys', () => {
+    expect(isSafeBranchName('feature/login-fix')).toBe(true)
+    for (const bad of ['--upload-pack=touch /tmp/x', '-x', 'a..b', 'a b', 'a:b', 'x.lock', '']) {
+      expect(isSafeBranchName(bad)).toBe(false)
+    }
+    expect(toTypeableLine('fix it\x1b[2J\x03 now\r\nplease')).toBe('fix it now please')
+    expect(withoutControlChars('line one\r\n\tline\x1b two\x1b[31m red\x1b]0;title\x07')).toBe(
+      'line one\n\tline two red'
+    )
   })
 })

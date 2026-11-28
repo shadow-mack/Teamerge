@@ -1132,7 +1132,6 @@
       "df1d56bf87": "In der Arbeitsbereichs-Shell ist ein Fehler aufgetreten.",
       "9e0b441a91": "Rechte Seitenleiste ein-/ausblenden",
       "e81217c1b7": "App-Namen ausblenden",
-      "5096cbbc86": "Orca",
       "8b0b8eb54f": "Anwendungsmenü",
       "caea5b51b9": "Jetzt neu starten",
       "0a9e810705": "Änderungen werden erst nach einem Neustart gespeichert. Die bisherigen Tabs sind sicher auf dem Datenträger gespeichert.",
@@ -2381,9 +2380,6 @@
       },
       "Landing": {
         "f9eaa9e12d": "Projekt hinzufügen",
-        "6ca6ff404e": "ORCA",
-        "520304a067": "Orca-Logo",
-        "c1cf168479": "Ausblenden",
         "00cee697c1": "\"gh auth login\" in einem Terminal ausführen, um das GitHub-Konto zu verbinden.",
         "9f96d018b7": "GitHub CLI ist nicht authentifiziert",
         "73e1ad4282": "Orca verwendet die GitHub CLI (gh), um Pull Requests, Issues und Checks anzuzeigen.",
@@ -2392,9 +2388,6 @@
         "e5b7296d9d": "Git ist nicht installiert",
         "cd21242762": "Zum Einstieg ein Projekt hinzufügen.",
         "9c00bd4adf": "Zum Einstieg einen Arbeitsbereich in der Seitenleiste auswählen.",
-        "0d0ace8861": "Stern auf GitHub vergeben",
-        "ec43b38ba7": "Auf GitHub mit einem Stern markiert",
-        "157bb5ecbb": "GitHub öffnen",
         "preflightDismiss": "Ausblenden",
         "moveUpWorkspace": "Vorherigen Arbeitsbereich auswählen",
         "moveDownWorkspace": "Nächsten Arbeitsbereich auswählen",
@@ -5232,7 +5225,6 @@
         "share": {
           "card": {
             "utils": {
-              "19f4b4dc75": "github.com/stablyai/orca",
               "d864fc5f98": "Ausgabe",
               "5d66fdd7c2": "Eingabe",
               "7080aeaebb": "Denkprozess",
@@ -6228,7 +6220,6 @@
           "80611a8b10": "Suchen",
           "0c3395fd32": "Worktrees und Browser-Tabs durchsuchen",
           "c86d83b5c3": "Neu",
-          "1b5c41caee": "Orca Mobile",
           "f323383e9a": "Automatisierungen",
           "e7ad3c540d": "Jira-Aufgaben öffnen",
           "c39ab10000": "Linear-Aufgaben öffnen",

@@ -8,7 +8,7 @@ vi.mock('electron', () => ({
 }))
 
 import { submitFeedback } from './feedback'
-import { FEEDBACK_API_URL, postFeedback, type FeedbackSubmitBody } from './feedback-request'
+import { postFeedback, type FeedbackSubmitBody } from './feedback-request'
 
 const plainSubmission: Parameters<typeof submitFeedback>[0] = {
   feedback: 'request ownership regression',
@@ -30,8 +30,13 @@ function requestSignal(index = 0): AbortSignal {
   return signal
 }
 
+const TEST_FEEDBACK_URL = 'https://feedback.test/v1/feedback'
+
 describe('feedback request ownership', () => {
-  beforeEach(() => fetchMock.mockReset())
+  beforeEach(() => {
+    fetchMock.mockReset()
+    vi.stubEnv('TEAMERGE_FEEDBACK_URL', TEST_FEEDBACK_URL)
+  })
 
   it('retires both failed text attempts while preserving the retry result', async () => {
     fetchMock.mockResolvedValue(new Response('unused error', { status: 503 }))
@@ -119,7 +124,7 @@ describe('feedback request ownership', () => {
     const failure = new Error('response reader failure')
 
     await expect(
-      postFeedback(FEEDBACK_API_URL, body, undefined, async () => {
+      postFeedback(TEST_FEEDBACK_URL, body, undefined, async () => {
         throw failure
       })
     ).rejects.toBe(failure)

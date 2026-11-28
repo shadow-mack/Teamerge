@@ -1110,7 +1110,6 @@
       "df1d56bf87": "Çalışma alanı kabuğu bir hatayla karşılaştı.",
       "9e0b441a91": "Sağ kenar çubuğunu aç/kapat",
       "e81217c1b7": "Uygulama Adını Gizle",
-      "5096cbbc86": "Orca",
       "8b0b8eb54f": "Uygulama menüsü",
       "caea5b51b9": "Şimdi yeniden başlat",
       "0a9e810705": "Değişiklikler yeniden başlatana kadar kaydedilmeyecek. Önceki sekmeleriniz diskte güvende.",
@@ -2359,9 +2358,6 @@
       },
       "Landing": {
         "f9eaa9e12d": "Proje ekle",
-        "6ca6ff404e": "ORCA",
-        "520304a067": "Orca logosu",
-        "c1cf168479": "Gizle",
         "00cee697c1": "GitHub hesabınızı bağlamak için bir terminalde \"gh auth login\" komutunu çalıştırın.",
         "9f96d018b7": "GitHub CLI kimlik doğrulaması yapılmamış",
         "73e1ad4282": "Orca, pull request'leri, sorunları ve kontrolleri göstermek için GitHub CLI'yi (gh) kullanır.",
@@ -2370,9 +2366,6 @@
         "e5b7296d9d": "Git kurulu değil",
         "cd21242762": "Başlamak için bir proje ekleyin.",
         "9c00bd4adf": "Başlamak için kenar çubuğundan bir çalışma alanı seçin.",
-        "0d0ace8861": "GitHub'da yıldızla",
-        "ec43b38ba7": "GitHub'da yıldızlandı",
-        "157bb5ecbb": "GitHub'ı aç",
         "preflightDismiss": "Kapat",
         "moveUpWorkspace": "Önceki çalışma alanını seç",
         "moveDownWorkspace": "Sonraki çalışma alanını seç",
@@ -5218,7 +5211,6 @@
         "share": {
           "card": {
             "utils": {
-              "19f4b4dc75": "github.com/stablyai/orca",
               "d864fc5f98": "çıktı",
               "5d66fdd7c2": "girdi",
               "7080aeaebb": "Akıl yürütme",
@@ -6214,7 +6206,6 @@
           "80611a8b10": "Ara",
           "0c3395fd32": "Worktree'lerde ve tarayıcı sekmelerinde ara",
           "c86d83b5c3": "Yeni",
-          "1b5c41caee": "Orca Mobile",
           "f323383e9a": "Otomasyonlar",
           "e7ad3c540d": "Jira görevlerini aç",
           "c39ab10000": "Linear görevlerini aç",

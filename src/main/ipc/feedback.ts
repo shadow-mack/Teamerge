@@ -9,7 +9,9 @@ import type {
 } from '../../shared/feedback-submit-contract'
 import {
   errorFailure,
-  FEEDBACK_API_URL,
+  feedbackServiceUrl,
+  NO_FEEDBACK_SERVICE_MESSAGE,
+  requireFeedbackServiceUrl,
   messageFromError,
   postFeedback,
   responseFailure,
@@ -65,7 +67,7 @@ async function retryFeedbackOnPrimary(
   primaryError?: unknown
 ): Promise<FeedbackSubmitResult> {
   try {
-    const retry = await postFeedback(FEEDBACK_API_URL, body)
+    const retry = await postFeedback(requireFeedbackServiceUrl(), body)
     if (retry.ok) {
       return { ok: true }
     }
@@ -101,7 +103,7 @@ async function postFeedbackWithoutAttachment(
   body: FeedbackSubmitBody
 ): Promise<FeedbackRequestFailure | null> {
   try {
-    const response = await postFeedback(FEEDBACK_API_URL, body)
+    const response = await postFeedback(requireFeedbackServiceUrl(), body)
     return response.ok ? null : responseFailure(response)
   } catch (error) {
     return errorFailure(error)
@@ -125,7 +127,7 @@ async function submitFeedbackWithImages(
   try {
     let imagesDelivered = true
     const response = await postFeedback(
-      FEEDBACK_API_URL,
+      requireFeedbackServiceUrl(),
       body,
       FEEDBACK_ATTACHMENT_REQUEST_TIMEOUT_MS,
       async (nextResponse) => {
@@ -160,7 +162,7 @@ async function submitFeedbackWithDiagnosticBundle(
   try {
     // Large diagnostic bundles need longer upload deadlines than small JSON reports.
     const response = await postFeedback(
-      FEEDBACK_API_URL,
+      requireFeedbackServiceUrl(),
       body,
       FEEDBACK_ATTACHMENT_REQUEST_TIMEOUT_MS
     )
@@ -183,6 +185,9 @@ async function submitFeedbackWithDiagnosticBundle(
 export async function submitFeedback(
   args: InternalFeedbackSubmitArgs
 ): Promise<FeedbackSubmitResult> {
+  if (!feedbackServiceUrl()) {
+    return { ok: false, status: null, error: NO_FEEDBACK_SERVICE_MESSAGE }
+  }
   // Ignore discarded crash-lane images instead of rejecting over unused attachments.
   if (args.submissionType !== 'crash' && args.images !== undefined) {
     const imageError = validateFeedbackImages(args.images)
@@ -206,11 +211,10 @@ export async function submitFeedback(
     return submitFeedbackWithDiagnosticBundle(body, bodyWithoutDiagnosticBundle)
   }
   try {
-    const res = await postFeedback(FEEDBACK_API_URL, body)
+    const res = await postFeedback(requireFeedbackServiceUrl(), body)
     if (res.ok) {
       return { ok: true }
     }
-    // Retry the owning endpoint; api.onorca.dev serves a different product.
     if (res.status >= 500) {
       return retryFeedbackOnPrimary(body, new Error(`status ${res.status}`))
     }

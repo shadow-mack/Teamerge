@@ -1771,7 +1771,6 @@
       "df1d56bf87": "A visualização do espaço de trabalho encontrou um erro.",
       "9e0b441a91": "Alternar barra lateral direita",
       "e81217c1b7": "Ocultar Nome do Aplicativo",
-      "5096cbbc86": "Orca",
       "8b0b8eb54f": "Menu do aplicativo",
       "caea5b51b9": "Reiniciar agora",
       "0a9e810705": "As alterações não serão salvas até reiniciar. Suas abas anteriores estão salvas no disco.",
@@ -11907,7 +11906,6 @@
           "80611a8b10": "Buscar",
           "0c3395fd32": "Buscar worktrees e abas do navegador",
           "c86d83b5c3": "Novo",
-          "1b5c41caee": "Orca Mobile",
           "f323383e9a": "Automações",
           "e7ad3c540d": "Abrir tarefas do Jira",
           "c39ab10000": "Abrir tarefas do Linear",
@@ -15683,7 +15681,6 @@
         "share": {
           "card": {
             "utils": {
-              "19f4b4dc75": "github.com/stablyai/orca",
               "d864fc5f98": "saída",
               "5d66fdd7c2": "entrada",
               "7080aeaebb": "Raciocínio",
@@ -18911,9 +18908,6 @@
       },
       "Landing": {
         "f9eaa9e12d": "Adicionar projeto",
-        "6ca6ff404e": "ORCA",
-        "520304a067": "Logo do Orca",
-        "c1cf168479": "Ocultar",
         "00cee697c1": "Execute \"gh auth login\" em um terminal para conectar sua conta do GitHub.",
         "9f96d018b7": "A CLI do GitHub não está autenticada",
         "73e1ad4282": "O Orca usa a CLI do GitHub (gh) para mostrar pull requests, issues e verificações.",
@@ -18922,9 +18916,6 @@
         "e5b7296d9d": "O Git não está instalado",
         "cd21242762": "Adicione um projeto para começar.",
         "9c00bd4adf": "Selecione um espaço de trabalho na barra lateral para começar.",
-        "0d0ace8861": "Dar estrela no GitHub",
-        "ec43b38ba7": "Com estrela no GitHub",
-        "157bb5ecbb": "Abrir GitHub",
         "preflightDismiss": "Descartar",
         "moveUpWorkspace": "Selecionar espaço de trabalho anterior",
         "moveDownWorkspace": "Selecionar próximo espaço de trabalho",

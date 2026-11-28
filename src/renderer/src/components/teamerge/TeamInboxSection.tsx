@@ -25,6 +25,7 @@ import {
   StatusPill,
   TeamSectionHeader
 } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 function TaskMenu({
   label,
@@ -94,7 +95,13 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
         prompt
       })
       await window.api.teamerge.setHandoffStatus({ id: handoff.id, status: 'taken' })
-      toast.success(`Took “${handoff.title}”. The agent is picking it up.`)
+      toast.success(
+        translate(
+          'auto.components.teamerge.TeamInboxSection.013ac7d750',
+          'Took “{{value0}}”. The agent is picking it up.',
+          { value0: handoff.title }
+        )
+      )
       closeTeamPage()
       setActiveWorktree(worktree.id, worktree.hostId)
     } catch (error) {
@@ -113,18 +120,24 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
   return (
     <div>
       <TeamSectionHeader
-        title="Inbox"
-        subtitle="Hand work to a teammate with a brief, or ask for a review whose line comments go straight to your agent."
+        title={translate('auto.components.teamerge.TeamInboxSection.56d7325dcd', 'Inbox')}
+        subtitle={translate(
+          'auto.components.teamerge.TeamInboxSection.360e785e9c',
+          'Hand work to a teammate with a brief, or ask for a review whose line comments go straight to your agent.'
+        )}
         actions={
           <>
             <TaskMenu
-              label="Request Review"
+              label={translate(
+                'auto.components.teamerge.TeamInboxSection.7a0978bc64',
+                'Request Review'
+              )}
               icon={<FileSearch className="size-4" />}
               tasks={workTasks}
               onPick={setReviewTask}
             />
             <TaskMenu
-              label="Hand Off"
+              label={translate('auto.components.teamerge.TeamInboxSection.b5f2202123', 'Hand Off')}
               icon={<ArrowRightLeft className="size-4" />}
               tasks={workTasks}
               onPick={setHandoffTask}
@@ -135,13 +148,21 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
       {empty ? (
         <EmptyState
           icon={<Inbox />}
-          title="Nothing Waiting"
-          description="Handoffs and review requests from teammates show up here."
+          title={translate(
+            'auto.components.teamerge.TeamInboxSection.36765cdef1',
+            'Nothing Waiting'
+          )}
+          description={translate(
+            'auto.components.teamerge.TeamInboxSection.d34c7467ee',
+            'Handoffs and review requests from teammates show up here.'
+          )}
         />
       ) : null}
 
       {incomingHandoffs.length ? (
-        <GroupedList title="Handed to You">
+        <GroupedList
+          title={translate('auto.components.teamerge.TeamInboxSection.8b921de47e', 'Handed to You')}
+        >
           {incomingHandoffs.map((handoff) => (
             <div key={handoff.id}>
               <GroupedRow
@@ -151,7 +172,15 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
                     <span className="font-medium">{handoff.title}</span>
                     {handoff.status !== 'sent' ? (
                       <StatusPill tone={handoff.status === 'taken' ? 'green' : 'neutral'}>
-                        {handoff.status === 'taken' ? 'Taken' : 'Declined'}
+                        {handoff.status === 'taken'
+                          ? translate(
+                              'auto.components.teamerge.TeamInboxSection.0fb4c61b50',
+                              'Taken'
+                            )
+                          : translate(
+                              'auto.components.teamerge.TeamInboxSection.d554203dcb',
+                              'Declined'
+                            )}
                       </StatusPill>
                     ) : null}
                   </span>
@@ -175,14 +204,25 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
                           })
                         }
                       >
-                        Decline
+                        {translate(
+                          'auto.components.teamerge.TeamInboxSection.03c9847c91',
+                          'Decline'
+                        )}
                       </Button>
                       <Button
                         size="sm"
                         disabled={taking === handoff.id}
                         onClick={() => void take(handoff)}
                       >
-                        {taking === handoff.id ? 'Taking…' : 'Take'}
+                        {taking === handoff.id
+                          ? translate(
+                              'auto.components.teamerge.TeamInboxSection.a6847544e0',
+                              'Taking…'
+                            )
+                          : translate(
+                              'auto.components.teamerge.TeamInboxSection.1af12c8b6a',
+                              'Take'
+                            )}
                       </Button>
                     </>
                   ) : null
@@ -199,7 +239,12 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
       ) : null}
 
       {incomingReviews.length ? (
-        <GroupedList title="Reviews for You">
+        <GroupedList
+          title={translate(
+            'auto.components.teamerge.TeamInboxSection.49397fba9d',
+            'Reviews for You'
+          )}
+        >
           {incomingReviews.map((review) => (
             <GroupedRow
               key={review.id}
@@ -224,10 +269,16 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
                     }
                   >
                     {review.status === 'done'
-                      ? 'Reviewed'
+                      ? translate(
+                          'auto.components.teamerge.TeamInboxSection.c270cea026',
+                          'Reviewed'
+                        )
                       : review.status === 'in-review'
-                        ? 'In review'
-                        : 'New'}
+                        ? translate(
+                            'auto.components.teamerge.TeamInboxSection.7cb322331d',
+                            'In review'
+                          )
+                        : translate('auto.components.teamerge.TeamInboxSection.d2aa8a4784', 'New')}
                   </StatusPill>
                   <Eye className="size-4 text-muted-foreground" />
                 </>
@@ -238,12 +289,18 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
       ) : null}
 
       {outgoingHandoffs.length || outgoingReviews.length ? (
-        <GroupedList title="Sent">
+        <GroupedList
+          title={translate('auto.components.teamerge.TeamInboxSection.f4225bb43a', 'Sent')}
+        >
           {outgoingHandoffs.map((handoff) => (
             <GroupedRow
               key={handoff.id}
               leading={<Send className="size-4 text-muted-foreground" />}
-              title={`Handed off “${handoff.title}”`}
+              title={translate(
+                'auto.components.teamerge.TeamInboxSection.0cd679c150',
+                'Handed off “{{value0}}”',
+                { value0: handoff.title }
+              )}
               subtitle={relativeTime(handoff.createdAt)}
               trailing={
                 <StatusPill
@@ -256,10 +313,13 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
                   }
                 >
                   {handoff.status === 'sent'
-                    ? 'Waiting'
+                    ? translate('auto.components.teamerge.TeamInboxSection.df3cac26f2', 'Waiting')
                     : handoff.status === 'taken'
-                      ? 'Taken'
-                      : 'Declined'}
+                      ? translate('auto.components.teamerge.TeamInboxSection.0fb4c61b50', 'Taken')
+                      : translate(
+                          'auto.components.teamerge.TeamInboxSection.d554203dcb',
+                          'Declined'
+                        )}
                 </StatusPill>
               }
             />
@@ -271,11 +331,23 @@ export function TeamInboxSection({ tasks }: { tasks: TeamergeRepoTasks }): React
                 key={review.id}
                 onClick={() => setOpenReviewId(review.id)}
                 leading={<FileSearch className="size-4 text-muted-foreground" />}
-                title={`Review of “${review.title}”`}
+                title={translate(
+                  'auto.components.teamerge.TeamInboxSection.00c04103fc',
+                  'Review of “{{value0}}”',
+                  { value0: review.title }
+                )}
                 subtitle={`${count} ${count === 1 ? 'comment' : 'comments'} · ${relativeTime(review.createdAt)}`}
                 trailing={
                   <StatusPill tone={review.status === 'done' ? 'green' : 'blue'}>
-                    {review.status === 'done' ? 'Reviewed' : 'Waiting'}
+                    {review.status === 'done'
+                      ? translate(
+                          'auto.components.teamerge.TeamInboxSection.c270cea026',
+                          'Reviewed'
+                        )
+                      : translate(
+                          'auto.components.teamerge.TeamInboxSection.df3cac26f2',
+                          'Waiting'
+                        )}
                   </StatusPill>
                 }
               />

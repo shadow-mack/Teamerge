@@ -6,7 +6,22 @@ import type {
 } from '../../shared/feedback-submit-contract'
 
 // Main-process HTTP avoids CORS preflights rejected by feedback when packaged renderers use file origins.
-export const FEEDBACK_API_URL = 'https://www.onorca.dev/v1/feedback'
+/** Teamerge runs no feedback service, so nothing is sent unless TEAMERGE_FEEDBACK_URL names your own. */
+export function feedbackServiceUrl(): string | null {
+  return process.env.TEAMERGE_FEEDBACK_URL?.trim() || null
+}
+
+export const NO_FEEDBACK_SERVICE_MESSAGE =
+  'Teamerge has no feedback service. Open an issue at github.com/shadow-mack/Teamerge/issues instead.'
+
+/** For send paths that run only after submitFeedback checked a service is configured. */
+export function requireFeedbackServiceUrl(): string {
+  const url = feedbackServiceUrl()
+  if (!url) {
+    throw new Error(NO_FEEDBACK_SERVICE_MESSAGE)
+  }
+  return url
+}
 const FEEDBACK_REQUEST_TIMEOUT_MS = 10_000
 const DIAGNOSTIC_BUNDLE_CONTENT_TYPE = 'application/x-ndjson'
 

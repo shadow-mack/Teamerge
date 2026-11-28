@@ -13,6 +13,7 @@ import {
   StatusPill,
   TeamSectionHeader
 } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 function Field({
   label,
@@ -55,7 +56,11 @@ export function TeamSettingsSection(): React.JSX.Element {
   const act = async (fn: () => Promise<unknown>, done?: string): Promise<void> => {
     try {
       const result = await fn()
-      toast.success(typeof result === 'string' ? result : (done ?? 'Saved.'))
+      toast.success(
+        typeof result === 'string'
+          ? result
+          : (done ?? translate('auto.components.teamerge.TeamSettingsSection.744b91a065', 'Saved.'))
+      )
     } catch (error) {
       toast.error(errorMessage(error))
     }
@@ -66,12 +71,25 @@ export function TeamSettingsSection(): React.JSX.Element {
   return (
     <div>
       <TeamSectionHeader
-        title="Team Settings"
-        subtitle="The roster lives in .teamerge/team.json. Commit and push changes to it so every teammate’s app agrees."
+        title={translate(
+          'auto.components.teamerge.TeamSettingsSection.c7ed6cd8a9',
+          'Team Settings'
+        )}
+        subtitle={translate(
+          'auto.components.teamerge.TeamSettingsSection.ec41a0c6de',
+          'The roster lives in .teamerge/team.json. Commit and push changes to it so every teammate’s app agrees.'
+        )}
       />
 
-      <GroupedList title="You">
-        <Field label="Display name">
+      <GroupedList
+        title={translate('auto.components.teamerge.TeamSettingsSection.54b32f2062', 'You')}
+      >
+        <Field
+          label={translate(
+            'auto.components.teamerge.TeamSettingsSection.c6c70aa3e1',
+            'Display name'
+          )}
+        >
           <Input
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
@@ -83,21 +101,32 @@ export function TeamSettingsSection(): React.JSX.Element {
             disabled={!displayName.trim() || displayName === status?.identity?.name}
             onClick={() => void act(() => window.api.teamerge.setDisplayName(displayName))}
           >
-            Save
+            {translate('auto.components.teamerge.TeamSettingsSection.1b7885893c', 'Save')}
           </Button>
         </Field>
-        <Field label="Member ID">
+        <Field
+          label={translate('auto.components.teamerge.TeamSettingsSection.c8a428b20a', 'Member ID')}
+        >
           <code className="font-mono text-xs text-muted-foreground">{me}</code>
         </Field>
       </GroupedList>
 
       {team ? (
         <>
-          <GroupedList title="Team">
-            <Field label="Name">
+          <GroupedList
+            title={translate('auto.components.teamerge.TeamSettingsSection.41563c5114', 'Team')}
+          >
+            <Field
+              label={translate('auto.components.teamerge.TeamSettingsSection.11a4cd082d', 'Name')}
+            >
               <Input value={name} onChange={(e) => setName(e.target.value)} className="max-w-xs" />
             </Field>
-            <Field label="Relay URL">
+            <Field
+              label={translate(
+                'auto.components.teamerge.TeamSettingsSection.e7047539e6',
+                'Relay URL'
+              )}
+            >
               <Input
                 value={relayUrl}
                 onChange={(e) => setRelayUrl(e.target.value)}
@@ -111,7 +140,10 @@ export function TeamSettingsSection(): React.JSX.Element {
                 onClick={() => void act(() => window.api.teamerge.commitTeamFile())}
               >
                 <GitCommitHorizontal className="size-4" />
-                Commit Roster
+                {translate(
+                  'auto.components.teamerge.TeamSettingsSection.558d7b541f',
+                  'Commit Roster'
+                )}
               </Button>
               <Button
                 size="sm"
@@ -120,13 +152,16 @@ export function TeamSettingsSection(): React.JSX.Element {
                   void act(() => window.api.teamerge.updateTeamSettings({ name, relayUrl }))
                 }
               >
-                Save Changes
+                {translate(
+                  'auto.components.teamerge.TeamSettingsSection.4805cc70b3',
+                  'Save Changes'
+                )}
               </Button>
             </div>
           </GroupedList>
 
           <GroupedList
-            title="Members"
+            title={translate('auto.components.teamerge.TeamSettingsSection.e2b43839e5', 'Members')}
             footer="Removing a member drops their key from the roster. Commit and push to make it stick."
           >
             {team.members.map((member) => (
@@ -142,7 +177,14 @@ export function TeamSettingsSection(): React.JSX.Element {
                 title={
                   <span className="flex items-center gap-2">
                     {member.name}
-                    {member.id === me ? <StatusPill tone="indigo">You</StatusPill> : null}
+                    {member.id === me ? (
+                      <StatusPill tone="indigo">
+                        {translate(
+                          'auto.components.teamerge.TeamSettingsSection.54b32f2062',
+                          'You'
+                        )}
+                      </StatusPill>
+                    ) : null}
                   </span>
                 }
                 subtitle={<span className="font-mono">{member.id}</span>}
@@ -152,7 +194,15 @@ export function TeamSettingsSection(): React.JSX.Element {
                       size="xs"
                       variant="ghost"
                       onClick={() => {
-                        if (window.confirm(`Remove ${member.name} from the team roster?`)) {
+                        if (
+                          window.confirm(
+                            translate(
+                              'auto.components.teamerge.TeamSettingsSection.dbf2b0fe63',
+                              'Remove {{value0}} from the team roster?',
+                              { value0: member.name }
+                            )
+                          )
+                        ) {
                           void act(
                             () => window.api.teamerge.removeMember(member.id),
                             `Removed ${member.name}. Commit the roster to finish.`
@@ -161,7 +211,10 @@ export function TeamSettingsSection(): React.JSX.Element {
                       }}
                     >
                       <UserMinus />
-                      Remove
+                      {translate(
+                        'auto.components.teamerge.TeamSettingsSection.3c7b8371f8',
+                        'Remove'
+                      )}
                     </Button>
                   ) : null
                 }
@@ -172,7 +225,10 @@ export function TeamSettingsSection(): React.JSX.Element {
       ) : null}
 
       <GroupedList
-        title="Relay on This Mac"
+        title={translate(
+          'auto.components.teamerge.TeamSettingsSection.9251448fcc',
+          'Relay on This Mac'
+        )}
         footer="The relay only forwards sealed envelopes between members. You can also run it anywhere with `teamerge relay`."
       >
         <GroupedRow
@@ -183,11 +239,26 @@ export function TeamSettingsSection(): React.JSX.Element {
               }
             />
           }
-          title={relay.running ? `Running on port ${relay.port}` : 'Not running'}
+          title={
+            relay.running
+              ? translate(
+                  'auto.components.teamerge.TeamSettingsSection.102be969b1',
+                  'Running on port {{value0}}',
+                  { value0: relay.port }
+                )
+              : translate('auto.components.teamerge.TeamSettingsSection.fc78deb481', 'Not running')
+          }
           subtitle={
             relay.running
-              ? `${relay.peers} connected ${relay.peers === 1 ? 'member' : 'members'}`
-              : 'Host the relay here for teammates on your network.'
+              ? translate(
+                  'auto.components.teamerge.TeamSettingsSection.585e8fca95',
+                  '{{count}} connected members',
+                  { count: relay.peers, defaultValue_one: '{{count}} connected member' }
+                )
+              : translate(
+                  'auto.components.teamerge.TeamSettingsSection.dd479fe166',
+                  'Host the relay here for teammates on your network.'
+                )
           }
           trailing={
             <Button
@@ -204,18 +275,31 @@ export function TeamSettingsSection(): React.JSX.Element {
                   .catch((error) => toast.error(errorMessage(error)))
               }
             >
-              {relay.running ? 'Stop Relay' : 'Start Relay'}
+              {relay.running
+                ? translate('auto.components.teamerge.TeamSettingsSection.139a3de806', 'Stop Relay')
+                : translate(
+                    'auto.components.teamerge.TeamSettingsSection.2f13c832b4',
+                    'Start Relay'
+                  )}
             </Button>
           }
         />
       </GroupedList>
 
       <GroupedList
-        title="Remote Keystroke Log"
+        title={translate(
+          'auto.components.teamerge.TeamSettingsSection.7c21711f3e',
+          'Remote Keystroke Log'
+        )}
         footer="Every keystroke a teammate sends to your shared panes, with your decision."
       >
         {audit.length === 0 ? (
-          <div className="px-4 py-3 text-xs text-muted-foreground">No remote keystrokes yet.</div>
+          <div className="px-4 py-3 text-xs text-muted-foreground">
+            {translate(
+              'auto.components.teamerge.TeamSettingsSection.96bc425a6c',
+              'No remote keystrokes yet.'
+            )}
+          </div>
         ) : (
           audit
             .slice(0, 50)

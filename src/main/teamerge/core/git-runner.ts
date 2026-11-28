@@ -1,4 +1,4 @@
-import { execFile } from 'node:child_process'
+import { runProcess } from '@orca/process-host'
 
 export type GitRunOptions = { stdin?: string; allowFailure?: boolean }
 
@@ -16,30 +16,34 @@ export class GitCommandError extends Error {
   }
 }
 
-export const nodeGitRunner: GitRunner = (cwd, args, options = {}) =>
-  new Promise((resolve, reject) => {
-    const child = execFile(
-      'git',
-      args,
-      {
-        cwd,
-        maxBuffer: 64 * 1024 * 1024,
-        env: { ...process.env, GIT_TERMINAL_PROMPT: '0', LC_ALL: 'C' }
-      },
-      (error, stdout, stderr) => {
-        const code = error ? (typeof error.code === 'number' ? error.code : 1) : 0
-        const result = { stdout: String(stdout), stderr: String(stderr), code }
-        if (code !== 0 && !options.allowFailure) {
-          reject(new GitCommandError(args, result))
-          return
-        }
-        resolve(result)
-      }
-    )
-    if (options.stdin !== undefined) {
-      child.stdin?.end(options.stdin)
-    }
+const GIT_TIMEOUT_MS = 10 * 60 * 1000
+const GIT_MAX_OUTPUT_BYTES = 64 * 1024 * 1024
+
+export const nodeGitRunner: GitRunner = async (cwd, args, options = {}) => {
+  const run = await runProcess({
+    program: 'git',
+    args,
+    cwd,
+    input: options.stdin,
+    timeoutMs: GIT_TIMEOUT_MS,
+    maxOutputBytes: GIT_MAX_OUTPUT_BYTES,
+    env: { ...process.env, GIT_TERMINAL_PROMPT: '0', LC_ALL: 'C' }
   })
+  const failure = run.timedOut
+    ? `git ${args[0]} timed out`
+    : run.outputTruncated
+      ? `git ${args[0]} produced more output than Teamerge reads`
+      : null
+  const result = {
+    stdout: run.stdout,
+    stderr: failure ?? run.stderr,
+    code: failure ? 1 : (run.code ?? 1)
+  }
+  if (result.code !== 0 && !options.allowFailure) {
+    throw new GitCommandError(args, result)
+  }
+  return result
+}
 
 export async function git(
   run: GitRunner,

@@ -28,26 +28,60 @@ import { TeamLandingSection } from './TeamLandingSection'
 import { TeamRacesSection } from './TeamRacesSection'
 import { TeamSettingsSection } from './TeamSettingsSection'
 import { RemotePaneViewer } from './RemotePaneViewer'
+import { translate } from '@/i18n/i18n'
 
 type NavItem = { id: TeamSection; label: string; icon: React.ComponentType<{ className?: string }> }
 
-const NAV_GROUPS: { label: string; items: NavItem[] }[] = [
+// A function so labels follow the current language.
+const navGroups = (): { label: string; items: NavItem[] }[] => [
   {
-    label: 'Team',
+    label: translate('auto.components.teamerge.TeamPage.e410cbfd99', 'Team'),
     items: [
-      { id: 'people', label: 'People', icon: Users },
-      { id: 'inbox', label: 'Inbox', icon: Inbox },
-      { id: 'messages', label: 'Agent Messages', icon: MessagesSquare },
-      { id: 'notes', label: 'Notes', icon: NotebookPen }
+      {
+        id: 'people',
+        label: translate('auto.components.teamerge.TeamPage.bf24fc9d8b', 'People'),
+        icon: Users
+      },
+      {
+        id: 'inbox',
+        label: translate('auto.components.teamerge.TeamPage.3cb275013a', 'Inbox'),
+        icon: Inbox
+      },
+      {
+        id: 'messages',
+        label: translate('auto.components.teamerge.TeamPage.d2e418ac41', 'Agent Messages'),
+        icon: MessagesSquare
+      },
+      {
+        id: 'notes',
+        label: translate('auto.components.teamerge.TeamPage.a064c5e810', 'Notes'),
+        icon: NotebookPen
+      }
     ]
   },
   {
-    label: 'Work',
+    label: translate('auto.components.teamerge.TeamPage.ffb7b428ad', 'Work'),
     items: [
-      { id: 'tasks', label: 'Task Tree', icon: Workflow },
-      { id: 'collisions', label: 'Collisions', icon: Flag },
-      { id: 'landing', label: 'Landing Queue', icon: ArrowDownToLine },
-      { id: 'races', label: 'Races', icon: Swords }
+      {
+        id: 'tasks',
+        label: translate('auto.components.teamerge.TeamPage.f820087e34', 'Task Tree'),
+        icon: Workflow
+      },
+      {
+        id: 'collisions',
+        label: translate('auto.components.teamerge.TeamPage.e16cce7d99', 'Collisions'),
+        icon: Flag
+      },
+      {
+        id: 'landing',
+        label: translate('auto.components.teamerge.TeamPage.e5499a4741', 'Landing Queue'),
+        icon: ArrowDownToLine
+      },
+      {
+        id: 'races',
+        label: translate('auto.components.teamerge.TeamPage.459d5bb66b', 'Races'),
+        icon: Swords
+      }
     ]
   }
 ]
@@ -158,7 +192,7 @@ export default function TeamPage(): React.JSX.Element {
   return (
     <div className="flex h-full min-h-0 w-full bg-background" data-teamerge-page="">
       <nav
-        aria-label="Team sections"
+        aria-label={translate('auto.components.teamerge.TeamPage.32d4f8696e', 'Team sections')}
         className="flex w-56 shrink-0 flex-col border-r border-border/70 bg-worktree-sidebar/60 px-2.5 pt-4 pb-3"
       >
         <div className="mb-4 flex items-center gap-2 px-2">
@@ -167,15 +201,17 @@ export default function TeamPage(): React.JSX.Element {
           </div>
           <div className="min-w-0">
             <div className="truncate text-[13px] font-semibold leading-4">
-              {status?.team?.name ?? 'Teamerge'}
+              {status?.team?.name ??
+                translate('auto.components.teamerge.TeamPage.6cc518bb77', 'Teamerge')}
             </div>
             <div className="truncate text-2xs text-muted-foreground">
-              {tasks.repo?.displayName ?? 'No repository'}
+              {tasks.repo?.displayName ??
+                translate('auto.components.teamerge.TeamPage.5ad095033e', 'No repository')}
             </div>
           </div>
         </div>
         <div className="flex-1 space-y-4 overflow-y-auto scrollbar-sleek">
-          {NAV_GROUPS.map((group) => (
+          {navGroups().map((group) => (
             <div key={group.label}>
               <div className="px-2 pb-1 text-2xs font-semibold text-muted-foreground/80">
                 {group.label}
@@ -240,14 +276,19 @@ export default function TeamPage(): React.JSX.Element {
               section === 'settings' ? 'text-primary' : 'text-muted-foreground'
             )}
           />
-          Team Settings
+          {translate('auto.components.teamerge.TeamPage.4ef56de10b', 'Team Settings')}
         </button>
       </nav>
 
       <main className="relative flex min-w-0 flex-1 flex-col">
         <div className="flex h-11 shrink-0 items-center justify-end gap-2 border-b border-border/60 px-4">
           <RelayIndicator />
-          <Button variant="ghost" size="icon-sm" aria-label="Close Team" onClick={closeTeamPage}>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label={translate('auto.components.teamerge.TeamPage.2f70bee216', 'Close Team')}
+            onClick={closeTeamPage}
+          >
             <X className="size-4" />
           </Button>
         </div>

@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import { lazyWithRetry } from '@/lib/lazy-with-retry'
 import { relativeTime, useTeamergeStore } from './teamerge-store'
 import { EmptyState, errorMessage, MemberAvatar, TeamSectionHeader } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 const CommentMarkdown = lazyWithRetry(() => import('../sidebar/CommentMarkdown'))
 
@@ -63,21 +64,31 @@ export function TeamNotesSection(): React.JSX.Element {
   return (
     <div>
       <TeamSectionHeader
-        title="Notes"
-        subtitle="Markdown notes shared with the whole team, end-to-end encrypted. Each note is also written to .teamerge/notes so you can commit it."
+        title={translate('auto.components.teamerge.TeamNotesSection.5ab71adedc', 'Notes')}
+        subtitle={translate(
+          'auto.components.teamerge.TeamNotesSection.c0c8291466',
+          'Markdown notes shared with the whole team, end-to-end encrypted. Each note is also written to .teamerge/notes so you can commit it.'
+        )}
         actions={
           <Button size="sm" onClick={startNew}>
             <Plus className="size-4" />
-            New Note
+            {translate('auto.components.teamerge.TeamNotesSection.780b17c06d', 'New Note')}
           </Button>
         }
       />
       {notes.length === 0 && selectedId !== NEW_NOTE ? (
         <EmptyState
           icon={<NotebookPen />}
-          title="No Notes Yet"
-          description="Capture decisions, conventions, or the plan for a big change where every teammate — and their agents — can read it."
-          action={<Button onClick={startNew}>New Note</Button>}
+          title={translate('auto.components.teamerge.TeamNotesSection.71522457a6', 'No Notes Yet')}
+          description={translate(
+            'auto.components.teamerge.TeamNotesSection.5cf5f3038d',
+            'Capture decisions, conventions, or the plan for a big change where every teammate — and their agents — can read it.'
+          )}
+          action={
+            <Button onClick={startNew}>
+              {translate('auto.components.teamerge.TeamNotesSection.780b17c06d', 'New Note')}
+            </Button>
+          }
         />
       ) : (
         <div className="grid min-h-[480px] grid-cols-[240px_1fr] overflow-hidden rounded-xl border border-border/80 bg-card shadow-[var(--shadow-card)]">
@@ -109,16 +120,28 @@ export function TeamNotesSection(): React.JSX.Element {
                 <div className="border-b border-border/70 px-5 py-3">
                   <Input
                     autoFocus
-                    aria-label="Note title"
-                    placeholder="Title"
+                    aria-label={translate(
+                      'auto.components.teamerge.TeamNotesSection.9a5929fd86',
+                      'Note title'
+                    )}
+                    placeholder={translate(
+                      'auto.components.teamerge.TeamNotesSection.280e1ce4b0',
+                      'Title'
+                    )}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className="h-auto border-none bg-transparent px-0 text-[17px] font-semibold shadow-none focus-visible:ring-0 dark:bg-transparent"
                   />
                 </div>
                 <Textarea
-                  aria-label="Note body"
-                  placeholder="Write in Markdown…"
+                  aria-label={translate(
+                    'auto.components.teamerge.TeamNotesSection.9606456035',
+                    'Note body'
+                  )}
+                  placeholder={translate(
+                    'auto.components.teamerge.TeamNotesSection.65dfc2e24e',
+                    'Write in Markdown…'
+                  )}
                   value={body}
                   onChange={(e) => setBody(e.target.value)}
                   className="min-h-0 flex-1 resize-none rounded-none border-none px-5 py-4 font-mono text-[13px] leading-6 shadow-none focus-visible:ring-0 dark:bg-transparent"
@@ -134,10 +157,13 @@ export function TeamNotesSection(): React.JSX.Element {
                       }
                     }}
                   >
-                    Cancel
+                    {translate('auto.components.teamerge.TeamNotesSection.409b24a32d', 'Cancel')}
                   </Button>
                   <Button size="sm" disabled={busy || !title.trim()} onClick={() => void save()}>
-                    Save and Share
+                    {translate(
+                      'auto.components.teamerge.TeamNotesSection.93b127728d',
+                      'Save and Share'
+                    )}
                   </Button>
                 </div>
               </>
@@ -150,18 +176,33 @@ export function TeamNotesSection(): React.JSX.Element {
                       {selected.title}
                     </div>
                     <div className="text-2xs text-muted-foreground">
-                      Last edited by {selected.authorName} · {relativeTime(selected.updatedAt)}
+                      {translate(
+                        'auto.components.teamerge.TeamNotesSection.a6460ba100',
+                        'Last edited by'
+                      )}{' '}
+                      {selected.authorName} · {relativeTime(selected.updatedAt)}
                     </div>
                   </div>
                   <Button size="sm" variant="outline" onClick={() => setEditing(true)}>
-                    Edit
+                    {translate('auto.components.teamerge.TeamNotesSection.7189bd20be', 'Edit')}
                   </Button>
                   <Button
                     size="icon-sm"
                     variant="ghost"
-                    aria-label="Delete note"
+                    aria-label={translate(
+                      'auto.components.teamerge.TeamNotesSection.0b0ef1886f',
+                      'Delete note'
+                    )}
                     onClick={() => {
-                      if (window.confirm(`Delete “${selected.title}” for the whole team?`)) {
+                      if (
+                        window.confirm(
+                          translate(
+                            'auto.components.teamerge.TeamNotesSection.e427bba74f',
+                            'Delete “{{value0}}” for the whole team?',
+                            { value0: selected.title }
+                          )
+                        )
+                      ) {
                         void window.api.teamerge.deleteNote(selected.id)
                         setSelectedId(null)
                       }
@@ -178,7 +219,10 @@ export function TeamNotesSection(): React.JSX.Element {
               </>
             ) : (
               <div className="flex flex-1 items-center justify-center text-[13px] text-muted-foreground">
-                Choose a note.
+                {translate(
+                  'auto.components.teamerge.TeamNotesSection.4a8d0d0880',
+                  'Choose a note.'
+                )}
               </div>
             )}
           </div>

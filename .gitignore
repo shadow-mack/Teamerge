@@ -94,6 +94,9 @@ docs/**
 !docs/assets/
 !docs/assets/**
 !docs/readme/
+# The updater reads these feeds from GitHub, so they must be committed.
+!docs/whats-new/
+!docs/whats-new/**
 !docs/readme/**
 !docs/bug-reproductions/
 !docs/bug-reproductions/**
@@ -156,3 +159,6 @@ ci-shards/
 /.build/windows-native-benchmark/
 
 .local/static-analysis-research/
+
+# Firebase config is per-project; never commit it (Teamerge ships without Orca's).
+mobile/google-services.json

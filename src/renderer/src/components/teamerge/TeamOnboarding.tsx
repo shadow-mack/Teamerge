@@ -13,6 +13,7 @@ import {
   MemberAvatar,
   TeamSectionHeader
 } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 function Feature({
   icon,
@@ -47,8 +48,14 @@ export function TeamOnboarding({ noRepo = false }: { noRepo?: boolean }): React.
     return (
       <EmptyState
         icon={<FolderGit2 />}
-        title="Add a Git Repository"
-        description="Teamerge keeps the team roster in the repository itself. Add a repository from the sidebar to set up your team."
+        title={translate(
+          'auto.components.teamerge.TeamOnboarding.6d6e67c621',
+          'Add a Git Repository'
+        )}
+        description={translate(
+          'auto.components.teamerge.TeamOnboarding.7d80a8dbe7',
+          'Teamerge keeps the team roster in the repository itself. Add a repository from the sidebar to set up your team.'
+        )}
       />
     )
   }
@@ -59,7 +66,10 @@ export function TeamOnboarding({ noRepo = false }: { noRepo?: boolean }): React.
       const { urls } = await window.api.teamerge.startLocalRelay()
       setRelayUrl(urls.find((url) => !url.includes('localhost')) ?? urls[0])
       toast.success(
-        'Relay running on this Mac. Teammates on your network can reach it at the URL shown.'
+        translate(
+          'auto.components.teamerge.TeamOnboarding.65fefe57c2',
+          'Relay running on this Mac. Teammates on your network can reach it at the URL shown.'
+        )
       )
     } catch (error) {
       toast.error(errorMessage(error))
@@ -84,30 +94,57 @@ export function TeamOnboarding({ noRepo = false }: { noRepo?: boolean }): React.
   return (
     <div>
       <TeamSectionHeader
-        title={team ? `Join ${team.name}` : 'Work Together, Machine to Machine'}
-        subtitle="Your teammates’ agents show up here, live, from their own laptops. Identity is a key in the repository and traffic is end‑to‑end encrypted through a relay your team hosts."
+        title={
+          team
+            ? translate('auto.components.teamerge.TeamOnboarding.6d286ac15f', 'Join {{value0}}', {
+                value0: team.name
+              })
+            : translate(
+                'auto.components.teamerge.TeamOnboarding.c301cbf88f',
+                'Work Together, Machine to Machine'
+              )
+        }
+        subtitle={translate(
+          'auto.components.teamerge.TeamOnboarding.2ecea7c09b',
+          'Your teammates’ agents show up here, live, from their own laptops. Identity is a key in the repository and traffic is end‑to‑end encrypted through a relay your team hosts.'
+        )}
       />
       <div className="mb-8 grid gap-5 sm:grid-cols-3">
         <Feature
           icon={<KeyRound />}
-          title="No Account"
-          text="Your key lives on this Mac. The roster lives in .teamerge/team.json — anyone who can push is on the team."
+          title={translate('auto.components.teamerge.TeamOnboarding.918dae7441', 'No Account')}
+          text={translate(
+            'auto.components.teamerge.TeamOnboarding.420f97825f',
+            'Your key lives on this Mac. The roster lives in .teamerge/team.json — anyone who can push is on the team.'
+          )}
         />
         <Feature
           icon={<Lock />}
-          title="End‑to‑End Encrypted"
-          text="Messages are sealed for each teammate. The relay forwards ciphertext and can’t read it."
+          title={translate(
+            'auto.components.teamerge.TeamOnboarding.b0c4878e90',
+            'End‑to‑End Encrypted'
+          )}
+          text={translate(
+            'auto.components.teamerge.TeamOnboarding.5c06e4fb26',
+            'Messages are sealed for each teammate. The relay forwards ciphertext and can’t read it.'
+          )}
         />
         <Feature
           icon={<ShieldCheck />}
-          title="You Stay in Control"
-          text="Teammates can watch shared panes, but every keystroke waits for your approval and is logged."
+          title={translate(
+            'auto.components.teamerge.TeamOnboarding.f1ab6974cf',
+            'You Stay in Control'
+          )}
+          text={translate(
+            'auto.components.teamerge.TeamOnboarding.0112295141',
+            'Teammates can watch shared panes, but every keystroke waits for your approval and is logged.'
+          )}
         />
       </div>
 
       {team ? (
         <GroupedList
-          title="Members"
+          title={translate('auto.components.teamerge.TeamOnboarding.014d4f9197', 'Members')}
           footer="Joining adds your public key to the roster. Commit and push it so teammates’ apps accept your messages."
         >
           {team.members.map((member) => (
@@ -129,43 +166,65 @@ export function TeamOnboarding({ noRepo = false }: { noRepo?: boolean }): React.
               }
             >
               <Users className="size-4" />
-              Join Team
+              {translate('auto.components.teamerge.TeamOnboarding.f7adf32862', 'Join Team')}
             </Button>
           </div>
         </GroupedList>
       ) : (
         <GroupedList
-          title="Create a Team"
+          title={translate('auto.components.teamerge.TeamOnboarding.9833f9b40a', 'Create a Team')}
           footer="Creates .teamerge/team.json in this repository with you as the first member."
         >
           <div className="grid gap-4 px-4 py-4">
             <div className="grid gap-1.5">
-              <Label htmlFor="teamerge-team-name">Team name</Label>
+              <Label htmlFor="teamerge-team-name">
+                {translate('auto.components.teamerge.TeamOnboarding.4f052b317f', 'Team name')}
+              </Label>
               <Input
                 id="teamerge-team-name"
-                placeholder="Platform"
+                placeholder={translate(
+                  'auto.components.teamerge.TeamOnboarding.5ad6bc4504',
+                  'Platform'
+                )}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="grid gap-1.5">
-              <Label htmlFor="teamerge-relay">Relay URL</Label>
+              <Label htmlFor="teamerge-relay">
+                {translate('auto.components.teamerge.TeamOnboarding.5386390dce', 'Relay URL')}
+              </Label>
               <div className="flex gap-2">
                 <Input
                   id="teamerge-relay"
                   className="font-mono text-xs"
-                  placeholder="wss://relay.your-team.dev"
+                  placeholder={translate(
+                    'auto.components.teamerge.TeamOnboarding.5f4c4d4eae',
+                    'wss://relay.your-team.dev'
+                  )}
                   value={relayUrl}
                   onChange={(e) => setRelayUrl(e.target.value)}
                 />
                 <Button variant="outline" disabled={busy} onClick={() => void hostRelay()}>
                   <Radio className="size-4" />
-                  Host on This Mac
+                  {translate(
+                    'auto.components.teamerge.TeamOnboarding.7ee7d4f649',
+                    'Host on This Mac'
+                  )}
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground">
-                Run <code className="font-mono">teamerge relay</code> on any server your team can
-                reach, or host it here for a local network.
+                {translate('auto.components.teamerge.TeamOnboarding.baf8652711', 'Run')}{' '}
+                <code className="font-mono">
+                  {translate(
+                    'auto.components.teamerge.TeamOnboarding.ab8dc04d85',
+                    'teamerge relay'
+                  )}
+                </code>{' '}
+                {translate(
+                  'auto.components.teamerge.TeamOnboarding.34f23515f5',
+                  'on any server your team can reach, or host it here for a local network.'
+                )}
               </p>
             </div>
             <div className="flex justify-end">
@@ -178,7 +237,7 @@ export function TeamOnboarding({ noRepo = false }: { noRepo?: boolean }): React.
                   )
                 }
               >
-                Create Team
+                {translate('auto.components.teamerge.TeamOnboarding.2af672b3de', 'Create Team')}
               </Button>
             </div>
           </div>
@@ -186,7 +245,8 @@ export function TeamOnboarding({ noRepo = false }: { noRepo?: boolean }): React.
       )}
       {status?.identity ? (
         <p className="px-1 text-xs text-muted-foreground">
-          This Mac is <span className="font-medium text-foreground">{status.identity.name}</span> ·{' '}
+          {translate('auto.components.teamerge.TeamOnboarding.6265f38166', 'This Mac is')}{' '}
+          <span className="font-medium text-foreground">{status.identity.name}</span> ·{' '}
           <span className="font-mono">{status.identity.memberId}</span>
         </p>
       ) : null}

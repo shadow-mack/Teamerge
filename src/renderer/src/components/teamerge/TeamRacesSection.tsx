@@ -1,41 +1,12 @@
-/* oxlint-disable eslint/max-lines */
 import React, { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { ArrowLeft, Crown, Equal, Minus, Plus, Swords, Trash2 } from 'lucide-react'
+import { ArrowLeft, Crown, Equal, Swords, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-import type {
-  RaceAttempt,
-  RaceFileComparison,
-  RaceGroup
-} from '../../../../shared/teamerge/teamerge-types'
-import type { TuiAgent } from '../../../../shared/agent-launch/catalog/tui-agent'
+import type { RaceFileComparison, RaceGroup } from '../../../../shared/teamerge/teamerge-types'
 import { relativeTime } from './teamerge-store'
 import type { TeamergeRepoTasks } from './use-teamerge-tasks'
-import {
-  createTeamergeWorkspace,
-  RACE_AGENT_CHOICES,
-  removeTeamergeWorkspace,
-  slugForBranch
-} from './teamerge-workspaces'
+import { removeTeamergeWorkspace } from './teamerge-workspaces'
 import {
   BranchLabel,
   EmptyState,
@@ -45,182 +16,17 @@ import {
   StatusPill,
   TeamSectionHeader
 } from './team-ui'
+import { NewRaceDialog } from './NewRaceDialog'
+import { translate } from '@/i18n/i18n'
+import { shortRefName } from '@/lib/git-utils'
 
-const LABELS = ['A', 'B', 'C', 'D']
-
-function NewRaceDialog({
-  tasks,
-  open,
-  onOpenChange,
-  onCreated
-}: {
-  tasks: TeamergeRepoTasks
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onCreated: (race: RaceGroup) => void
-}): React.JSX.Element {
-  const [title, setTitle] = useState('')
-  const [prompt, setPrompt] = useState('')
-  const [base, setBase] = useState(tasks.mainBranch)
-  const [agents, setAgents] = useState<TuiAgent[]>(
-    ['claude', 'codex'].filter((a) => RACE_AGENT_CHOICES.some((c) => c.id === a)) as TuiAgent[]
-  )
-  const [busy, setBusy] = useState(false)
-  const bases = [...new Set([tasks.mainBranch, ...tasks.tasks.map((t) => t.branch)])]
-
-  const start = async (): Promise<void> => {
-    if (!tasks.repo || !tasks.repoPath) {
-      return
-    }
-    setBusy(true)
-    try {
-      const slug = slugForBranch(title)
-      const stamp = Date.now().toString(36).slice(-4)
-      const attempts: RaceAttempt[] = []
-      for (const [index, agent] of agents.entries()) {
-        const label = LABELS[index]
-        const worktree = await createTeamergeWorkspace({
-          repoId: tasks.repo.id,
-          name: `race-${slug}-${stamp}-${label.toLowerCase()}`,
-          baseBranch: base,
-          displayName: `${title} · ${label} (${agent})`,
-          agent,
-          prompt
-        })
-        attempts.push({
-          worktreePath: worktree.path,
-          branch: worktree.branch.replace(/^refs\/heads\//, ''),
-          label,
-          agent
-        })
-      }
-      const race = await window.api.teamerge.createRace({
-        repoPath: tasks.repoPath,
-        title,
-        baseRef: base,
-        attempts
-      })
-      toast.success(`Started ${attempts.length} attempts at “${title}”.`)
-      onCreated(race)
-      onOpenChange(false)
-    } catch (error) {
-      toast.error(errorMessage(error))
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>New Race</DialogTitle>
-          <DialogDescription>
-            Run the same task with several agents in parallel, compare their changes file by file,
-            and keep the best one.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4">
-          <div className="grid gap-1.5">
-            <Label htmlFor="race-title">Name</Label>
-            <Input
-              id="race-title"
-              placeholder="Speed up search indexing"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="grid gap-1.5">
-            <Label htmlFor="race-prompt">Task for every agent</Label>
-            <Textarea
-              id="race-prompt"
-              className="min-h-24"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-            />
-          </div>
-          <div className="grid gap-1.5">
-            <Label>Start from</Label>
-            <Select value={base} onValueChange={setBase}>
-              <SelectTrigger className="w-full font-mono text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {bases.map((b) => (
-                  <SelectItem key={b} value={b} className="font-mono text-xs">
-                    {b}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="grid gap-1.5">
-            <Label>Attempts</Label>
-            <div className="space-y-2">
-              {agents.map((agent, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <span className="flex size-6 items-center justify-center rounded-full bg-muted text-2xs font-semibold">
-                    {LABELS[index]}
-                  </span>
-                  <Select
-                    value={agent}
-                    onValueChange={(value) =>
-                      setAgents(agents.map((a, i) => (i === index ? (value as TuiAgent) : a)))
-                    }
-                  >
-                    <SelectTrigger className="flex-1">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {RACE_AGENT_CHOICES.map((choice) => (
-                        <SelectItem key={choice.id} value={choice.id}>
-                          {choice.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Button
-                    size="icon-sm"
-                    variant="ghost"
-                    aria-label="Remove attempt"
-                    disabled={agents.length <= 2}
-                    onClick={() => setAgents(agents.filter((_, i) => i !== index))}
-                  >
-                    <Minus className="size-4" />
-                  </Button>
-                </div>
-              ))}
-              {agents.length < 4 ? (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setAgents([...agents, agents.at(-1) ?? 'claude'])}
-                >
-                  <Plus className="size-4" />
-                  Add Attempt
-                </Button>
-              ) : null}
-            </div>
-          </div>
-        </div>
-        <DialogFooter>
-          <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button disabled={busy || !title.trim() || !prompt.trim()} onClick={() => void start()}>
-            {busy ? 'Starting…' : `Start ${agents.length} Attempts`}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  )
-}
+const RACE_REFRESH_MS = 4000
 
 function DiffColumn({ diff }: { diff: string }): React.JSX.Element {
   if (!diff.trim()) {
     return (
       <div className="flex h-full items-center justify-center p-6 text-xs text-muted-foreground">
-        Untouched
+        {translate('auto.components.teamerge.TeamRacesSection.4c6293c5ac', 'Untouched')}
       </div>
     )
   }
@@ -261,26 +67,53 @@ function RaceDetail({
   const [keeping, setKeeping] = useState<string | null>(null)
   const repoPath = tasks.repoPath as string
 
+  // Attempts keep changing while their agents work, so the comparison refreshes while open.
+  const [tick, setTick] = useState(0)
   useEffect(() => {
+    const timer = window.setInterval(() => setTick((value) => value + 1), RACE_REFRESH_MS)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
     void window.api.teamerge
       .compareRace({ repoPath, raceId: race.id })
       .then((result) => {
+        if (cancelled) {
+          return
+        }
         setRows(result)
         setFile(
           (current) =>
             current ?? result.find((r) => !r.identical)?.filePath ?? result[0]?.filePath ?? null
         )
       })
-      .catch((error) => toast.error(errorMessage(error)))
-  }, [race.id, repoPath])
+      .catch((error) => {
+        if (!cancelled && tick === 0) {
+          toast.error(errorMessage(error))
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [race.id, repoPath, tick])
 
   useEffect(() => {
-    if (file) {
-      void window.api.teamerge
-        .raceFileDiffs({ repoPath, raceId: race.id, filePath: file })
-        .then(setDiffs)
+    if (!file) {
+      return
     }
-  }, [file, race.id, repoPath])
+    let cancelled = false
+    void window.api.teamerge
+      .raceFileDiffs({ repoPath, raceId: race.id, filePath: file })
+      .then((result) => {
+        if (!cancelled) {
+          setDiffs(result)
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [file, race.id, repoPath, tick])
 
   const totals = race.attempts.map((_, index) =>
     (rows ?? []).reduce(
@@ -297,7 +130,16 @@ function RaceDetail({
     const losers = race.attempts.filter((a) => a.branch !== branch)
     if (
       !window.confirm(
-        `Keep ${branch} and delete the other ${losers.length} ${losers.length === 1 ? 'attempt' : 'attempts'} (their workspaces and uncommitted changes)?`
+        translate(
+          'auto.components.teamerge.TeamRacesSection.fef5262fb7',
+          'Keep {{value0}} and delete the other {{count}} attempts (their workspaces and uncommitted changes)?',
+          {
+            value0: branch,
+            count: losers.length,
+            defaultValue_one:
+              'Keep {{value0}} and delete the other {{count}} attempt (its workspace and uncommitted changes)?'
+          }
+        )
       )
     ) {
       return
@@ -312,7 +154,15 @@ function RaceDetail({
         }
       }
       toast.success(
-        `Kept ${branch}. Removed ${losers.length} other ${losers.length === 1 ? 'attempt' : 'attempts'}.`
+        translate(
+          'auto.components.teamerge.TeamRacesSection.ef569fb3a9',
+          'Kept {{value0}}. Removed {{count}} other attempts.',
+          {
+            value0: branch,
+            count: losers.length,
+            defaultValue_one: 'Kept {{value0}}. Removed {{count}} other attempt.'
+          }
+        )
       )
       onBack()
     } catch (error) {
@@ -327,12 +177,14 @@ function RaceDetail({
       <div className="mb-5 flex items-center gap-3">
         <Button variant="ghost" size="sm" onClick={onBack}>
           <ArrowLeft className="size-4" />
-          Races
+          {translate('auto.components.teamerge.TeamRacesSection.eeb093e1c6', 'Races')}
         </Button>
         <div className="min-w-0 flex-1">
           <h1 className="truncate text-[20px] font-semibold tracking-[-0.02em]">{race.title}</h1>
           <p className="text-xs text-muted-foreground">
-            From <span className="font-mono">{race.baseRef}</span> · {race.attempts.length} attempts
+            {translate('auto.components.teamerge.TeamRacesSection.5d75949bef', 'From')}{' '}
+            <span className="font-mono">{shortRefName(race.baseRef)}</span> · {race.attempts.length}{' '}
+            {translate('auto.components.teamerge.TeamRacesSection.a881df4487', 'attempts')}
           </p>
         </div>
       </div>
@@ -354,7 +206,8 @@ function RaceDetail({
             </div>
             <BranchLabel branch={attempt.branch} className="mt-1 block truncate" />
             <div className="mt-2 text-xs text-muted-foreground">
-              {totals[index].files} files ·{' '}
+              {totals[index].files}{' '}
+              {translate('auto.components.teamerge.TeamRacesSection.06d187cbd5', 'files ·')}{' '}
               <span className="text-status-success">+{totals[index].added}</span>{' '}
               <span className="text-destructive">−{totals[index].removed}</span>
             </div>
@@ -365,7 +218,12 @@ function RaceDetail({
               onClick={() => void keep(attempt.branch)}
             >
               <Crown className="size-3.5" />
-              {keeping === attempt.branch ? 'Keeping…' : 'Keep This One'}
+              {keeping === attempt.branch
+                ? translate('auto.components.teamerge.TeamRacesSection.938daa6b96', 'Keeping…')
+                : translate(
+                    'auto.components.teamerge.TeamRacesSection.c496ef2677',
+                    'Keep This One'
+                  )}
             </Button>
           </div>
         ))}
@@ -374,11 +232,16 @@ function RaceDetail({
       <div className="grid min-h-[420px] grid-cols-[260px_1fr] overflow-hidden rounded-xl border border-border/80 bg-card shadow-[var(--shadow-card)]">
         <ul className="overflow-y-auto scrollbar-sleek border-r border-border/70 bg-muted/30">
           {rows === null ? (
-            <li className="px-3.5 py-3 text-xs text-muted-foreground">Comparing…</li>
+            <li className="px-3.5 py-3 text-xs text-muted-foreground">
+              {translate('auto.components.teamerge.TeamRacesSection.901605a945', 'Comparing…')}
+            </li>
           ) : null}
           {rows?.length === 0 ? (
             <li className="px-3.5 py-3 text-xs text-muted-foreground">
-              No attempt has changed anything yet.
+              {translate(
+                'auto.components.teamerge.TeamRacesSection.1dac21557c',
+                'No attempt has changed anything yet.'
+              )}
             </li>
           ) : null}
           {rows?.map((row) => (
@@ -396,7 +259,10 @@ function RaceDetail({
                   {row.identical ? (
                     <Equal
                       className="size-3 shrink-0 text-muted-foreground"
-                      aria-label="Identical in every attempt"
+                      aria-label={translate(
+                        'auto.components.teamerge.TeamRacesSection.f1a1d26a94',
+                        'Identical in every attempt'
+                      )}
                     />
                   ) : null}
                 </div>
@@ -464,21 +330,31 @@ export function TeamRacesSection({ tasks }: { tasks: TeamergeRepoTasks }): React
   return (
     <div>
       <TeamSectionHeader
-        title="Races"
-        subtitle="Give the same task to several agents at once, compare their runs side by side, and keep the winner."
+        title={translate('auto.components.teamerge.TeamRacesSection.eeb093e1c6', 'Races')}
+        subtitle={translate(
+          'auto.components.teamerge.TeamRacesSection.89ff8a35f6',
+          'Give the same task to several agents at once, compare their runs side by side, and keep the winner.'
+        )}
         actions={
           <Button size="sm" onClick={() => setCreating(true)}>
             <Swords className="size-4" />
-            New Race
+            {translate('auto.components.teamerge.TeamRacesSection.e7b7a1d429', 'New Race')}
           </Button>
         }
       />
       {races.length === 0 ? (
         <EmptyState
           icon={<Swords />}
-          title="No Races"
-          description="Start a race when a task has more than one good approach and you want to see each one."
-          action={<Button onClick={() => setCreating(true)}>New Race</Button>}
+          title={translate('auto.components.teamerge.TeamRacesSection.1a11c72448', 'No Races')}
+          description={translate(
+            'auto.components.teamerge.TeamRacesSection.e3ab1ba70a',
+            'Start a race when a task has more than one good approach and you want to see each one.'
+          )}
+          action={
+            <Button onClick={() => setCreating(true)}>
+              {translate('auto.components.teamerge.TeamRacesSection.e7b7a1d429', 'New Race')}
+            </Button>
+          }
         />
       ) : (
         <GroupedList>
@@ -493,15 +369,22 @@ export function TeamRacesSection({ tasks }: { tasks: TeamergeRepoTasks }): React
                 <>
                   {race.winnerBranch ? (
                     <StatusPill tone="green" icon={<Crown />}>
-                      Kept {race.winnerBranch}
+                      {translate('auto.components.teamerge.TeamRacesSection.4f4d3cac9b', 'Kept')}{' '}
+                      {race.winnerBranch}
                     </StatusPill>
                   ) : (
-                    <StatusPill tone="blue">Running</StatusPill>
+                    <StatusPill tone="blue">
+                      {translate('auto.components.teamerge.TeamRacesSection.50b10eaf66', 'Running')}
+                    </StatusPill>
                   )}
                   <Button
                     size="icon-xs"
                     variant="ghost"
-                    aria-label={`Forget race ${race.title}`}
+                    aria-label={translate(
+                      'auto.components.teamerge.TeamRacesSection.08c1b7c8e7',
+                      'Forget race {{value0}}',
+                      { value0: race.title }
+                    )}
                     onClick={(event) => {
                       event.stopPropagation()
                       void window.api.teamerge

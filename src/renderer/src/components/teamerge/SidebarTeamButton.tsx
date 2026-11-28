@@ -4,6 +4,7 @@ import { useAppStore } from '@/store'
 import { cn } from '@/lib/utils'
 import { useTeamergeStore } from './teamerge-store'
 import { MemberAvatar } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 /** Sidebar entry for the Team hub: who's online, plus a count of things waiting on you. */
 export function SidebarTeamButton(): React.JSX.Element {
@@ -38,9 +39,18 @@ export function SidebarTeamButton(): React.JSX.Element {
         )}
         strokeWidth={active ? 2.25 : 1.75}
       />
-      <span className="flex-1">Team</span>
+      <span className="flex-1">
+        {translate('auto.components.teamerge.SidebarTeamButton.37ffe32400', 'Team')}
+      </span>
       {online.length ? (
-        <span className="flex -space-x-1" aria-label={`${online.length} online`}>
+        <span
+          className="flex -space-x-1"
+          aria-label={translate(
+            'auto.components.teamerge.SidebarTeamButton.fadf7451f5',
+            '{{value0}} online',
+            { value0: online.length }
+          )}
+        >
           {online.slice(0, 3).map((member) => (
             <MemberAvatar key={member.id} memberId={member.id} name={member.name} size={16} />
           ))}

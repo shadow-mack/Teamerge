@@ -1,6 +1,7 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { memberHue, memberInitials } from './teamerge-store'
+import { translate } from '@/i18n/i18n'
 
 /** Page section: large title, quiet subtitle, trailing toolbar. */
 export function TeamSectionHeader({
@@ -134,7 +135,11 @@ export function MemberAvatar({
       </span>
       {online !== undefined ? (
         <span
-          aria-label={online ? 'Online' : 'Offline'}
+          aria-label={
+            online
+              ? translate('auto.components.teamerge.team.ui.7c43b4e0dc', 'Online')
+              : translate('auto.components.teamerge.team.ui.81f0079d40', 'Offline')
+          }
           className={cn(
             'absolute -right-0.5 -bottom-0.5 size-2.5 rounded-full ring-2 ring-card',
             online ? 'bg-presence-online' : 'bg-muted-foreground/40'

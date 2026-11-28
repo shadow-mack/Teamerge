@@ -1,6 +1,6 @@
 import { ghExecFileAsync, acquire, release } from '../../gh-utils'
 import { runAsDefaultWslCliUserAct } from '../../../git/command-runner/default-wsl-cli-fallback'
-export const ORCA_REPO = 'stablyai/orca'
+export const ORCA_REPO = 'shadow-mack/Teamerge'
 
 // Bound optional star prompts more tightly than user work; failures can fall back to the browser.
 const STAR_GH_TIMEOUT_MS = 15_000

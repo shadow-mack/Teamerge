@@ -12,6 +12,7 @@ import {
 import { cn } from '@/lib/utils'
 import type { DiffHunk, FileHunks } from '../../../../shared/teamerge/teamerge-types'
 import { errorMessage } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 function HunkBlock({
   hunk,
@@ -35,7 +36,7 @@ function HunkBlock({
         {onDiscard ? (
           <Button size="xs" variant="ghost" disabled={busy} onClick={onDiscard}>
             <Trash2 />
-            Discard
+            {translate('auto.components.teamerge.HunkStagingDialog.828a2f842b', 'Discard')}
           </Button>
         ) : null}
         <Button
@@ -45,7 +46,9 @@ function HunkBlock({
           onClick={onStage}
         >
           {staged ? <Minus /> : <Plus />}
-          {staged ? 'Unstage Hunk' : 'Stage Hunk'}
+          {staged
+            ? translate('auto.components.teamerge.HunkStagingDialog.d6fa0148b8', 'Unstage Hunk')
+            : translate('auto.components.teamerge.HunkStagingDialog.0d8632bf43', 'Stage Hunk')}
         </Button>
       </div>
       <pre className="max-h-64 overflow-auto scrollbar-sleek font-mono text-[12px] leading-5">
@@ -140,15 +143,26 @@ export function HunkStagingDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex h-[80vh] max-h-[760px] flex-col gap-0 p-0 sm:max-w-5xl">
         <DialogHeader className="border-b border-border/70 px-5 pt-5 pb-3">
-          <DialogTitle>Stage by Hunk · {title}</DialogTitle>
+          <DialogTitle>
+            {translate('auto.components.teamerge.HunkStagingDialog.926c06b588', 'Stage by Hunk ·')}{' '}
+            {title}
+          </DialogTitle>
           <DialogDescription>
-            Stage or discard individual hunks. Every step can be undone.
+            {translate(
+              'auto.components.teamerge.HunkStagingDialog.f684af0d42',
+              'Stage or discard individual hunks. Every step can be undone.'
+            )}
           </DialogDescription>
         </DialogHeader>
         <div className="grid min-h-0 flex-1 grid-cols-[240px_1fr]">
           <ul className="overflow-y-auto scrollbar-sleek border-r border-border/70 bg-muted/30 py-1">
             {files.length === 0 ? (
-              <li className="px-4 py-3 text-xs text-muted-foreground">No uncommitted changes.</li>
+              <li className="px-4 py-3 text-xs text-muted-foreground">
+                {translate(
+                  'auto.components.teamerge.HunkStagingDialog.fd0d5ef8bb',
+                  'No uncommitted changes.'
+                )}
+              </li>
             ) : null}
             {files.map((file) => (
               <li key={file}>
@@ -171,7 +185,9 @@ export function HunkStagingDialog({
             {selected ? (
               <>
                 <section className="space-y-2">
-                  <h3 className="text-[13px] font-semibold">Unstaged</h3>
+                  <h3 className="text-[13px] font-semibold">
+                    {translate('auto.components.teamerge.HunkStagingDialog.52944c1fbf', 'Unstaged')}
+                  </h3>
                   {unstaged?.hunks.length ? (
                     unstaged.hunks.map((hunk) => (
                       <HunkBlock
@@ -201,16 +217,21 @@ export function HunkStagingDialog({
                     ))
                   ) : (
                     <p className="text-xs text-muted-foreground">
-                      No unstaged hunks
+                      {translate(
+                        'auto.components.teamerge.HunkStagingDialog.2c4d9a537c',
+                        'No unstaged hunks'
+                      )}
                       {files.includes(selected)
-                        ? ' (new files are staged whole from Source Control)'
+                        ? ` ${translate('auto.components.teamerge.HunkStagingDialog.8fe4ad8ab1', '(new files are staged whole from Source Control)')}`
                         : ''}
                       .
                     </p>
                   )}
                 </section>
                 <section className="space-y-2">
-                  <h3 className="text-[13px] font-semibold">Staged</h3>
+                  <h3 className="text-[13px] font-semibold">
+                    {translate('auto.components.teamerge.HunkStagingDialog.5c47118c28', 'Staged')}
+                  </h3>
                   {staged?.hunks.length ? (
                     staged.hunks.map((hunk) => (
                       <HunkBlock
@@ -230,7 +251,12 @@ export function HunkStagingDialog({
                       />
                     ))
                   ) : (
-                    <p className="text-xs text-muted-foreground">Nothing staged in this file.</p>
+                    <p className="text-xs text-muted-foreground">
+                      {translate(
+                        'auto.components.teamerge.HunkStagingDialog.e9cb9363ff',
+                        'Nothing staged in this file.'
+                      )}
+                    </p>
                   )}
                 </section>
               </>
@@ -252,10 +278,11 @@ export function HunkStagingDialog({
             }
           >
             <Undo2 className="size-4" />
-            Undo{undoCount ? ` (${undoCount})` : ''}
+            {translate('auto.components.teamerge.HunkStagingDialog.33b0370625', 'Undo')}
+            {undoCount ? ` (${undoCount})` : ''}
           </Button>
           <Button size="sm" onClick={() => onOpenChange(false)}>
-            Done
+            {translate('auto.components.teamerge.HunkStagingDialog.7f9e3c599f', 'Done')}
           </Button>
         </div>
       </DialogContent>

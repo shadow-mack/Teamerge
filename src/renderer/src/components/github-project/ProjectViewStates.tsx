@@ -11,7 +11,7 @@ import type { GitHubProjectViewSummary } from '../../../../shared/github/project
 import type { GitHubProjectViewError } from '../../../../shared/github/project-result-types'
 import { openAppHttpLink } from '@/lib/app-http-link-open'
 
-const ORCA_FEATURE_REQUEST_URL = 'https://github.com/stablyai/orca/issues/new'
+const ORCA_FEATURE_REQUEST_URL = 'https://github.com/shadow-mack/Teamerge/issues/new'
 
 export function ProjectViewTabStrip({
   views,

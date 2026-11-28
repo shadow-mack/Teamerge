@@ -20,6 +20,7 @@ import {
   MemberAvatar,
   TeamSectionHeader
 } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 /** Agent-to-agent messages; agents send them with `teamerge send` and read them with `teamerge inbox`. */
 export function TeamMessagesSection({ tasks }: { tasks: TeamergeRepoTasks }): React.JSX.Element {
@@ -29,10 +30,17 @@ export function TeamMessagesSection({ tasks }: { tasks: TeamergeRepoTasks }): Re
   const [to, setTo] = useState('')
   const [body, setBody] = useState('')
   const me = status?.identity?.memberId ?? ''
-  const targets = [
+  const recipients = [
     ...tasks.tasks
       .filter((t) => !t.isMain)
-      .map((t) => ({ key: `${me}|${t.branch}`, label: `${t.taskName} (this machine)` })),
+      .map((t) => ({
+        key: `${me}|${t.branch}`,
+        label: translate(
+          'auto.components.teamerge.TeamMessagesSection.35bc3c7e78',
+          '{{value0}} (this machine)',
+          { value0: t.taskName }
+        )
+      })),
     ...agents.map((a) => ({
       key: `${a.memberId}|${a.branch}`,
       label: `${a.memberName} / ${a.taskName}`
@@ -57,14 +65,30 @@ export function TeamMessagesSection({ tasks }: { tasks: TeamergeRepoTasks }): Re
   return (
     <div>
       <TeamSectionHeader
-        title="Agent Messages"
+        title={translate(
+          'auto.components.teamerge.TeamMessagesSection.043e5771fb',
+          'Agent Messages'
+        )}
         subtitle={
           <>
-            Agents talk to each other across tasks and machines with{' '}
+            {translate(
+              'auto.components.teamerge.TeamMessagesSection.17612ed4ca',
+              'Agents talk to each other across tasks and machines with'
+            )}{' '}
             <code className="font-mono text-xs">
-              teamerge send &lt;task|teammate/task&gt; &quot;…&quot;
+              {translate(
+                'auto.components.teamerge.TeamMessagesSection.cefd9a8216',
+                'teamerge send &lt;task|teammate/task&gt; &quot;…&quot;'
+              )}
             </code>{' '}
-            and read with <code className="font-mono text-xs">teamerge inbox</code>.
+            {translate('auto.components.teamerge.TeamMessagesSection.2072e1cd5b', 'and read with')}{' '}
+            <code className="font-mono text-xs">
+              {translate(
+                'auto.components.teamerge.TeamMessagesSection.0dcf30f57b',
+                'teamerge inbox'
+              )}
+            </code>
+            .
           </>
         }
       />
@@ -80,25 +104,36 @@ export function TeamMessagesSection({ tasks }: { tasks: TeamergeRepoTasks }): Re
         >
           <Select value={to} onValueChange={setTo}>
             <SelectTrigger className="w-56 shrink-0">
-              <SelectValue placeholder="To task…" />
+              <SelectValue
+                placeholder={translate(
+                  'auto.components.teamerge.TeamMessagesSection.02f65c6ea2',
+                  'To task…'
+                )}
+              />
             </SelectTrigger>
             <SelectContent>
-              {targets.map((target) => (
-                <SelectItem key={target.key} value={target.key}>
-                  {target.label}
+              {recipients.map((recipient) => (
+                <SelectItem key={recipient.key} value={recipient.key}>
+                  {recipient.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
           <Input
-            placeholder="Message for the agent"
+            placeholder={translate(
+              'auto.components.teamerge.TeamMessagesSection.8ff8321e5e',
+              'Message for the agent'
+            )}
             value={body}
             onChange={(e) => setBody(e.target.value)}
           />
           <Button
             type="submit"
             size="icon"
-            aria-label="Send message"
+            aria-label={translate(
+              'auto.components.teamerge.TeamMessagesSection.bc66b6b501',
+              'Send message'
+            )}
             disabled={!to || !body.trim()}
           >
             <Send className="size-4" />
@@ -108,11 +143,19 @@ export function TeamMessagesSection({ tasks }: { tasks: TeamergeRepoTasks }): Re
       {messages.length === 0 ? (
         <EmptyState
           icon={<MessagesSquare />}
-          title="No Messages"
-          description="When agents coordinate — “I’m renaming the auth module, hold off on it” — the conversation shows up here."
+          title={translate(
+            'auto.components.teamerge.TeamMessagesSection.e140b08b89',
+            'No Messages'
+          )}
+          description={translate(
+            'auto.components.teamerge.TeamMessagesSection.f20e6d7c7b',
+            'When agents coordinate — “I’m renaming the auth module, hold off on it” — the conversation shows up here.'
+          )}
         />
       ) : (
-        <GroupedList title="Recent">
+        <GroupedList
+          title={translate('auto.components.teamerge.TeamMessagesSection.f10427d5fc', 'Recent')}
+        >
           {messages.map((message) => (
             <GroupedRow
               key={message.id}
@@ -124,7 +167,12 @@ export function TeamMessagesSection({ tasks }: { tasks: TeamergeRepoTasks }): Re
                 <span className="flex items-center gap-1">
                   <Terminal className="size-3" />
                   {message.fromName}
-                  {message.fromTask ? `/${message.fromTask}` : ''} → {message.toTask ?? 'any task'}{' '}
+                  {message.fromTask ? `/${message.fromTask}` : ''} →{' '}
+                  {message.toTask ??
+                    translate(
+                      'auto.components.teamerge.TeamMessagesSection.4f5040888d',
+                      'any task'
+                    )}{' '}
                   · {relativeTime(message.at)}
                 </span>
               }

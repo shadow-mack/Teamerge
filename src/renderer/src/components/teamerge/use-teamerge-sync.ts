@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { useTeamergeStore } from './teamerge-store'
 import { useTeamergeTasks, type TeamergeRepoTasks } from './use-teamerge-tasks'
+import { translate } from '@/i18n/i18n'
 
 const SYNC_INTERVAL_MS = 15_000
 
@@ -85,7 +86,10 @@ export function useTeamergeSync(): void {
         for (const h of event.handoffs) {
           if (h.direction === 'incoming' && h.status === 'sent' && isFresh(h.id, h.createdAt)) {
             toast(`${h.fromName} handed you “${h.title}”`, {
-              action: { label: 'Open', onClick: () => openTeamSection('inbox') }
+              action: {
+                label: translate('auto.components.teamerge.use.teamerge.sync.9cc0cae9b8', 'Open'),
+                onClick: () => openTeamSection('inbox')
+              }
             })
           }
         }
@@ -98,7 +102,10 @@ export function useTeamergeSync(): void {
             isFresh(r.id, r.createdAt)
           ) {
             toast(`${r.fromName} asked you to review “${r.title}”`, {
-              action: { label: 'Review', onClick: () => openTeamSection('inbox') }
+              action: {
+                label: translate('auto.components.teamerge.use.teamerge.sync.4fbc4cee37', 'Review'),
+                onClick: () => openTeamSection('inbox')
+              }
             })
           }
         }
