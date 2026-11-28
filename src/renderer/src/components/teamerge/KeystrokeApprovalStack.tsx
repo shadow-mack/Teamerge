@@ -3,6 +3,7 @@ import { Keyboard, VolumeX } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTeamergeStore } from './teamerge-store'
 import { MemberAvatar } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 function printable(data: string): string {
   return [...data]
@@ -38,16 +39,29 @@ export function KeystrokeApprovalStack(): React.JSX.Element | null {
         <div
           key={request.id}
           role="alertdialog"
-          aria-label={`${request.fromName} wants to type`}
+          aria-label={translate(
+            'auto.components.teamerge.KeystrokeApprovalStack.3eb968aa2b',
+            '{{value0}} wants to type',
+            { value0: request.fromName }
+          )}
           className="pointer-events-auto rounded-2xl border border-border bg-floating-surface p-3 shadow-floating backdrop-blur-xl reduce-effects:bg-popover"
         >
           <div className="flex items-center gap-2.5">
             <MemberAvatar memberId={request.fromMemberId} name={request.fromName} size={26} />
             <div className="min-w-0 flex-1">
-              <div className="text-[13px] font-semibold">{request.fromName} wants to type</div>
+              <div className="text-[13px] font-semibold">
+                {request.fromName}{' '}
+                {translate(
+                  'auto.components.teamerge.KeystrokeApprovalStack.dfbcd8cb8e',
+                  'wants to type'
+                )}
+              </div>
               <div className="flex items-center gap-1 text-2xs text-muted-foreground">
                 <Keyboard className="size-3" />
-                Into your shared agent pane
+                {translate(
+                  'auto.components.teamerge.KeystrokeApprovalStack.20acf22eaa',
+                  'Into your shared agent pane'
+                )}
               </div>
             </div>
           </div>
@@ -67,7 +81,7 @@ export function KeystrokeApprovalStack(): React.JSX.Element | null {
               }
             >
               <VolumeX />
-              Mute
+              {translate('auto.components.teamerge.KeystrokeApprovalStack.da1060ada4', 'Mute')}
             </Button>
             <div className="flex gap-1.5">
               <Button
@@ -81,7 +95,7 @@ export function KeystrokeApprovalStack(): React.JSX.Element | null {
                   })
                 }
               >
-                Reject
+                {translate('auto.components.teamerge.KeystrokeApprovalStack.5c5f676d69', 'Reject')}
               </Button>
               <Button
                 size="sm"
@@ -93,7 +107,7 @@ export function KeystrokeApprovalStack(): React.JSX.Element | null {
                   })
                 }
               >
-                Approve
+                {translate('auto.components.teamerge.KeystrokeApprovalStack.6dc8351160', 'Approve')}
               </Button>
             </div>
           </div>
@@ -101,7 +115,8 @@ export function KeystrokeApprovalStack(): React.JSX.Element | null {
       ))}
       {pending.length > 4 ? (
         <div className="pointer-events-auto self-end rounded-full bg-muted px-2.5 py-1 text-2xs text-muted-foreground">
-          {pending.length - 4} more waiting
+          {pending.length - 4}{' '}
+          {translate('auto.components.teamerge.KeystrokeApprovalStack.938100d43c', 'more waiting')}
         </div>
       ) : null}
     </div>

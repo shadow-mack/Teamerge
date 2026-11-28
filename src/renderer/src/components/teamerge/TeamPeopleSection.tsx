@@ -16,6 +16,7 @@ import {
   StatusPill,
   TeamSectionHeader
 } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): React.JSX.Element {
   const status = useTeamergeStore((s) => s.status)
@@ -31,15 +32,24 @@ export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): Reac
   return (
     <div>
       <TeamSectionHeader
-        title="People"
-        subtitle="Teammates’ agents running on their own machines. Open a shared pane to watch it live; typing into it asks the owner first."
+        title={translate('auto.components.teamerge.TeamPeopleSection.b4193dc640', 'People')}
+        subtitle={translate(
+          'auto.components.teamerge.TeamPeopleSection.d6fff899c0',
+          'Teammates’ agents running on their own machines. Open a shared pane to watch it live; typing into it asks the owner first.'
+        )}
       />
 
       {teammates.length === 0 ? (
         <EmptyState
           icon={<Users />}
-          title="Just You So Far"
-          description="Commit and push .teamerge/team.json, then ask teammates to open this repository in Teamerge and choose Join Team."
+          title={translate(
+            'auto.components.teamerge.TeamPeopleSection.10e03c8b0a',
+            'Just You So Far'
+          )}
+          description={translate(
+            'auto.components.teamerge.TeamPeopleSection.8c42da01a8',
+            'Commit and push .teamerge/team.json, then ask teammates to open this repository in Teamerge and choose Join Team.'
+          )}
         />
       ) : (
         <div className="mb-6 grid gap-4 lg:grid-cols-2">
@@ -63,7 +73,10 @@ export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): Reac
                     <div className="text-xs text-muted-foreground">
                       {isOnline
                         ? `${theirs.length} ${theirs.length === 1 ? 'task' : 'tasks'}`
-                        : 'Offline'}
+                        : translate(
+                            'auto.components.teamerge.TeamPeopleSection.a044b8cb30',
+                            'Offline'
+                          )}
                     </div>
                   </div>
                 </div>
@@ -71,8 +84,14 @@ export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): Reac
                   {theirs.length === 0 ? (
                     <div className="px-4 py-3 text-xs text-muted-foreground">
                       {isOnline
-                        ? 'No agents running.'
-                        : 'Their agents appear here when they come online.'}
+                        ? translate(
+                            'auto.components.teamerge.TeamPeopleSection.66c6db95f4',
+                            'No agents running.'
+                          )
+                        : translate(
+                            'auto.components.teamerge.TeamPeopleSection.5afcf32098',
+                            'Their agents appear here when they come online.'
+                          )}
                     </div>
                   ) : (
                     theirs.map((agent) => (
@@ -94,7 +113,15 @@ export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): Reac
                             <span>·</span>
                             <span>
                               {agent.changedFiles.length}{' '}
-                              {agent.changedFiles.length === 1 ? 'file' : 'files'}
+                              {agent.changedFiles.length === 1
+                                ? translate(
+                                    'auto.components.teamerge.TeamPeopleSection.00e3ed34b8',
+                                    'file'
+                                  )
+                                : translate(
+                                    'auto.components.teamerge.TeamPeopleSection.ae26c5c574',
+                                    'files'
+                                  )}
                             </span>
                           </span>
                         }
@@ -115,10 +142,18 @@ export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): Reac
                               }
                             >
                               <Eye className="size-3.5" />
-                              Watch
+                              {translate(
+                                'auto.components.teamerge.TeamPeopleSection.b6a9aeb084',
+                                'Watch'
+                              )}
                             </Button>
                           ) : (
-                            <span className="text-2xs text-muted-foreground">Not shared</span>
+                            <span className="text-2xs text-muted-foreground">
+                              {translate(
+                                'auto.components.teamerge.TeamPeopleSection.509f36b838',
+                                'Not shared'
+                              )}
+                            </span>
                           )
                         }
                       />
@@ -132,12 +167,18 @@ export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): Reac
       )}
 
       <GroupedList
-        title="Your Shared Panes"
+        title={translate(
+          'auto.components.teamerge.TeamPeopleSection.01ccae2610',
+          'Your Shared Panes'
+        )}
         footer="Sharing streams a pane to teammates who open it. Their keystrokes wait for your approval, muted teammates can only watch, and every remote keystroke is logged."
       >
         {myPanes.length === 0 ? (
           <div className="px-4 py-3 text-xs text-muted-foreground">
-            Start an agent in a workspace to share its pane.
+            {translate(
+              'auto.components.teamerge.TeamPeopleSection.3ebf334aba',
+              'Start an agent in a workspace to share its pane.'
+            )}
           </div>
         ) : (
           myPanes.map((task) => {
@@ -176,7 +217,11 @@ export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): Reac
                         </span>
                       ) : null}
                       <Switch
-                        aria-label={`Share ${task.taskName} live`}
+                        aria-label={translate(
+                          'auto.components.teamerge.TeamPeopleSection.dd4523c737',
+                          'Share {{value0}} live',
+                          { value0: task.taskName }
+                        )}
                         checked={shared}
                         onCheckedChange={(checked) =>
                           void window.api.teamerge.setPaneShared({
@@ -211,7 +256,17 @@ export function TeamPeopleSection({ tasks }: { tasks: TeamergeRepoTasks }): Reac
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent side="top" sideOffset={4}>
-                            {muted ? `Unmute ${viewer.name}` : `Mute ${viewer.name}`}
+                            {muted
+                              ? translate(
+                                  'auto.components.teamerge.TeamPeopleSection.4b09ed2b50',
+                                  'Unmute {{value0}}',
+                                  { value0: viewer.name }
+                                )
+                              : translate(
+                                  'auto.components.teamerge.TeamPeopleSection.190ee30dda',
+                                  'Mute {{value0}}',
+                                  { value0: viewer.name }
+                                )}
                           </TooltipContent>
                         </Tooltip>
                       )

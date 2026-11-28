@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useShallow } from 'zustand/react/shallow'
 import { useAppStore } from '@/store'
+import { selectWorktreesByRepo } from '@/store/workspace-record-selectors'
 import { branchName } from '@/lib/git-utils'
 import type { Repo } from '../../../../shared/repo-types'
 import type { Worktree } from '../../../../shared/worktree/types'
@@ -55,7 +56,7 @@ export function useTeamergeTasks(): TeamergeRepoTasks {
   } = useAppStore(
     useShallow((s) => ({
       repos: s.repos,
-      worktreesByRepo: s.worktreesByRepo,
+      worktreesByRepo: selectWorktreesByRepo(s),
       activeWorktreeId: s.activeWorktreeId,
       tabsByWorktree: s.tabsByWorktree,
       agentStatusByPaneKey: s.agentStatusByPaneKey,

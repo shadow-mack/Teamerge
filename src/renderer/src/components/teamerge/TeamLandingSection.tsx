@@ -30,42 +30,44 @@ import {
   TeamSectionHeader,
   type PillTone
 } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
-const STATUS: Record<
+// A function so labels follow the current language.
+const landingStatus = (): Record<
   LandingItem['status'],
   { label: string; tone: PillTone; icon: React.ReactNode }
-> = {
+> => ({
   queued: {
-    label: 'Queued',
+    label: translate('auto.components.teamerge.TeamLandingSection.4b52cd99c6', 'Queued'),
     tone: 'neutral',
     icon: <CircleDashed className="size-4 text-muted-foreground" />
   },
   landing: {
-    label: 'Landing',
+    label: translate('auto.components.teamerge.TeamLandingSection.c63319f695', 'Landing'),
     tone: 'blue',
     icon: <Loader2 className="size-4 animate-spin text-primary motion-reduce:animate-none" />
   },
   landed: {
-    label: 'Landed',
+    label: translate('auto.components.teamerge.TeamLandingSection.3bef740345', 'Landed'),
     tone: 'green',
     icon: <CheckCircle2 className="size-4 text-status-success" />
   },
   skipped: {
-    label: 'Skipped',
+    label: translate('auto.components.teamerge.TeamLandingSection.79adbf759d', 'Skipped'),
     tone: 'amber',
     icon: <SkipForward className="size-4 text-collision-overlap" />
   },
   failed: {
-    label: 'Failed',
+    label: translate('auto.components.teamerge.TeamLandingSection.c80e3e16b4', 'Failed'),
     tone: 'red',
     icon: <XCircle className="size-4 text-collision-conflict" />
   },
   undone: {
-    label: 'Undone',
+    label: translate('auto.components.teamerge.TeamLandingSection.3d2bfb09b9', 'Undone'),
     tone: 'neutral',
     icon: <RotateCcw className="size-4 text-muted-foreground" />
   }
-}
+})
 
 export function TeamLandingSection({ tasks }: { tasks: TeamergeRepoTasks }): React.JSX.Element {
   const landing = useTeamergeStore((s) => s.landing)
@@ -109,14 +111,20 @@ export function TeamLandingSection({ tasks }: { tasks: TeamergeRepoTasks }): Rea
   return (
     <div>
       <TeamSectionHeader
-        title="Landing Queue"
-        subtitle="Finished tasks land one after another. A task that would conflict is skipped with the reason, and the rest keep going. Local merges can be undone."
+        title={translate('auto.components.teamerge.TeamLandingSection.d4aba0af2b', 'Landing Queue')}
+        subtitle={translate(
+          'auto.components.teamerge.TeamLandingSection.df8a0150e5',
+          'Finished tasks land one after another. A task that would conflict is skipped with the reason, and the rest keep going. Local merges can be undone.'
+        )}
         actions={
           <>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="sm" variant="outline" disabled={candidates.length === 0}>
-                  Ready to Land…
+                  {translate(
+                    'auto.components.teamerge.TeamLandingSection.c00930474f',
+                    'Ready to Land…'
+                  )}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -148,7 +156,13 @@ export function TeamLandingSection({ tasks }: { tasks: TeamergeRepoTasks }): Rea
               ) : (
                 <ArrowDownToLine className="size-4" />
               )}
-              {running ? 'Landing…' : `Land All${pending ? ` (${pending})` : ''}`}
+              {running
+                ? translate('auto.components.teamerge.TeamLandingSection.e265102dff', 'Landing…')
+                : translate(
+                    'auto.components.teamerge.TeamLandingSection.b47ca05391',
+                    'Land All{{value0}}',
+                    { value0: pending ? ` (${pending})` : '' }
+                  )}
             </Button>
           </>
         }
@@ -156,8 +170,14 @@ export function TeamLandingSection({ tasks }: { tasks: TeamergeRepoTasks }): Rea
       {items.length === 0 ? (
         <EmptyState
           icon={<ArrowDownToLine />}
-          title="Nothing Queued"
-          description="Mark finished tasks Ready to Land, then land them all in one go."
+          title={translate(
+            'auto.components.teamerge.TeamLandingSection.614322ad8a',
+            'Nothing Queued'
+          )}
+          description={translate(
+            'auto.components.teamerge.TeamLandingSection.fb2e0745d3',
+            'Mark finished tasks Ready to Land, then land them all in one go.'
+          )}
         />
       ) : (
         <GroupedList
@@ -170,14 +190,17 @@ export function TeamLandingSection({ tasks }: { tasks: TeamergeRepoTasks }): Rea
                 variant="ghost"
                 onClick={() => void window.api.teamerge.clearLanding(repoPath)}
               >
-                Clear Finished
+                {translate(
+                  'auto.components.teamerge.TeamLandingSection.ad4fd05fb9',
+                  'Clear Finished'
+                )}
               </Button>
             ) : null
           }
-          title="Queue"
+          title={translate('auto.components.teamerge.TeamLandingSection.295d770f07', 'Queue')}
         >
           {items.map((item) => {
-            const meta = STATUS[item.status]
+            const meta = landingStatus()[item.status]
             const canUndo =
               item.status === 'landed' && lastLandedByTarget.get(item.targetBranch) === item.id
             return (
@@ -209,14 +232,21 @@ export function TeamLandingSection({ tasks }: { tasks: TeamergeRepoTasks }): Rea
                         }
                       >
                         <RotateCcw />
-                        Undo
+                        {translate(
+                          'auto.components.teamerge.TeamLandingSection.6a67503796',
+                          'Undo'
+                        )}
                       </Button>
                     ) : null}
                     {item.status === 'queued' || item.status === 'skipped' ? (
                       <Button
                         size="icon-xs"
                         variant="ghost"
-                        aria-label={`Remove ${item.taskName} from the queue`}
+                        aria-label={translate(
+                          'auto.components.teamerge.TeamLandingSection.22d3a6ab6c',
+                          'Remove {{value0}} from the queue',
+                          { value0: item.taskName }
+                        )}
                         onClick={() =>
                           void window.api.teamerge.removeLanding({
                             repoPath: repoPath as string,

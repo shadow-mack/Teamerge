@@ -677,7 +677,6 @@
       "df1d56bf87": "工作区界面遇到错误。",
       "9e0b441a91": "切换右侧边栏",
       "e81217c1b7": "隐藏应用名称",
-      "5096cbbc86": "Orca",
       "8b0b8eb54f": "应用菜单",
       "caea5b51b9": "立即重启",
       "0a9e810705": "重新启动之前不会保存更改。您以前的选项卡在磁盘上是安全的。",
@@ -1918,9 +1917,6 @@
       },
       "Landing": {
         "f9eaa9e12d": "添加项目",
-        "6ca6ff404e": "ORCA",
-        "520304a067": "Orca 标志",
-        "c1cf168479": "隐藏",
         "00cee697c1": "在终端中运行“gh auth login”以连接您的 GitHub 账户。",
         "9f96d018b7": "GitHub CLI 未经过身份验证",
         "73e1ad4282": "Orca 使用 GitHub CLI (gh) 来显示PR、议题和检查。",
@@ -1929,9 +1925,6 @@
         "e5b7296d9d": "未安装 Git",
         "cd21242762": "添加一个项目即可开始。",
         "9c00bd4adf": "从侧边栏中选择一个工作区开始。",
-        "0d0ace8861": "在 GitHub 上加星标",
-        "ec43b38ba7": "已在 GitHub 上加星标",
-        "157bb5ecbb": "打开 GitHub",
         "preflightDismiss": "关闭",
         "moveUpWorkspace": "选择上一个工作区",
         "moveDownWorkspace": "选择下一个工作区",
@@ -4664,7 +4657,6 @@
         "share": {
           "card": {
             "utils": {
-              "19f4b4dc75": "github.com/stablyai/orca",
               "d864fc5f98": "输出",
               "5d66fdd7c2": "输入",
               "7080aeaebb": "推理",
@@ -5586,7 +5578,6 @@
           "80611a8b10": "搜索",
           "0c3395fd32": "搜索工作树和浏览器选项卡",
           "c86d83b5c3": "新功能",
-          "1b5c41caee": "Orca 手机端",
           "f323383e9a": "自动化",
           "e7ad3c540d": "打开 Jira 任务",
           "c39ab10000": "打开 Linear 任务",

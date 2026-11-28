@@ -1,4 +1,3 @@
-/* oxlint-disable eslint/max-lines */
 import { app } from 'electron'
 import { ORCA_LAYOUT_OWNER_IS_MAIN } from '../../../shared/layout-owner-switch'
 import { registerAppHandlers } from '../app'
@@ -116,7 +115,6 @@ import type { PluginService } from '../../plugins/plugin-service'
 import type { PluginMarketplaceHandlerServices } from '../plugin-marketplaces'
 import { settleWithinMs } from '../../startup/quit/quit-teardown-deadline'
 import { getRuntimeEnvironmentRegistryRoot } from '../runtime-environments/runtime-environment-registry-root'
-import { registerTeamergeHandlers } from '../teamerge/teamerge-handlers'
 
 let registered = false
 // Same cap as the restart path's auth preservation: bookkeeping must not hold Restart on a stalled disk.
@@ -189,7 +187,6 @@ export function registerCoreHandlers(
     onBeforeRelaunchExit: () => closeNotificationDismissalsBeforeRelaunch(runtime)
   })
   registerCliHandlers()
-  registerTeamergeHandlers()
   registerPreflightHandlers(store)
   registerUsageProviderHandlers({ claudeUsage, codexUsage, openCodeUsage, museUsage })
   registerCodexAccountHandlers(codexAccounts, () => store.getSettings())

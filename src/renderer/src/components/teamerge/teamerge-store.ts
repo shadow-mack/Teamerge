@@ -155,7 +155,6 @@ export const useTeamergeStore = create<TeamergeState>((set, get) => ({
       case 'activity':
         set({ activity: [event.event, ...get().activity].slice(0, 200) })
         break
-      default:
     }
   },
   hydrate: async () => {

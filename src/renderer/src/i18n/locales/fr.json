@@ -905,7 +905,6 @@
       "df1d56bf87": "Le shell de l'espace de travail a rencontré une erreur.",
       "9e0b441a91": "Basculer la barre latérale droite",
       "e81217c1b7": "Masquer le nom de l'app",
-      "5096cbbc86": "Orca",
       "8b0b8eb54f": "Menu de l'application",
       "caea5b51b9": "Redémarrer maintenant",
       "0a9e810705": "Les modifications ne seront enregistrées qu'après redémarrage. Vos onglets précédents sont en sécurité sur le disque.",
@@ -2176,9 +2175,6 @@
       },
       "Landing": {
         "f9eaa9e12d": "Ajouter un projet",
-        "6ca6ff404e": "ORCA",
-        "520304a067": "Logo Orca",
-        "c1cf168479": "Masquer",
         "00cee697c1": "Exécutez \"gh auth login\" dans un terminal pour connecter votre compte GitHub.",
         "9f96d018b7": "GitHub CLI n'est pas authentifiée",
         "73e1ad4282": "Orca utilise la GitHub CLI (gh) pour afficher les pull requests, les tickets et les vérifications.",
@@ -2187,9 +2183,6 @@
         "e5b7296d9d": "Git n'est pas installé",
         "cd21242762": "Ajoutez un projet pour commencer.",
         "9c00bd4adf": "Sélectionnez un espace de travail dans la barre latérale pour commencer.",
-        "0d0ace8861": "Mettre une étoile sur GitHub",
-        "ec43b38ba7": "Étoile ajoutée sur GitHub",
-        "157bb5ecbb": "Ouvrir GitHub",
         "preflightDismiss": "Ignorer",
         "moveUpWorkspace": "Sélectionner l’espace de travail précédent",
         "moveDownWorkspace": "Sélectionner l’espace de travail suivant",
@@ -5026,7 +5019,6 @@
         "share": {
           "card": {
             "utils": {
-              "19f4b4dc75": "github.com/stablyai/orca",
               "d864fc5f98": "sortie",
               "5d66fdd7c2": "entrée",
               "7080aeaebb": "Raisonnement",
@@ -6070,7 +6062,6 @@
           "80611a8b10": "Recherche",
           "0c3395fd32": "Rechercher parmi les worktrees et les onglets du navigateur",
           "c86d83b5c3": "Nouveau",
-          "1b5c41caee": "Orca Mobile",
           "f323383e9a": "Automatisations",
           "e7ad3c540d": "Ouvrir les tâches Jira",
           "c39ab10000": "Ouvrir les tâches Linear",

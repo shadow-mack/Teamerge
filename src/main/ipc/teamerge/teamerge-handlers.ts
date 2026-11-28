@@ -1,47 +1,16 @@
-/* oxlint-disable eslint/max-lines */
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'node:path'
 import {
   TEAMERGE_EVENT_CHANNEL,
   type LocalTaskAnnouncement,
-  type RaceAttempt,
   type TeamergeEvent
 } from '../../../shared/teamerge/teamerge-types'
+import type { Store } from '../../persistence/loading-store/store'
+import { resolveAuthorizedPath } from '../filesystem/access/filesystem-auth'
 import { tryGetProviderForPty } from '../pty/provider/registry'
-import {
-  childTaskStatus,
-  mergeAllReady,
-  mergeChildIntoParent,
-  updateFromParent
-} from '../../teamerge/core/branch-flow'
-import {
-  assessEditRisk,
-  claimFiles,
-  computeCollisions,
-  releaseClaims,
-  summarizeByTask,
-  type LocalTaskInput
-} from '../../teamerge/core/collisions'
-import { nodeGitRunner, worktreeChangedFiles } from '../../teamerge/core/git-runner'
-import { HunkStager, readFileHunks } from '../../teamerge/core/hunks'
-import {
-  clearFinishedLanding,
-  enqueueForLanding,
-  landAll,
-  readLandingQueue,
-  removeFromLanding,
-  undoLanding
-} from '../../teamerge/core/landing-queue'
-import { readRepoState, updateRepoState } from '../../teamerge/core/local-state'
-import {
-  compareRace,
-  createRace,
-  listRaces,
-  pickRaceWinner,
-  raceFileDiffs,
-  removeRace
-} from '../../teamerge/core/races'
+import { nodeGitRunner } from '../../teamerge/core/git-runner'
 import { TeamergeService } from '../../teamerge/teamerge-service'
+import { registerTeamergeRepoHandlers, type TeamergeHandle } from './teamerge-repo-handlers'
 
 const run = nodeGitRunner
 let service: TeamergeService | null = null
@@ -72,7 +41,11 @@ export function getTeamergeService(): TeamergeService | null {
 }
 
 /** Registers every `teamerge:*` channel. The renderer reaches them through `window.api.teamerge`. */
-export function registerTeamergeHandlers(): void {
+export function registerTeamergeHandlers(store: Store): void {
+  // A replaced macOS window re-attaches services; IPC channels may only be registered once.
+  if (service) {
+    return
+  }
   service = new TeamergeService({
     dataDir: join(app.getPath('userData'), 'teamerge'),
     run,
@@ -84,19 +57,25 @@ export function registerTeamergeHandlers(): void {
     await ready
     return service as TeamergeService
   }
-  const stager = new HunkStager(run)
   app.on('will-quit', () => service?.dispose())
 
-  const handle = <A extends unknown[], R>(
-    channel: string,
-    fn: (...args: A) => Promise<R> | R
-  ): void => {
-    ipcMain.handle(`teamerge:${channel}`, async (_event, ...args) => fn(...(args as A)))
+  // Every repo or worktree path from the renderer must sit inside a registered repo or workspace.
+  const allowed = async (path: string): Promise<string> => {
+    await resolveAuthorizedPath(path, store)
+    return path
+  }
+
+  const handle: TeamergeHandle = (channel, fn) => {
+    ipcMain.handle(`teamerge:${channel}`, async (_event, ...args: Parameters<typeof fn>) =>
+      fn(...args)
+    )
   }
 
   // team, identity and relay
   handle('status', async () => (await svc()).status())
-  handle('setRepo', async (repoPath: string | null) => (await svc()).setRepo(repoPath))
+  handle('setRepo', async (repoPath: string | null) =>
+    (await svc()).setRepo(repoPath ? await allowed(repoPath) : null)
+  )
   handle('createTeam', async (args: { name: string; relayUrl: string }) =>
     (await svc()).createTeam(args.name, args.relayUrl)
   )
@@ -107,17 +86,17 @@ export function registerTeamergeHandlers(): void {
   handle('removeMember', async (memberId: string) => (await svc()).removeMember(memberId))
   handle('commitTeamFile', async () => (await svc()).commitTeamFile())
   handle('setDisplayName', async (name: string) => (await svc()).setDisplayName(name))
-  handle('startLocalRelay', async (port?: number) => (await svc()).startLocalRelay(port))
-  handle('stopLocalRelay', async () => (await svc()).stopLocalRelay())
-  handle('localRelayStatus', async () => (await svc()).localRelayStatus())
+  handle('startLocalRelay', async (port?: number) => (await svc()).localRelay.start(port))
+  handle('stopLocalRelay', async () => (await svc()).localRelay.stop())
+  handle('localRelayStatus', async () => (await svc()).localRelay.status())
   handle('snapshot', async () => (await svc()).snapshot())
 
   // presence and live panes
   handle('announceTasks', async (tasks: LocalTaskAnnouncement[]) =>
-    (await svc()).announceTasks(tasks)
+    (await svc()).presence.announceTasks(tasks)
   )
   handle('setPaneShared', async (args: { paneId: string; shared: boolean }) =>
-    (await svc()).setPaneShared(args.paneId, args.shared)
+    (await svc()).presence.setPaneShared(args.paneId, args.shared)
   )
   handle('listPaneShares', async () => (await svc()).panes.list())
   handle('setViewerMuted', async (args: { paneId: string; memberId: string; muted: boolean }) =>
@@ -140,205 +119,36 @@ export function registerTeamergeHandlers(): void {
   )
 
   // handoffs, reviews, notes, messages
-  handle('sendHandoff', async (args: Parameters<TeamergeService['sendHandoff']>[0]) =>
-    (await svc()).sendHandoff(args)
+  handle('sendHandoff', async (args: Parameters<TeamergeService['handoffs']['send']>[0]) =>
+    (await svc()).handoffs.send({ ...args, worktreePath: await allowed(args.worktreePath) })
   )
-  handle('prepareHandoffBranch', async (id: string) => (await svc()).prepareHandoffBranch(id))
+  handle('prepareHandoffBranch', async (id: string) => (await svc()).handoffs.prepareBranch(id))
   handle('setHandoffStatus', async (args: { id: string; status: 'taken' | 'declined' }) =>
-    (await svc()).setHandoffStatus(args.id, args.status)
+    (await svc()).handoffs.setStatus(args.id, args.status)
   )
-  handle('requestReview', async (args: Parameters<TeamergeService['requestReview']>[0]) =>
-    (await svc()).requestReview(args)
+  handle('requestReview', async (args: Parameters<TeamergeService['reviews']['request']>[0]) =>
+    (await svc()).reviews.request({ ...args, worktreePath: await allowed(args.worktreePath) })
   )
-  handle('addReviewComment', async (args: Parameters<TeamergeService['addReviewComment']>[0]) =>
-    (await svc()).addReviewComment(args)
+  handle(
+    'addReviewComment',
+    async (args: Parameters<TeamergeService['reviews']['addComment']>[0]) =>
+      (await svc()).reviews.addComment(args)
   )
   handle(
     'setReviewStatus',
     async (args: { id: string; status: 'requested' | 'in-review' | 'done' }) =>
-      (await svc()).setReviewStatus(args.id, args.status)
+      (await svc()).reviews.setStatus(args.id, args.status)
   )
   handle('redeliverComment', async (args: { commentId: string; paneId: string }) =>
-    (await svc()).redeliverComment(args.commentId, args.paneId)
+    (await svc()).reviews.redeliver(args.commentId, args.paneId)
   )
   handle('saveNote', async (args: { id?: string; title: string; body: string }) =>
-    (await svc()).saveNote(args)
+    (await svc()).notes.save(args)
   )
-  handle('deleteNote', async (id: string) => (await svc()).deleteNote(id))
-  handle('sendMessage', async (args: Parameters<TeamergeService['sendMessage']>[0]) =>
-    (await svc()).sendMessage(args)
-  )
-
-  // collisions and claims
-  handle(
-    'collisions',
-    async (args: { repoPath: string; tasks: LocalTaskInput[]; memberName: string }) => {
-      const collisions = await computeCollisions(
-        run,
-        args.repoPath,
-        args.tasks,
-        (await svc()).presence(),
-        args.memberName
-      )
-      return { collisions, byTask: summarizeByTask(collisions) }
-    }
-  )
-  handle(
-    'claimFiles',
-    async (args: {
-      repoPath: string
-      taskId: string
-      branch: string
-      paths: string[]
-      note?: string
-    }) => {
-      const status = (await svc()).status()
-      const claims = await claimFiles(
-        run,
-        args.repoPath,
-        {
-          taskId: args.taskId,
-          branch: args.branch,
-          memberId: status.identity?.memberId ?? 'local',
-          memberName: status.identity?.name ?? 'me',
-          note: args.note
-        },
-        args.paths
-      )
-      await (await svc()).broadcastClaims()
-      return claims
-    }
-  )
-  handle('releaseClaims', async (args: { repoPath: string; taskId: string; paths?: string[] }) => {
-    const claims = await releaseClaims(run, args.repoPath, args.taskId, args.paths)
-    await (await svc()).broadcastClaims()
-    return claims
-  })
-  handle('listClaims', async (repoPath: string) => {
-    const state = await readRepoState(run, repoPath)
-    return [...state.claims, ...state.remoteClaims]
-  })
-  handle(
-    'assessEditRisk',
-    async (args: {
-      repoPath: string
-      filePath: string
-      selfTaskId: string | null
-      tasks: LocalTaskInput[]
-    }) => assessEditRisk(run, args.repoPath, args.filePath, args.selfTaskId, args.tasks)
-  )
-  handle(
-    'recordTasks',
-    async (args: {
-      repoPath: string
-      tasks: Record<string, { taskName: string; parentBranch?: string; baseRef?: string }>
-    }) =>
-      updateRepoState(run, args.repoPath, (state) => {
-        state.tasks = args.tasks
-      })
+  handle('deleteNote', async (id: string) => (await svc()).notes.delete(id))
+  handle('sendMessage', async (args: Parameters<TeamergeService['messages']['send']>[0]) =>
+    (await svc()).messages.send(args)
   )
 
-  handle('taskChangedFiles', async (args: { worktreePath: string; baseRef: string }) =>
-    worktreeChangedFiles(run, args.worktreePath, args.baseRef).catch((): string[] => [])
-  )
-
-  // child tasks
-  handle('childStatus', async (args: { worktreePath: string; parentBranch: string }) =>
-    childTaskStatus(run, args.worktreePath, args.parentBranch)
-  )
-  handle('updateFromParent', async (args: { worktreePath: string; parentBranch: string }) =>
-    updateFromParent(run, args.worktreePath, args.parentBranch)
-  )
-  handle('mergeIntoParent', async (args: { worktreePath: string; parentBranch: string }) =>
-    mergeChildIntoParent(run, args.worktreePath, args.parentBranch)
-  )
-  handle('mergeAllReady', async (args: { worktreePaths: string[]; parentBranch: string }) =>
-    mergeAllReady(
-      run,
-      args.worktreePaths.map((worktreePath) => ({ worktreePath })),
-      args.parentBranch
-    )
-  )
-
-  // landing queue
-  const emitLanding = (queue: Awaited<ReturnType<typeof readLandingQueue>>): void =>
-    broadcast({ type: 'landing', queue })
-  handle('landingQueue', async (repoPath: string) => readLandingQueue(run, repoPath))
-  handle(
-    'enqueueLanding',
-    async (args: {
-      repoPath: string
-      worktreePath: string
-      taskName: string
-      targetBranch: string
-    }) => {
-      const item = await enqueueForLanding(run, args.repoPath, args)
-      emitLanding(await readLandingQueue(run, args.repoPath))
-      return item
-    }
-  )
-  handle('removeLanding', async (args: { repoPath: string; id: string }) => {
-    await removeFromLanding(run, args.repoPath, args.id)
-    emitLanding(await readLandingQueue(run, args.repoPath))
-  })
-  handle('clearLanding', async (repoPath: string) => {
-    await clearFinishedLanding(run, repoPath)
-    emitLanding(await readLandingQueue(run, repoPath))
-  })
-  handle('landAll', async (repoPath: string) => {
-    const queue = await landAll(run, repoPath, emitLanding)
-    emitLanding(queue)
-    return queue
-  })
-  handle('undoLanding', async (args: { repoPath: string; id: string }) => {
-    const item = await undoLanding(run, args.repoPath, args.id)
-    emitLanding(await readLandingQueue(run, args.repoPath))
-    return item
-  })
-
-  // races
-  handle('listRaces', async (repoPath: string) => listRaces(run, repoPath))
-  handle(
-    'createRace',
-    async (args: { repoPath: string; title: string; baseRef: string; attempts: RaceAttempt[] }) =>
-      createRace(run, args.repoPath, args)
-  )
-  handle('compareRace', async (args: { repoPath: string; raceId: string }) => {
-    const race = (await listRaces(run, args.repoPath)).find((entry) => entry.id === args.raceId)
-    if (!race) {
-      throw new Error('This race no longer exists.')
-    }
-    return compareRace(run, race)
-  })
-  handle('raceFileDiffs', async (args: { repoPath: string; raceId: string; filePath: string }) => {
-    const race = (await listRaces(run, args.repoPath)).find((entry) => entry.id === args.raceId)
-    if (!race) {
-      throw new Error('This race no longer exists.')
-    }
-    return raceFileDiffs(run, race, args.filePath)
-  })
-  handle(
-    'pickRaceWinner',
-    async (args: { repoPath: string; raceId: string; winnerBranch: string }) =>
-      pickRaceWinner(run, args.repoPath, args.raceId, args.winnerBranch)
-  )
-  handle('removeRace', async (args: { repoPath: string; raceId: string }) =>
-    removeRace(run, args.repoPath, args.raceId)
-  )
-
-  // hunks
-  handle('fileHunks', async (args: { worktreePath: string; filePath: string; staged: boolean }) =>
-    readFileHunks(run, args.worktreePath, args.filePath, args.staged)
-  )
-  handle('stageHunk', async (args: { worktreePath: string; filePath: string; hunkId: string }) =>
-    stager.stage(args.worktreePath, args.filePath, args.hunkId)
-  )
-  handle('unstageHunk', async (args: { worktreePath: string; filePath: string; hunkId: string }) =>
-    stager.unstage(args.worktreePath, args.filePath, args.hunkId)
-  )
-  handle('discardHunk', async (args: { worktreePath: string; filePath: string; hunkId: string }) =>
-    stager.discard(args.worktreePath, args.filePath, args.hunkId)
-  )
-  handle('undoHunk', async (worktreePath: string) => stager.undoLast(worktreePath))
-  handle('hunkHistory', async (worktreePath: string) => stager.history(worktreePath))
+  registerTeamergeRepoHandlers({ handle, allowed, svc, broadcast })
 }

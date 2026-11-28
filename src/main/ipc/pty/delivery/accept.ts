@@ -17,6 +17,7 @@ import { clearFlushTimerIfIdle } from './flush'
 import { advancePtyEscapeBoundary, escapeBoundaryFields } from './pty-escape-boundary'
 import type { PtyIpcSession } from '../session'
 import type { PendingPtyData } from './pty-pending-data-drain-contract'
+import { teamergeTapPtyOutput } from '../../../teamerge/pty-tap'
 
 export function rendererPtyIsKnownHidden(id: string): boolean {
   return rendererVisibilityKnownPtys.has(id) && !visibleRendererPtys.has(id)
@@ -71,6 +72,10 @@ export function acceptPtyDataForRenderer(
   // Advance before any early return: bytes accepted without a renderer still move the stream's parser.
   // Zero-sequence payloads are query copies salvaged from a provider gap, not stream bytes.
   const isQueryCopy = payload.sequenceChars === 0
+  if (!isQueryCopy) {
+    // Shared panes stream to teammates even while hidden here, so tap before any visibility gating.
+    teamergeTapPtyOutput(payload.id, payload.data)
+  }
   const startEscapeBoundary = isQueryCopy ? '' : advancePtyEscapeBoundary(payload.id, payload.data)
   if (!session.mainWindow || session.mainWindow.isDestroyed()) {
     if (session.flushTimer) {

@@ -685,7 +685,6 @@
       "df1d56bf87": "La vista del espacio de trabajo tuvo un error.",
       "9e0b441a91": "Alternar barra lateral derecha",
       "e81217c1b7": "Ocultar nombre de la aplicación",
-      "5096cbbc86": "Orca",
       "8b0b8eb54f": "Menú de aplicaciones",
       "caea5b51b9": "Reiniciar ahora",
       "0a9e810705": "Hasta que reinicies, los cambios no se guardarán. Tus pestañas anteriores siguen guardadas en disco.",
@@ -1952,9 +1951,6 @@
       },
       "Landing": {
         "f9eaa9e12d": "Agregar proyecto",
-        "6ca6ff404e": "ORCA",
-        "520304a067": "logotipo de Orca",
-        "c1cf168479": "Ocultar",
         "00cee697c1": "Ejecuta \"gh auth login\" en una terminal para conectar tu cuenta de GitHub.",
         "9f96d018b7": "La CLI de GitHub no está autenticada",
         "73e1ad4282": "Orca usa GitHub CLI (gh) para mostrar pull requests, issues y checks.",
@@ -1963,9 +1959,6 @@
         "e5b7296d9d": "Git no está instalado",
         "cd21242762": "Agrega un proyecto para comenzar.",
         "9c00bd4adf": "Selecciona un espacio de trabajo en la barra lateral para comenzar.",
-        "0d0ace8861": "Dar estrella en GitHub",
-        "ec43b38ba7": "Con estrella en GitHub",
-        "157bb5ecbb": "Abrir GitHub",
         "preflightDismiss": "Descartar",
         "moveUpWorkspace": "Seleccionar espacio de trabajo anterior",
         "moveDownWorkspace": "Seleccionar espacio de trabajo siguiente",
@@ -4802,7 +4795,6 @@
         "share": {
           "card": {
             "utils": {
-              "19f4b4dc75": "github.com/stablyai/orca",
               "d864fc5f98": "salida",
               "5d66fdd7c2": "entrada",
               "7080aeaebb": "Razonamiento",
@@ -5831,7 +5823,6 @@
           "80611a8b10": "Buscar",
           "0c3395fd32": "Buscar worktrees y pestañas del navegador",
           "c86d83b5c3": "Nuevo",
-          "1b5c41caee": "Orca Móvil",
           "f323383e9a": "Automatizaciones",
           "e7ad3c540d": "Abrir tareas de Jira",
           "c39ab10000": "Abrir tareas de Linear",

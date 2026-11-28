@@ -46,9 +46,9 @@ const SidebarFeedbackDialog = lazyWithRetry(
   { reloadKey: 'sidebar-feedback-dialog' }
 )
 
-const DOCS_URL = 'https://www.onorca.dev/docs'
-const CHANGELOG_URL = 'https://onorca.dev/changelog'
-const GITHUB_URL = 'https://github.com/stablyai/orca'
+const DOCS_URL = 'https://github.com/shadow-mack/Teamerge#readme'
+const CHANGELOG_URL = 'https://github.com/shadow-mack/Teamerge/releases'
+const GITHUB_URL = 'https://github.com/shadow-mack/Teamerge'
 const DISCORD_URL = 'https://discord.gg/fzjDKHxv8Q'
 const X_URL = 'https://x.com/orca_build'
 const NO_UPDATE_CHECK_MODIFIERS = {

@@ -1,5 +1,6 @@
 import type { BrowserWindow } from 'electron'
 import { registerCoreHandlers } from '../ipc/register-core-handlers/register-core-handlers'
+import { registerTeamergeHandlers } from '../ipc/teamerge/teamerge-handlers'
 import { attachMainWindowServices } from '../window/attach-main-window-services'
 import { initTccPromptNotice } from '../macos-permissions/macos-tcc-prompt-notice'
 import { resolveUpdateInstallMode } from '../updater/updater-service'
@@ -65,6 +66,7 @@ export function attachMainWindowCoreServices(
   }
   // Server status probes start inside registerCoreHandlers; held hosts must be marked first.
   holdLaunchReconnectOptOuts(store.getSshTargets())
+  registerTeamergeHandlers(store)
   registerCoreHandlers(
     store,
     runtime,

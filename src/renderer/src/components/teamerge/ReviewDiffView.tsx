@@ -10,6 +10,7 @@ import type {
 } from '../../../../shared/teamerge/teamerge-types'
 import { relativeTime, useTeamergeStore } from './teamerge-store'
 import { errorMessage, MemberAvatar, StatusPill } from './team-ui'
+import { translate } from '@/i18n/i18n'
 
 type DiffLine = {
   kind: 'add' | 'del' | 'ctx' | 'hunk'
@@ -64,7 +65,11 @@ function CommentBubble({ comment }: { comment: TeamReviewComment }): React.JSX.E
         <div className="flex items-center gap-2 text-xs">
           <span className="font-semibold">{comment.authorName}</span>
           <span className="text-muted-foreground">{relativeTime(comment.createdAt)}</span>
-          {comment.delivered ? <StatusPill tone="green">Sent to agent</StatusPill> : null}
+          {comment.delivered ? (
+            <StatusPill tone="green">
+              {translate('auto.components.teamerge.ReviewDiffView.040dd05b00', 'Sent to agent')}
+            </StatusPill>
+          ) : null}
         </div>
         <p className="mt-0.5 text-[13px] leading-5 whitespace-pre-wrap">{comment.body}</p>
       </div>
@@ -117,15 +122,27 @@ export function ReviewDiffView({
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <Button variant="ghost" size="sm" onClick={onBack}>
           <ArrowLeft className="size-4" />
-          Inbox
+          {translate('auto.components.teamerge.ReviewDiffView.8ca101d933', 'Inbox')}
         </Button>
         <div className="min-w-0 flex-1">
           <h1 className="truncate text-[20px] font-semibold tracking-[-0.02em]">{review.title}</h1>
           <p className="text-xs text-muted-foreground">
-            {review.direction === 'incoming' ? `From ${review.fromName}` : 'Your request'} ·{' '}
-            <span className="font-mono">{review.branch}</span> · {files.length}{' '}
-            {files.length === 1 ? 'file' : 'files'} · {comments.length}{' '}
-            {comments.length === 1 ? 'comment' : 'comments'}
+            {review.direction === 'incoming'
+              ? translate('auto.components.teamerge.ReviewDiffView.85435bd95c', 'From {{value0}}', {
+                  value0: review.fromName
+                })
+              : translate(
+                  'auto.components.teamerge.ReviewDiffView.1b84ec7d9c',
+                  'Your request'
+                )}{' '}
+            · <span className="font-mono">{review.branch}</span> · {files.length}{' '}
+            {files.length === 1
+              ? translate('auto.components.teamerge.ReviewDiffView.b4ebcbaeea', 'file')
+              : translate('auto.components.teamerge.ReviewDiffView.e9649b4586', 'files')}{' '}
+            · {comments.length}{' '}
+            {comments.length === 1
+              ? translate('auto.components.teamerge.ReviewDiffView.ad2a20cc7f', 'comment')
+              : translate('auto.components.teamerge.ReviewDiffView.458bb56ff5', 'comments')}
           </p>
         </div>
         {review.direction === 'incoming' && review.status !== 'done' ? (
@@ -135,18 +152,27 @@ export function ReviewDiffView({
             }
           >
             <Check className="size-4" />
-            Finish Review
+            {translate('auto.components.teamerge.ReviewDiffView.8bd47b5773', 'Finish Review')}
           </Button>
         ) : (
           <StatusPill tone={review.status === 'done' ? 'green' : 'blue'}>
-            {review.status === 'done' ? 'Reviewed' : 'In review'}
+            {review.status === 'done'
+              ? translate('auto.components.teamerge.ReviewDiffView.fb553080e2', 'Reviewed')
+              : translate('auto.components.teamerge.ReviewDiffView.edd3b9405e', 'In review')}
           </StatusPill>
         )}
       </div>
       {canComment ? (
         <p className="mb-3 text-xs text-muted-foreground">
-          Click a line number to comment. Comments are typed into {review.fromName}’s agent as they
-          arrive.
+          {translate(
+            'auto.components.teamerge.ReviewDiffView.35ac70d22d',
+            'Click a line number to comment. Comments are typed into'
+          )}{' '}
+          {review.fromName}
+          {translate(
+            'auto.components.teamerge.ReviewDiffView.0e5a666e45',
+            '’s agent as they arrive.'
+          )}
         </p>
       ) : null}
       <div className="space-y-4">
@@ -184,7 +210,11 @@ export function ReviewDiffView({
                         <button
                           type="button"
                           disabled={!canComment}
-                          aria-label={`Comment on line ${lineNo}`}
+                          aria-label={translate(
+                            'auto.components.teamerge.ReviewDiffView.20f0bb814a',
+                            'Comment on line {{value0}}',
+                            { value0: lineNo }
+                          )}
                           onClick={() => setDraftAt({ file: file.path, line: lineNo })}
                           className="relative w-12 shrink-0 pr-2 text-right text-muted-foreground/70 select-none enabled:hover:text-primary"
                         >
@@ -218,7 +248,11 @@ export function ReviewDiffView({
                       <div className="mx-3 my-1.5 rounded-xl border border-primary/40 bg-card p-2 font-sans shadow-[var(--shadow-card)]">
                         <Textarea
                           autoFocus
-                          placeholder={`Comment on ${file.path}:${lineNo}`}
+                          placeholder={translate(
+                            'auto.components.teamerge.ReviewDiffView.c7c1dd64f0',
+                            'Comment on {{value0}}:{{value1}}',
+                            { value0: file.path, value1: lineNo }
+                          )}
                           value={draft}
                           onChange={(e) => setDraft(e.target.value)}
                           onKeyDown={(e) => {
@@ -230,14 +264,20 @@ export function ReviewDiffView({
                         />
                         <div className="mt-2 flex justify-end gap-2">
                           <Button size="sm" variant="ghost" onClick={() => setDraftAt(null)}>
-                            Cancel
+                            {translate(
+                              'auto.components.teamerge.ReviewDiffView.ce23490525',
+                              'Cancel'
+                            )}
                           </Button>
                           <Button
                             size="sm"
                             disabled={busy || !draft.trim()}
                             onClick={() => void submit()}
                           >
-                            Comment
+                            {translate(
+                              'auto.components.teamerge.ReviewDiffView.8a66349d01',
+                              'Comment'
+                            )}
                           </Button>
                         </div>
                       </div>

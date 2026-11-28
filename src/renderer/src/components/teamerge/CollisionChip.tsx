@@ -4,6 +4,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { cn } from '@/lib/utils'
 import { useTeamergeStore } from './teamerge-store'
 import { openTeamSection } from './use-teamerge-sync'
+import { translate } from '@/i18n/i18n'
 
 /** Shows when another task touches this task's files; red when merging them would conflict. */
 export function CollisionChip({
@@ -44,7 +45,11 @@ export function CollisionChip({
               : 'bg-collision-overlap/15 text-[color-mix(in_srgb,var(--collision-overlap)_80%,var(--foreground))]',
             className
           )}
-          aria-label={`${label} with ${[...others].join(', ')}`}
+          aria-label={translate(
+            'auto.components.teamerge.CollisionChip.06ec718358',
+            '{{value0}} with {{value1}}',
+            { value0: label, value1: [...others].join(', ') }
+          )}
         >
           {conflict ? (
             <AlertTriangle className="size-2.5" />
@@ -55,9 +60,15 @@ export function CollisionChip({
         </button>
       </TooltipTrigger>
       <TooltipContent side="top" sideOffset={4}>
-        {conflict ? 'Would conflict with ' : 'Also changed by '}
+        {conflict
+          ? `${translate('auto.components.teamerge.CollisionChip.ed050dc119', 'Would conflict with')} `
+          : `${translate('auto.components.teamerge.CollisionChip.d111aeaec2', 'Also changed by')} `}
         {[...others].slice(0, 3).join(', ')}
-        {others.size > 3 ? ` and ${others.size - 3} more` : ''}
+        {others.size > 3
+          ? translate('auto.components.teamerge.CollisionChip.ffb5dbb3e4', ' and {{value0}} more', {
+              value0: others.size - 3
+            })
+          : ''}
       </TooltipContent>
     </Tooltip>
   )

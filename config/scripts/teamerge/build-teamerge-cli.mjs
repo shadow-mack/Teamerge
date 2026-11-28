@@ -13,6 +13,8 @@ await build({
   platform: 'node',
   format: 'cjs',
   target: 'node20',
+  // Bundle workspace packages from source so the CLI needs no prior package build.
+  conditions: ['orca-source'],
   external: ['bufferutil', 'utf-8-validate'],
   logLevel: 'warning'
 })
