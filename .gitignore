@@ -24,6 +24,8 @@ out/
 /build/
 release/
 !config/scripts/release/
+# Orca source modules, not build output; a fresh checkout must keep them.
+!src/main/runtime/orchestration/terminal-authority/release/
 native/**/.build/
 native/windows-cli-launcher/target/
 native/windows-agent-hook/target/
@@ -75,6 +77,8 @@ prod-release-scan-*.md
 
 # Benchmark run output
 /tests/tools/benchmarks/results/*.json
+!/tests/tools/benchmarks/results/startup-*-2026-06-10T*.json
+!/tests/tools/benchmarks/results/terminal-perf-*-2026-07-02T*.json
 /.bench-fixtures/
 
 tmp/
@@ -107,6 +111,15 @@ docs/**
 !docs/agents-md-refs/**
 !docs/agent-skill-sharing-implementation-checklist.md
 !docs/mobile-terminal-shortcut-bar.md
+# Upstream reference docs and schemas that are committed despite the docs/** rule.
+!docs/reference/
+!docs/reference/**
+!docs/schemas/
+!docs/schemas/**
+!docs/relay-region-correction/
+!docs/relay-region-correction/**
+!docs/automated-setup-tab-*.md
+!docs/native-chat-setup-provisioning-*.md
 
 .stably/*
 !.stably/docs/
