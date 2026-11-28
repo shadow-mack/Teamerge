@@ -165,7 +165,7 @@ describe('managed-home Codex hook approval', () => {
     ).toBe(undefined)
   })
 
-  it("leaves user trust byte-untouched while approving Orca's entries", async () => {
+  it("leaves user trust byte-untouched while approving Teamerge's entries", async () => {
     mkdirSync(managedHome(), { recursive: true })
     const userBlock = [
       '[hooks.state."/home/user/.codex/hooks.json:stop:3:1"]',
@@ -270,7 +270,7 @@ describe('managed-home Codex hook approval', () => {
     expect(trust.get(userKey(1))).toBeUndefined()
   })
 
-  describe("Orca's own hash until Codex answers, as main wrote it", () => {
+  describe("Teamerge's own hash until Codex answers, as main wrote it", () => {
     const orcaStop = (): string | undefined => computeOrcaCodexHookHashes().stop ?? undefined
 
     function stopApproval(): string | undefined {
@@ -278,7 +278,7 @@ describe('managed-home Codex hook approval', () => {
         ?.trustedHash
     }
 
-    it("keeps the approval main's grant recorded for Orca's entry until Codex answers", async () => {
+    it("keeps the approval main's grant recorded for Teamerge's entry until Codex answers", async () => {
       useAnswer(timedOut)
       const service = new CodexHookService()
       await service.install()
@@ -309,7 +309,7 @@ describe('managed-home Codex hook approval', () => {
       expect(service.getStatus(managedHome()).state).toBe('installed')
     })
 
-    it("replaces a user hook's approval left at Orca's key with Orca's hash", async () => {
+    it("replaces a user hook's approval left at Teamerge's key with Teamerge's hash", async () => {
       useAnswer(timedOut)
       const service = new CodexHookService()
       await service.install()

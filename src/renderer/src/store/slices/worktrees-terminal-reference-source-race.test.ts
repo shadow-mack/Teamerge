@@ -36,7 +36,7 @@ it.each([
   const repo: Repo = {
     id: 'repo',
     path: '/repo',
-    displayName: 'Orca',
+    displayName: 'Teamerge',
     addedAt: 0,
     badgeColor: '',
     gitRemoteIdentity: {

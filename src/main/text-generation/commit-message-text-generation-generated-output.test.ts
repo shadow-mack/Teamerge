@@ -287,7 +287,7 @@ describe('generateCommitMessageFromContext', () => {
       success: false,
       error:
         agentId === 'kimi'
-          ? "Kimi returned output Orca couldn't read. Try again."
+          ? "Kimi returned output Teamerge couldn't read. Try again."
           : 'Generated pull request details could not be parsed.',
       branchChangedByPreparation: true
     })

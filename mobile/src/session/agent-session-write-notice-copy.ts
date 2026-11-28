@@ -36,17 +36,17 @@ const SENTENCES: Record<AgentSessionWriteNoticeSentence, () => string> = {
   capacity: () =>
     translate(
       'session.writeNotice.capacity',
-      'Orca on the computer running this chat has hit a request limit. Update Orca there, then try again.'
+      'Teamerge on the computer running this chat has hit a request limit. Update Teamerge there, then try again.'
     ),
   outcomeUnknown: () =>
     translate(
       'session.writeNotice.outcomeUnknown',
-      "Orca couldn't confirm what happened. Check the chat."
+      "Teamerge couldn't confirm what happened. Check the chat."
     ),
   sendOutcomeLost: () =>
     translate(
       'session.writeNotice.sendOutcomeLost',
-      "Orca couldn't confirm your message reached the agent. Check the chat, then send it again if needed."
+      "Teamerge couldn't confirm your message reached the agent. Check the chat, then send it again if needed."
     ),
   continuationSuperseded: () =>
     translate(
@@ -63,35 +63,42 @@ const SENTENCES: Record<AgentSessionWriteNoticeSentence, () => string> = {
   historyUnreadable: () =>
     translate(
       'session.writeNotice.historyUnreadable',
-      "Orca couldn't read this chat's saved history."
+      "Teamerge couldn't read this chat's saved history."
     ),
   historyUnusable: () =>
     translate('session.writeNotice.historyUnusable', 'Unable to load this chat.'),
   historyUnavailable: () =>
     translate(
       'session.writeNotice.historyUnavailable',
-      "Orca couldn't open this chat's history right now."
+      "Teamerge couldn't open this chat's history right now."
     ),
   savedByNewerOrca: () =>
-    translate('session.writeNotice.savedByNewerOrca', 'Chats were saved by a newer Orca.'),
+    translate('session.writeNotice.savedByNewerOrca', 'Chats were saved by a newer Teamerge.'),
   updateOrcaToKeepUsing: () =>
-    translate('session.writeNotice.updateOrcaToKeepUsing', 'Update Orca to keep using them.'),
+    translate('session.writeNotice.updateOrcaToKeepUsing', 'Update Teamerge to keep using them.'),
   chatSavedByNewerOrca: () =>
-    translate('session.writeNotice.chatSavedByNewerOrca', 'This chat was saved by a newer Orca.'),
+    translate(
+      'session.writeNotice.chatSavedByNewerOrca',
+      'This chat was saved by a newer Teamerge.'
+    ),
   updateOrcaToOpenChat: () =>
-    translate('session.writeNotice.updateOrcaToOpenChat', 'Update Orca to open it.'),
+    translate('session.writeNotice.updateOrcaToOpenChat', 'Update Teamerge to open it.'),
   unsupported: () =>
     translate(
       'session.writeNotice.unsupported',
-      'This needs a newer Orca on the computer running this chat. Update Orca there, then try again.'
+      'This needs a newer Teamerge on the computer running this chat. Update Teamerge there, then try again.'
     ),
   notAvailable: () =>
     translate('session.writeNotice.notAvailable', "This isn't available in this chat."),
   cannotRunHere: () =>
-    translate('session.writeNotice.cannotRunHere', "Orca can't run this agent in a chat here."),
-  unreachable: () => translate('session.writeNotice.unreachable', "Orca couldn't reach the agent."),
+    translate('session.writeNotice.cannotRunHere', "Teamerge can't run this agent in a chat here."),
+  unreachable: () =>
+    translate('session.writeNotice.unreachable', "Teamerge couldn't reach the agent."),
   recordFailed: () =>
-    translate('session.writeNotice.recordFailed', "Orca couldn't save this to the chat's history."),
+    translate(
+      'session.writeNotice.recordFailed',
+      "Teamerge couldn't save this to the chat's history."
+    ),
   attachmentExpired: () =>
     translate('session.writeNotice.attachmentExpired', 'This attachment expired.'),
   reattachFile: () =>
@@ -224,20 +231,21 @@ const SENTENCES: Record<AgentSessionWriteNoticeSentence, () => string> = {
   hostReconciling: () =>
     translate(
       'session.writeNotice.hostReconciling',
-      'Orca is still checking on this chat after restarting.'
+      'Teamerge is still checking on this chat after restarting.'
     ),
   waitMoment: () => translate('session.writeNotice.waitMoment', 'Wait a moment.'),
   recordUnreadable: () =>
     translate(
       'session.writeNotice.recordUnreadable',
-      "Orca couldn't read this chat's saved state."
+      "Teamerge couldn't read this chat's saved state."
     ),
   mailOwnerUnconfirmed: () =>
     translate(
       'session.writeNotice.mailOwnerUnconfirmed',
-      "Orca couldn't confirm this message is still meant for this chat."
+      "Teamerge couldn't confirm this message is still meant for this chat."
     ),
-  chatNotFound: () => translate('session.writeNotice.chatNotFound', "Orca can't find this chat."),
+  chatNotFound: () =>
+    translate('session.writeNotice.chatNotFound', "Teamerge can't find this chat."),
   startNewChat: () =>
     translate('session.writeNotice.startNewChat', 'Start a new chat to continue.'),
   tryAgain: () => translate('session.writeNotice.tryAgain', 'Try again.')

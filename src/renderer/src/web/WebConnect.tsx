@@ -32,7 +32,7 @@ export default function WebConnect({
 }: WebConnectProps): React.JSX.Element {
   const existingEnvironment = readStoredWebRuntimeEnvironment()
   const [name, setName] = useState(
-    (!confirmReplacingSavedServer && existingEnvironment?.name) || 'Orca Server'
+    (!confirmReplacingSavedServer && existingEnvironment?.name) || 'Teamerge Server'
   )
   const [pairingCode, setPairingCode] = useState(initialPairingInput ?? '')
   const [error, setError] = useState<string | null>(null)
@@ -45,21 +45,21 @@ export default function WebConnect({
   const connect = async (): Promise<void> => {
     setError(null)
     if (!parsedOffer) {
-      setError('Enter a valid Orca pairing URL or pairing code.')
+      setError('Enter a valid Teamerge pairing URL or pairing code.')
       return
     }
     if (parsedOffer.scope === 'mobile') {
       setError(
         translate(
           'auto.web.WebConnect.mobileScopeRejected',
-          'This QR code grants limited (mobile) access. To use the full web app, open the browser access link from Settings → Runtime Environments → Share this Orca server → New Link.'
+          'This QR code grants limited (mobile) access. To use the full web app, open the browser access link from Settings → Runtime Environments → Share this Teamerge server → New Link.'
         )
       )
       return
     }
     if (isMixedContentWebSocket(parsedOffer.endpoint)) {
       setError(
-        'This HTTPS page cannot connect to a plain ws:// Orca server. Open the web client over HTTP or pair with a wss:// endpoint.'
+        'This HTTPS page cannot connect to a plain ws:// Teamerge server. Open the web client over HTTP or pair with a wss:// endpoint.'
       )
       return
     }
@@ -81,7 +81,7 @@ export default function WebConnect({
         setError(
           translate(
             'auto.web.WebConnect.mobileScopeRejected',
-            'This QR code grants limited (mobile) access. To use the full web app, open the browser access link from Settings → Runtime Environments → Share this Orca server → New Link.'
+            'This QR code grants limited (mobile) access. To use the full web app, open the browser access link from Settings → Runtime Environments → Share this Teamerge server → New Link.'
           )
         )
         return
@@ -131,12 +131,12 @@ export default function WebConnect({
           </div>
           <div className="min-w-0">
             <h1 className="text-base font-semibold leading-6">
-              {translate('auto.web.WebConnect.e3bcd082ac', 'Connect to Orca')}
+              {translate('auto.web.WebConnect.e3bcd082ac', 'Connect to Teamerge')}
             </h1>
             <p className="mt-1 text-sm leading-5 text-muted-foreground">
               {translate(
                 'auto.web.WebConnect.3affe7de3a',
-                'Paste a pairing URL from an Orca server that this browser can reach.'
+                'Paste a pairing URL from a Teamerge server that this browser can reach.'
               )}
             </p>
           </div>

@@ -10,7 +10,7 @@ import {
 const repo: Repo = {
   id: 'repo',
   path: '/repo',
-  displayName: 'Orca',
+  displayName: 'Teamerge',
   badgeColor: '',
   addedAt: 1,
   connectionId: 'remote'

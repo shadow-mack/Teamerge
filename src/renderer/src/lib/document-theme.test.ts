@@ -40,7 +40,7 @@ describe('host pill outline on the selected workspace card', () => {
     expect(paintedOutlineMix('#2a2a2a', '#919191')).toBe('54%')
   })
 
-  it("keeps Orca's 40% outline when the sidebar text is bright enough", () => {
+  it("keeps Teamerge's 40% outline when the sidebar text is bright enough", () => {
     expect(paintedOutlineMix('#2a2a2a', '#f0f0f0')).toBe('40%')
   })
 })

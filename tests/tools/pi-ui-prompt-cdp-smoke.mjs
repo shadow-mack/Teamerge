@@ -12,7 +12,7 @@ await mkdir(output, { recursive: true })
 const browser = await chromium.connectOverCDP(endpoint)
 try {
   const page = browser.contexts().flatMap((context) => context.pages())[0]
-  assert.ok(page, 'Orca renderer must be open')
+  assert.ok(page, 'Teamerge renderer must be open')
   const identity = await page.evaluate(() => window.api.app.getIdentity())
   assert.equal(identity.isDev, true, 'Use an isolated development instance')
   console.log(JSON.stringify(identity))

@@ -140,7 +140,7 @@ export function MobileOfflineState({
       }
       message={t(
         'common.offline.message',
-        'Check that your computer is awake and Orca is running.'
+        'Check that your computer is awake and Teamerge is running.'
       )}
       action={
         onReconnect

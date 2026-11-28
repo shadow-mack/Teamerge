@@ -109,7 +109,7 @@ export function useMobileDiffReviewController(input: ControllerInput) {
         kind: 'unavailable',
         message: translate(
           'session.useDiffReviewController.commitMissing',
-          'Update the Orca app to open commit files here.'
+          'Update the Teamerge app to open commit files here.'
         )
       })
       return

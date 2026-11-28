@@ -37,7 +37,7 @@ function setup(overrides: Partial<ProjectHostSetup> = {}): ProjectHostSetup {
 }
 
 describe('automation setup decision defaults', () => {
-  it('hides setup choice outside Orca new-run automations with setup', () => {
+  it('hides setup choice outside Teamerge new-run automations with setup', () => {
     const baseArgs = {
       repoId: 'repo-1',
       repos: [repo],

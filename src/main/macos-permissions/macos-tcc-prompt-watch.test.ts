@@ -92,7 +92,7 @@ describe('MacosTccPromptWatch', () => {
     expect(spawnLogStream).not.toHaveBeenCalled()
   })
 
-  it('reports only Orca-attributed dialogs from a live stream', async () => {
+  it('reports only Teamerge-attributed dialogs from a live stream', async () => {
     const { child, stdout } = createFakeLogStream()
     const onPrompt = vi.fn()
     const watch = new MacosTccPromptWatch({ onPrompt, spawnLogStream: () => child })

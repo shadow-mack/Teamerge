@@ -128,7 +128,7 @@
       "ordinal": 11,
       "value": {
         "durationMs": 3000,
-        "message": "Open Orca on the host to wake sleeping agents."
+        "message": "Open Teamerge on the host to wake sleeping agents."
       }
     },
     "38b377793c34": {
@@ -698,7 +698,7 @@
       "ordinal": 24,
       "value": {
         "durationMs": 3000,
-        "message": "Open Orca on the host to wake sleeping agents."
+        "message": "Open Teamerge on the host to wake sleeping agents."
       }
     },
     "d4bedafff7b3": {
@@ -866,7 +866,7 @@
       "ordinal": 23,
       "value": {
         "durationMs": 3000,
-        "message": "Open Orca on the host to wake sleeping agents."
+        "message": "Open Teamerge on the host to wake sleeping agents."
       }
     },
     "ef975183a3b7": {

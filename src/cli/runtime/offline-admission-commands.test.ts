@@ -180,7 +180,8 @@ describe.skipIf(process.platform === 'win32')(
       'retains the %s helper selection and never replays an uncertain child result',
       async (kind) => {
         metadata()
-        const executable = kind === 'older-override' ? join(root, 'older-Orca') : process.execPath
+        const executable =
+          kind === 'older-override' ? join(root, 'older-Teamerge') : process.execPath
         if (kind === 'older-override') {
           vi.stubEnv('ORCA_APP_EXECUTABLE', executable)
         } else {

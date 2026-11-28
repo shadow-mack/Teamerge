@@ -87,7 +87,7 @@ export async function publishCatalog(
   )
   await writeFile(
     join(repositories, 'orca-plugins.git', 'orca-catalog.json'),
-    JSON.stringify({ catalogVersion: 2, name: 'Orca Plugins', owner: 'stablyai', plugins })
+    JSON.stringify({ catalogVersion: 2, name: 'Teamerge Plugins', owner: 'stablyai', plugins })
   )
 }
 
@@ -102,7 +102,7 @@ export async function commitFixtureChange(
     repository,
     [
       '-c',
-      'user.name=Orca Test',
+      'user.name=Teamerge Test',
       '-c',
       'user.email=orca-test@example.invalid',
       'commit',

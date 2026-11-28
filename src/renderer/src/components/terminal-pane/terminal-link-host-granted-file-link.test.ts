@@ -90,7 +90,7 @@ describe('a Shift-clicked paired-server file outside its workspace', () => {
     expect(openFileMock).not.toHaveBeenCalled()
   })
 
-  it('opens a granted file in Orca when its host cannot page grants', async () => {
+  it('opens a granted file in Teamerge when its host cannot page grants', async () => {
     runtimeEnvironmentTransportCallMock.mockImplementation(
       (args: RuntimeEnvironmentCallRequest) => {
         const status = createCompatibleRuntimeStatusResponseIfNeeded(args)

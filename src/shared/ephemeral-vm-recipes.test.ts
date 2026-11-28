@@ -198,7 +198,7 @@ describe('parseEphemeralVmRecipeResult', () => {
       )
     ).toEqual({
       ok: false,
-      error: 'Recipe result pairingCode is not a valid Orca pairing code.',
+      error: 'Recipe result pairingCode is not a valid Teamerge pairing code.',
       errorCode: 'recipeResultPairingCodeInvalid'
     })
   })

@@ -159,7 +159,7 @@ describe('cwd workspace ownership at the real CLI boundary', () => {
             if (args[0] === 'orchestration') {
               const steps = [
                 'This command needs your own caller identity; selecting a target workspace cannot supply it.',
-                'Run the command in your own live Orca terminal with ORCA_TERMINAL_HANDLE preserved.'
+                'Run the command in your own live Teamerge terminal with ORCA_TERMINAL_HANDLE preserved.'
               ]
               expect(
                 json
@@ -168,12 +168,12 @@ describe('cwd workspace ownership at the real CLI boundary', () => {
               ).toEqual(steps)
               expect(advice).not.toMatch(/--worktree|--parent-worktree|--from|worktree show/)
               expect(
-                output.match(/More than one Orca workspace matched the current directory/g)
+                output.match(/More than one Teamerge workspace matched the current directory/g)
               ).toHaveLength(1)
               expect(log).toHaveBeenCalledTimes(1)
               expect(err.mock.calls).toEqual([
                 [
-                  'error: selector_ambiguous: More than one Orca workspace matched the current directory. Choose an exact workspace.'
+                  'error: selector_ambiguous: More than one Teamerge workspace matched the current directory. Choose an exact workspace.'
                 ]
               ])
               if (json) {
@@ -203,7 +203,7 @@ describe('cwd workspace ownership at the real CLI boundary', () => {
             if (!args.includes('--parent-worktree')) {
               expect(advice).not.toContain('--parent-worktree')
             }
-            expect(output).not.toContain('No Orca workspace matched')
+            expect(output).not.toContain('No Teamerge workspace matched')
             expect(output).not.toContain('orca repo list')
             expect(
               callMock.mock.calls.map(([method]) => method),

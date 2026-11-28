@@ -25,7 +25,8 @@ vi.mock('./remote-install-transfers', () => ({
 const conn = unusedOrcadHostTransport()
 const host = getRemoteHostPlatform('linux-x64')
 const TARGET = 'linux-x64-glibc'
-const OFFLINE_PATH = '/Users/me/Library/Application Support/Orca/orcad-artifacts/node/archives/x'
+const OFFLINE_PATH =
+  '/Users/me/Library/Application Support/Teamerge/orcad-artifacts/node/archives/x'
 
 afterEach(() => {
   vi.mocked(execCommand).mockReset()

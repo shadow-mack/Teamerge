@@ -127,7 +127,7 @@ describe('command aliases dispatch to the canonical handler', () => {
     await main(['worktree', 'rm', '--worktree', 'id:wt-1'], '/tmp/repo')
 
     expect(logSpy).toHaveBeenCalledWith(
-      'removed: false\nOrca is still deleting the checkout in the background.'
+      'removed: false\nTeamerge is still deleting the checkout in the background.'
     )
   })
 
@@ -415,7 +415,7 @@ describe('unknown command surfaces a suggestion', () => {
       expect.objectContaining({ worktree: 'repo-1', from: 'term-caller' })
     )
     expect(stderr).toBe('error: selector_not_found: selector_not_found')
-    expect(stdout).toContain('No Orca workspace matched the worktree selector "repo-1"')
+    expect(stdout).toContain('No Teamerge workspace matched the worktree selector "repo-1"')
     expect(stdout).toContain('id:repo-1::<absolute-path>')
     expect(stdout).toContain('Valid selector forms:')
   })

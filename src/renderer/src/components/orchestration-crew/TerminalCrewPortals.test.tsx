@@ -194,7 +194,7 @@ it('mentions into a restored pane whose terminal connects after the panel first 
     fireEvent.click(within(test.first.container).getByRole('button', { name: 'Mention all' }))
   )
   expect(test.accepted).toHaveBeenCalledExactlyOnceWith(
-    'Worker (Orca agent term_worker) ',
+    'Worker (Teamerge agent term_worker) ',
     'driving'
   )
 })

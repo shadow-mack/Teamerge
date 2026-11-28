@@ -68,13 +68,13 @@ Everything a components panel (`"ui": "components"`) imports comes from `orca`. 
 - `mount(component: () => OrcaNode): void`: Optional: the module's default export is mounted automatically.
 - `on<E extends keyof OrcaEvents>(event: E, handler: (payload: OrcaEvents[E]) => void): Disposable`
 - `host.call(method, ...args)`
-- `host.has(method: string)`: Whether this Orca offers `method` to this panel.
-- `api: { readonly major: number; readonly minor: number }`: The host API this Orca implements.
-- `env.locale: string`: Orca's UI language (BCP-47).
+- `host.has(method: string)`: Whether this Teamerge offers `method` to this panel.
+- `api: { readonly major: number; readonly minor: number }`: The host API this Teamerge implements.
+- `env.locale: string`: Teamerge's UI language (BCP-47).
 - `env.theme: Theme`: Reading it while rendering re-renders on light/dark switches.
 - `env.client: 'desktop'`
 - `ui.catalog: number`: Grows with the component catalog.
-- `ui.has(component: string, prop?: string)`: Whether this Orca draws `component` (and accepts `prop` on it, when given).
+- `ui.has(component: string, prop?: string)`: Whether this Teamerge draws `component` (and accepts `prop` on it, when given).
 - `shell.openExternal(url: string)`: Needs a press on one of the panel's controls; see "User gestures".
 - `files.saveAs(options: HostMethods['files.saveAs']['params'])`: Needs a press on one of the panel's controls; see "User gestures".
 - `plugin: PluginBridgeApi`

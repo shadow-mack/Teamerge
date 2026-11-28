@@ -62,7 +62,7 @@ afterEach(() => {
 })
 
 describe('a built-in action a plugin replaces', () => {
-  it("runs Orca's own after 2 s of silence, and only once", async () => {
+  it("runs Teamerge's own after 2 s of silence, and only once", async () => {
     const builtIn = vi.fn()
     let answer: (value: unknown) => void = () => {}
     invokeCommand.mockReturnValueOnce(new Promise((resolve) => (answer = resolve)))

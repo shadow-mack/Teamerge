@@ -56,7 +56,7 @@ export const NEVER_TRANSLATE_VALUES = new Set([
   'OpenClaw',
   'OpenCode',
   'OpenCode Go',
-  'Orca',
+  'Teamerge',
   'Pi',
   'PostHog',
   'Qwen Code',
@@ -438,11 +438,11 @@ export function repairTranslatedValue({ key, enValue, localeValue, locale }) {
     result = result.replace(/虎鲸:\/\//g, 'orca://')
   }
 
-  if (enValue === 'Orca' || enValue.startsWith('Orca ')) {
+  if (enValue === 'Teamerge' || enValue.startsWith('Teamerge ')) {
     result = result
-      .replaceAll('虎鲸', 'Orca')
-      .replaceAll('逆戟鲸', 'Orca')
-      .replaceAll('シャチ', 'Orca')
+      .replaceAll('虎鲸', 'Teamerge')
+      .replaceAll('逆戟鲸', 'Teamerge')
+      .replaceAll('シャチ', 'Teamerge')
   }
 
   if (enValue.includes('orca://')) {
@@ -508,22 +508,22 @@ export function repairCatalog(enCatalog, localeCatalog, locale) {
 
   if (localeCatalog.menu) {
     if (locale === 'zh') {
-      if (localeCatalog.menu.exploreOrca !== '探索 Orca') {
-        localeCatalog.menu.exploreOrca = '探索 Orca'
+      if (localeCatalog.menu.exploreOrca !== '探索 Teamerge') {
+        localeCatalog.menu.exploreOrca = '探索 Teamerge'
         repaired += 1
       }
-      if (localeCatalog.menu.gettingStarted !== 'Orca 入门') {
-        localeCatalog.menu.gettingStarted = 'Orca 入门'
+      if (localeCatalog.menu.gettingStarted !== 'Teamerge 入门') {
+        localeCatalog.menu.gettingStarted = 'Teamerge 入门'
         repaired += 1
       }
     }
     if (locale === 'ko') {
-      if (localeCatalog.menu.exploreOrca !== 'Orca 둘러보기') {
-        localeCatalog.menu.exploreOrca = 'Orca 둘러보기'
+      if (localeCatalog.menu.exploreOrca !== 'Teamerge 둘러보기') {
+        localeCatalog.menu.exploreOrca = 'Teamerge 둘러보기'
         repaired += 1
       }
-      if (localeCatalog.menu.gettingStarted !== 'Orca 시작하기') {
-        localeCatalog.menu.gettingStarted = 'Orca 시작하기'
+      if (localeCatalog.menu.gettingStarted !== 'Teamerge 시작하기') {
+        localeCatalog.menu.gettingStarted = 'Teamerge 시작하기'
         repaired += 1
       }
     }

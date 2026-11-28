@@ -24,7 +24,7 @@ describe('host pill outline in the tinted left sidebar', () => {
     expect(tintedSidebarHostPillOutlineMix(tinted, app, probe)).toBe(53)
   })
 
-  it("keeps Orca's 40% outline over Orca's dark colors", () => {
+  it("keeps Teamerge's 40% outline over Teamerge's dark colors", () => {
     const app = { foreground: '#f0f0f0', background: '#0a0a0a', base: 'dark' as const }
     expect(tintedSidebarHostPillOutlineMix(tinted, app, probe)).toBe(40)
   })

@@ -69,7 +69,7 @@ it('lists an unopened newer journal passively and preserves its offer when actin
   await keptWithoutAWord(host, root, acquire, true)
 })
 
-it('keeps the offer of every chat in a newer Orca database, and offers, runs and counts nothing', async () => {
+it('keeps the offer of every chat in a newer Teamerge database, and offers, runs and counts nothing', async () => {
   const { host, root, acquire } = await interruptedRestart()
   const database = openTestJournalHostDatabase(root)
   Object.defineProperty(database, 'readOnly', { value: true })
@@ -77,11 +77,11 @@ it('keeps the offer of every chat in a newer Orca database, and offers, runs and
   await keptWithoutAWord(host, root, acquire)
 })
 
-it('keeps the offer and files nothing when the send is refused as a newer Orca chat', async () => {
+it('keeps the offer and files nothing when the send is refused as a newer Teamerge chat', async () => {
   const { host, root } = await interruptedRestart()
   await host.restartResume.list()
   vi.spyOn(AgentSessionJournal.prototype, 'appendSubmission').mockRejectedValue(
-    new AgentSessionJournalError('journal_read_only', 'a newer Orca wrote this journal')
+    new AgentSessionJournalError('journal_read_only', 'a newer Teamerge wrote this journal')
   )
 
   const action = await host.restartResume.continueAfterRestart([SESSION], 'modal')
@@ -140,7 +140,7 @@ it.each([
   ['on a host that has not listed them yet', false, undefined],
   ['for a client shown only Codex', false, (agent: string) => agent === 'codex']
 ])(
-  "dismisses every listed offer and leaves a newer Orca's hidden one as it was, %s",
+  "dismisses every listed offer and leaves a newer Teamerge's hidden one as it was, %s",
   async (_when, listFirst, audience) => {
     const NEWER = 'session-newer-orca'
     const created = await hostTestState().host.attach(

@@ -202,7 +202,7 @@ describe('picker window launch contract', () => {
         if (target === 'older-host') {
           mockCreateWebRuntimeSessionTerminal.mockResolvedValue({
             status: 'failed',
-            message: 'Upgrade the remote Orca host before starting or resuming agent sessions.'
+            message: 'Upgrade the remote Teamerge host before starting or resuming agent sessions.'
           })
         }
       }

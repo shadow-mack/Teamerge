@@ -17,7 +17,7 @@ describe('what a rejection shows the reader', () => {
     const shown = notice('provider_write_failed: broken pipe')
     expect(shown).not.toContain('provider_write_failed')
     expect(shown).not.toContain('broken pipe')
-    expect(shown).toBe("Orca couldn't reach the agent. Your message was not sent.")
+    expect(shown).toBe("Teamerge couldn't reach the agent. Your message was not sent.")
   })
 })
 

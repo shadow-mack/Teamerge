@@ -69,7 +69,7 @@ describe('useNativeChatTerminalDraftPickup', () => {
 
   const orcaDraft = seed({ fromTerminal: undefined })
 
-  it('reads the line once the transcript shows a draft Orca typed was already sent', () => {
+  it('reads the line once the transcript shows a draft Teamerge typed was already sent', () => {
     const { hook, readTerminalDraft } = render({
       launchDraft: orcaDraft,
       resolved: false,
@@ -84,7 +84,7 @@ describe('useNativeChatTerminalDraftPickup', () => {
     )
   })
 
-  it('never reads after a chat send takes the Orca draft before the transcript is ready', () => {
+  it('never reads after a chat send takes the Teamerge draft before the transcript is ready', () => {
     const { hook, readTerminalDraft } = render({
       launchDraft: orcaDraft,
       resolved: false,

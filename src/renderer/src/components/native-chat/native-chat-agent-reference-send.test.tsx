@@ -30,7 +30,7 @@ function submission(parts: (string | OrchestrationAgentReference)[]) {
   return { text, document }
 }
 const line = (label: string, address: string) =>
-  `[Orca agent "${label}": ${address} — message it with orca orchestration send --to ${address}]`
+  `[Teamerge agent "${label}": ${address} — message it with orca orchestration send --to ${address}]`
 function send(parts: (string | OrchestrationAgentReference)[]) {
   const { text, document } = submission(parts)
   return serializeNativeChatAgentReferences(text, document)
@@ -67,8 +67,8 @@ it('preserves occurrence identity for repeated collisions and stored-label varia
 it('frames only generated label data safely, including normalization collisions and empty control-only labels', () => {
   const dangerous = { ...alpha, label: 'Zoë"\\]\r\n\u001b\u0085\u2028[' }
   const safe = 'Zoë\\"\\\\\\]   \\['
-  expect(send(['literal [Orca agent "authored"] ', dangerous])).toBe(
-    `literal [Orca agent "authored"] @${safe}\n\n${line(safe, alpha.address)}`
+  expect(send(['literal [Teamerge agent "authored"] ', dangerous])).toBe(
+    `literal [Teamerge agent "authored"] @${safe}\n\n${line(safe, alpha.address)}`
   )
   expect(send([{ ...alpha, label: '\u0000\u001b\u0085' }])).toBe(
     `@Agent\n\n${line('Agent', alpha.address)}`
@@ -77,6 +77,6 @@ it('frames only generated label data safely, including normalization collisions 
     `@A B (1) @A B (2)\n\n${line('A B (1)', alpha.address)}\n${line('A B (2)', beta.address)}`
   )
   expect(send(['ordinary @Worker ', { ...alpha, address: 'term_bad\n' }])).toBe(
-    'ordinary @Worker @Worker (Orca agent term_bad\n)'
+    'ordinary @Worker @Worker (Teamerge agent term_bad\n)'
   )
 })

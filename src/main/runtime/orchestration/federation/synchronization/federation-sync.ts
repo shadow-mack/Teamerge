@@ -76,7 +76,7 @@ async function syncFederatedDispatchPages(
   if (currentServer.peerFingerprint !== federated.peer_fingerprint) {
     throw new OrchestrationError(
       'peer_changed',
-      `Saved environment ${federated.environment_name} now identifies a different Orca server.`
+      `Saved environment ${federated.environment_name} now identifies a different Teamerge server.`
     )
   }
   const ackLease = acquireFederationAckLease(runtime, dispatchId)

@@ -41,7 +41,7 @@ export function installChromeWebStoreBridge(): void {
         )
         return reply
       } catch {
-        return { error: 'Orca could not handle this request' }
+        return { error: 'Teamerge could not handle this request' }
       }
     },
     onEvent: (handler) => {

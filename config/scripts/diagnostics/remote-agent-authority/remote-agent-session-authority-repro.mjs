@@ -55,7 +55,7 @@ try {
       '-C',
       projectPath,
       '-c',
-      'user.name=Orca Repro',
+      'user.name=Teamerge Repro',
       '-c',
       'user.email=orca-repro@example.invalid',
       'commit',

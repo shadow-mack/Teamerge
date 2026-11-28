@@ -232,7 +232,7 @@ export function ChecksPanelEmptyContent({
       reviewState.autoRetryAt !== undefined && reviewState.autoRetryAt > now
         ? translate(
             'auto.components.right.sidebar.ChecksPanel.review.auto_retry',
-            'Orca will retry at {{time}}.',
+            'Teamerge will retry at {{time}}.',
             { time: new Date(reviewState.autoRetryAt).toLocaleTimeString(getIntlLocale()) }
           )
         : null

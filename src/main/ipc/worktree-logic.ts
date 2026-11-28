@@ -179,7 +179,7 @@ function workspaceRootForMirrorHome(
 ): string {
   // Desktop absolute roots must mirror into WSL; repo-relative roots already resolve inside the distro.
   return wslHome
-    ? win32.join(wslHome, 'orca', 'workspaces')
+    ? win32.join(wslHome, 'teamerge', 'workspaces')
     : resolveWorkspaceDirForRepo(repoPath, workspaceDir)
 }
 

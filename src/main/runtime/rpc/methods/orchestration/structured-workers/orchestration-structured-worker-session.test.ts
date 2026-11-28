@@ -204,7 +204,7 @@ describe('structured worker session', () => {
       ok: false,
       refusal: {
         code: 'structured_agent_session_unsupported',
-        message: 'Orca cannot open a structured agent chat for this workspace.'
+        message: 'Teamerge cannot open a structured agent chat for this workspace.'
       }
     }))
     await expect(

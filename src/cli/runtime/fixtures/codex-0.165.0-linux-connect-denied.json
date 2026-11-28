@@ -1,6 +1,6 @@
 {
   "provenance": {
-    "capture": "QA3286, real rendered remote Orca terminal, Linux arm64 glibc",
+    "capture": "QA3286, real rendered remote Teamerge terminal, Linux arm64 glibc",
     "codexVersion": "0.165.0",
     "command": ["orca", "status", "--json"],
     "policy": {
@@ -20,12 +20,12 @@
     "ok": false,
     "error": {
       "code": "runtime_access_denied",
-      "message": "Permission denied connecting to Orca (EPERM). Orca may be running normally; this command's sandbox or OS permissions block the connection.",
+      "message": "Permission denied connecting to Teamerge (EPERM). Teamerge may be running normally; this command's sandbox or OS permissions block the connection.",
       "data": {
         "systemCode": "EPERM",
         "nextSteps": [
-          "Re-run this command outside its sandbox, or as a user allowed to reach the Orca runtime.",
-          "Do not restart Orca or run 'orca open'; a restart cannot grant this command access."
+          "Re-run this command outside its sandbox, or as a user allowed to reach the Teamerge runtime.",
+          "Do not restart Teamerge or run 'orca open'; a restart cannot grant this command access."
         ]
       }
     },

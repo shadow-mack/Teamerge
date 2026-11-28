@@ -60,11 +60,11 @@ export function TerminalRemoteRuntimeReconnectBanner({
         data={{ 'data-terminal-remote-runtime-reconnect-banner': 'server-replaced' }}
         title={translate(
           'auto.components.terminal.pane.TerminalRemoteRuntimeReconnectBanner.serverReplacedTitle',
-          'This host runs a different Orca server'
+          'This host runs a different Teamerge server'
         )}
         body={translate(
           'auto.components.terminal.pane.TerminalRemoteRuntimeReconnectBanner.serverReplacedBody',
-          'Orca connects to the host as a different SSH user, or its server was reinstalled, so reconnecting can’t restore this terminal. Forget this server in Settings, then connect the SSH host to pair with its current server.'
+          'Teamerge connects to the host as a different SSH user, or its server was reinstalled, so reconnecting can’t restore this terminal. Forget this server in Settings, then connect the SSH host to pair with its current server.'
         )}
         action={{
           label: translate(
@@ -87,7 +87,7 @@ export function TerminalRemoteRuntimeReconnectBanner({
         )}
         body={translate(
           'auto.components.terminal.pane.TerminalRemoteRuntimeReconnectBanner.pairingRefusedBody',
-          "Orca couldn't pair with it again over SSH. Nothing on the host was stopped. Reconnect to try again."
+          "Teamerge couldn't pair with it again over SSH. Nothing on the host was stopped. Reconnect to try again."
         )}
         action={reconnectAction(onReconnect)}
       />

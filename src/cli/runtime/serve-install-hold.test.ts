@@ -12,8 +12,8 @@ describe('readServeInstallEvidence', () => {
 
   beforeEach(async () => {
     root = await mkdtemp(join(tmpdir(), 'orca-install-hold-'))
-    bundle = join(root, 'Orca.app')
-    executable = join(bundle, 'Contents', 'MacOS', 'Orca')
+    bundle = join(root, 'Teamerge.app')
+    executable = join(bundle, 'Contents', 'MacOS', 'Teamerge')
     await mkdir(join(bundle, 'Contents', 'MacOS'), { recursive: true })
     await writeFile(executable, '')
   })

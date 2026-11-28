@@ -48,7 +48,7 @@ function fakeGuest(respond: (request: GuestRequest, canceled: Promise<void>) => 
 
 const prepare = vi.fn(async () => ({
   node: '/home/dev/.cache/orca/node-runtime/bin/node',
-  helper: '/mnt/c/Program Files/Orca/resources/relay/wsl/opencode-text-task-wsl.cjs'
+  helper: '/mnt/c/Program Files/Teamerge/resources/relay/wsl/opencode-text-task-wsl.cjs'
 }))
 
 function task(signal = new AbortController().signal) {
@@ -79,7 +79,7 @@ describe('runOpenCodeWslTextTask', () => {
         '-u',
         'NODE_OPTIONS',
         '/home/dev/.cache/orca/node-runtime/bin/node',
-        '/mnt/c/Program Files/Orca/resources/relay/wsl/opencode-text-task-wsl.cjs'
+        '/mnt/c/Program Files/Teamerge/resources/relay/wsl/opencode-text-task-wsl.cjs'
       ],
       cwd: '\\\\wsl.localhost\\Ubuntu\\home\\dev\\repo',
       wslDistro: 'Ubuntu',

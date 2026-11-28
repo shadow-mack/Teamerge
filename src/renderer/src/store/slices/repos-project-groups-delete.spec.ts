@@ -229,7 +229,7 @@ export function registerReposProjectGroupsDeleteTests(): void {
         failedProjectRemovals: [
           {
             projectId: 'nested',
-            reason: 'Project remained in Orca after removeProject completed.'
+            reason: 'Project remained in Teamerge after removeProject completed.'
           }
         ]
       })

@@ -72,7 +72,10 @@ async function dragDivider(page: Page): Promise<void> {
 }
 
 test.describe('layout compat: current desktop on a released server', () => {
-  test.skip(packagedExecutableMissing, `${PACKAGED_EXECUTABLE_ENV} must point at a released Orca`)
+  test.skip(
+    packagedExecutableMissing,
+    `${PACKAGED_EXECUTABLE_ENV} must point at a released Teamerge`
+  )
 
   test('new-desktop-on-old-server: split, divider drag, pane rename, reconnect', async ({
     testRepoPath

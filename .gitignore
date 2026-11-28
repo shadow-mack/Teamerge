@@ -120,6 +120,9 @@ docs/**
 !docs/relay-region-correction/**
 !docs/automated-setup-tab-*.md
 !docs/native-chat-setup-provisioning-*.md
+# Teamerge user guides.
+!docs/install.md
+!docs/packaging.md
 
 .stably/*
 !.stably/docs/

@@ -78,7 +78,7 @@ export function runtimeHostBlockedCopy(
           : repairRoute === 'ssh'
             ? translate(
                 'auto.components.status.bar.RuntimeHostStatusRow.managed_access_revoked_explanation',
-                "Orca couldn't pair with it again over SSH. Connect to try again."
+                "Teamerge couldn't pair with it again over SSH. Connect to try again."
               )
             : translate(
                 'auto.components.status.bar.RuntimeHostStatusRow.connect_access_revoked_explanation',
@@ -94,12 +94,12 @@ export function runtimeHostBlockedCopy(
       ),
       summary: translate(
         'auto.components.status.bar.RuntimeHostStatusRow.server_replaced_summary',
-        'This host now runs a different Orca server than the one this computer paired with'
+        'This host now runs a different Teamerge server than the one this computer paired with'
       ),
       // Why: SSH access alone can't re-pin another server key, so reconnecting can't fix this.
       explanation: translate(
         'auto.components.status.bar.RuntimeHostStatusRow.server_replaced_explanation',
-        'Orca connects to the host as a different SSH user, or its server was reinstalled. In Settings › Remote Orca Servers, open the ⋯ menu on this server and choose Forget…, then connect the SSH host to pair with its current server.'
+        'Teamerge connects to the host as a different SSH user, or its server was reinstalled. In Settings › Remote Teamerge Servers, open the ⋯ menu on this server and choose Forget…, then connect the SSH host to pair with its current server.'
       )
     }
   }
@@ -110,11 +110,11 @@ export function runtimeHostBlockedCopy(
     ),
     summary: translate(
       'auto.components.status.bar.RuntimeHostStatusRow.update_required_summary',
-      'Orca versions are not compatible'
+      'Teamerge versions are not compatible'
     ),
     explanation: translate(
       'auto.components.status.bar.RuntimeHostStatusRow.update_required_explanation',
-      'Update Orca on this computer or on the server, then connect again.'
+      'Update Teamerge on this computer or on the server, then connect again.'
     ),
     ...(compatibility?.kind === 'blocked'
       ? { detail: describeRuntimeCompatBlock(compatibility) }

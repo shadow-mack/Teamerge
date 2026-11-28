@@ -215,7 +215,7 @@ describe('a worker cannot tell which mode it is running in', () => {
     expect(terminal.mode.mode).toBe('terminal')
     const structuredPreamble = structuredPreambles[0] as string
     const terminalPreamble = vi.mocked(runtime.sendTerminalAgentPrompt).mock.calls[0]?.[1] as string
-    const selfLine = `\nYour Orca session ID is: ${STRUCTURED_ORCA_SESSION_ID}`
+    const selfLine = `\nYour Teamerge session ID is: ${STRUCTURED_ORCA_SESSION_ID}`
     expect(
       normalizePreamble(
         structuredPreamble.replace(selfLine, ''),
@@ -226,7 +226,7 @@ describe('a worker cannot tell which mode it is running in', () => {
     // A session worker is named by its Orca session ID; a terminal worker's text is main's.
     expect(structuredPreamble).toContain(`${selfLine}\n`)
     expect(structuredPreamble).not.toContain(STRUCTURED_HANDLE)
-    expect(terminalPreamble).not.toContain('Orca session ID')
+    expect(terminalPreamble).not.toContain('Teamerge session ID')
     // Only the surface words differ: a chat is told about its chat, a terminal keeps main's text.
     expect(structuredPreamble).toContain(CHAT_REDISPATCH_PARAGRAPH)
     expect(terminalPreamble).toContain(TERMINAL_REDISPATCH_PARAGRAPH)
@@ -252,7 +252,7 @@ describe('a worker cannot tell which mode it is running in', () => {
     expect(showTerminal).not.toHaveBeenCalled()
     // Its sub-worker is told the coordinator's Orca session ID, not the handle it was minted.
     expect(vi.mocked(runtime.sendTerminalAgentPrompt).mock.calls[0]?.[1]).toContain(
-      "Your coordinator's Orca session ID is: orca_session_id:sess_coord\n"
+      "Your coordinator's Teamerge session ID is: orca_session_id:sess_coord\n"
     )
     expect(vi.mocked(runtime.sendTerminalAgentPrompt).mock.calls[0]?.[1]).toContain(
       '=== SUB-DISPATCH ==='

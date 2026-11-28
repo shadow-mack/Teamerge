@@ -81,7 +81,7 @@ describe('desktop words for a write that did not happen', () => {
     ).toBe("您的訊息未傳送。Claude couldn't start. Send your message to try again.")
   })
 
-  it("says a queued card's message wasn't sent only when Orca couldn't confirm its mail", () => {
+  it("says a queued card's message wasn't sent only when Teamerge couldn't confirm its mail", () => {
     const send = agentSessionWriteKindForMethod('agentSession.queuedMessageSend', {})
     for (const retryControl of [false, true]) {
       expect(
@@ -95,7 +95,7 @@ describe('desktop words for a write that did not happen', () => {
           { retryControl }
         )
       ).toBe(
-        "Orca couldn't confirm this message is still meant for this chat. Your message was not sent. Try again."
+        "Teamerge couldn't confirm this message is still meant for this chat. Your message was not sent. Try again."
       )
     }
     // Any other refused Send of a queued card keeps its existing words.

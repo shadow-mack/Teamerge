@@ -252,7 +252,7 @@ export function useMobileSourceControlLoaders(params: Params): MobileSourceContr
         kind: 'unavailable',
         message: t(
           'sourceControl.loaders.updateDesktop',
-          'Update Orca desktop to use Source Control on mobile.'
+          'Update Teamerge desktop to use Source Control on mobile.'
         )
       }
     }

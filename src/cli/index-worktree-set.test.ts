@@ -104,7 +104,7 @@ describe('orca cli worktree awareness', () => {
         'The server did not identify which selector failed.'
       )
       expect(output.data.nextSteps.join(' ')).not.toContain(
-        'No Orca workspace matched the worktree selector'
+        'No Teamerge workspace matched the worktree selector'
       )
       expect(process.exitCode).toBe(1)
       expect(errSpy).not.toHaveBeenCalled()
@@ -155,7 +155,7 @@ describe('orca cli worktree awareness', () => {
             stage === 'preflight' ? 'Inspect original request.' : `current directory: ${cwd}`
           )
           expect(text).toContain(
-            stage === 'parent' ? 'explicit parent selector' : 'No Orca workspace matched'
+            stage === 'parent' ? 'explicit parent selector' : 'No Teamerge workspace matched'
           )
           expect(text).not.toContain(stage === 'parent' ? 'name:x' : 'parent selector')
           if (response) {

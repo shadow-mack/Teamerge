@@ -65,7 +65,7 @@ export function ManagedServerDetailLines({
       <p>
         {translate(
           'auto.components.settings.managedServers.row.orcaVersion',
-          'Orca on this host: {{version}}',
+          'Teamerge on this host: {{version}}',
           {
             version: managedServerVersionLabel(status, statusError)
           }
@@ -247,7 +247,7 @@ export function ManagedServerConfirmations({
       <ConfirmStrip
         message={translate(
           'auto.components.settings.managedServers.row.stopOrcaDescription',
-          'Stops Orca on the SSH host and removes it from this list.'
+          'Stops Teamerge on the SSH host and removes it from this list.'
         )}
         confirmLabel={translate(
           'auto.components.settings.managedServers.row.confirmStop',
@@ -328,7 +328,7 @@ export function ManagedServerMenuItems({
         <ArrowUpCircle />
         {translate(
           'auto.components.settings.managedServers.row.updateOrcaOnHost',
-          'Update Orca on this host'
+          'Update Teamerge on this host'
         )}
       </DropdownMenuItem>
       {status?.rollbackAvailable ? (

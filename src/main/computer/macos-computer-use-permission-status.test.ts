@@ -81,9 +81,9 @@ describe('getComputerUsePermissionStatus', () => {
     })
     resolveHelperAppPathMock.mockReset()
     resolveHelperExecutablePathMock.mockReset()
-    resolveHelperAppPathMock.mockReturnValue('/Applications/Orca Computer Use.app')
+    resolveHelperAppPathMock.mockReturnValue('/Applications/Teamerge Computer Use.app')
     resolveHelperExecutablePathMock.mockReturnValue(
-      '/Applications/Orca Computer Use.app/Contents/MacOS/orca-computer-use-macos'
+      '/Applications/Teamerge Computer Use.app/Contents/MacOS/orca-computer-use-macos'
     )
     vi.mocked(mkdtemp).mockResolvedValue(permissionStatusTempDir)
     vi.mocked(stat).mockResolvedValue({} as Awaited<ReturnType<typeof stat>>)

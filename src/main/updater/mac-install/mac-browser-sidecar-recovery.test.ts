@@ -6,7 +6,7 @@ import { recoverMacBrowserSidecars } from './mac-browser-sidecar-recovery'
 const { run } = vi.hoisted(() => ({ run: vi.fn() }))
 vi.mock('@orca/process-host', () => ({ runProcess: run }))
 
-const executable = '/Applications/Orca Test.app/Contents/MacOS/Orca Test'
+const executable = '/Applications/Teamerge Test.app/Contents/MacOS/Teamerge Test'
 const command = `${
   executable
 } --serve --serve-port 5000 --serve-json --serve-no-pairing --user-data-dir=/tmp/orcad-browser-test`

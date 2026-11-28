@@ -135,7 +135,7 @@ describe('WslHostAutomationWake', () => {
     }
   })
 
-  it('fires a run that came due while the computer was off as soon as Orca starts', async () => {
+  it('fires a run that came due while the computer was off as soon as Teamerge starts', async () => {
     const h = harness({ due: { 'wsl:ubuntu': due(-HOUR) } })
     h.subject.start()
     expect(h.timerAt()).toBe(0)

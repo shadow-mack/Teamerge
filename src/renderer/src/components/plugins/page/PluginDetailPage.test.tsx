@@ -23,7 +23,7 @@ vi.mock('../../ui/tooltip', () => ({
 
 const listing: PluginMarketplaceHostListing = {
   marketplaceSourceId: 'official',
-  marketplaceName: 'Orca Official Plugins',
+  marketplaceName: 'Teamerge Official Plugins',
   marketplaceOwner: 'stablyai',
   marketplaceCommit: 'c',
   pluginKey: 'stablyai.orca-minimal-icons',
@@ -46,7 +46,7 @@ const manifest = pluginManifestSchema.parse({
   manifestVersion: 1,
   id: 'orca-minimal-icons',
   publisher: 'stablyai',
-  name: 'Orca Minimal Icons',
+  name: 'Teamerge Minimal Icons',
   version: '1.0.0',
   engines: { orca: '>=1.0.0' },
   pluginApi: 1,
@@ -57,7 +57,7 @@ const manifest = pluginManifestSchema.parse({
 
 const preview: PluginMarketplaceHostInstallPreview = {
   marketplaceSourceId: 'official',
-  marketplaceName: 'Orca Official Plugins',
+  marketplaceName: 'Teamerge Official Plugins',
   marketplaceOwner: 'stablyai',
   marketplaceCommit: 'c',
   pluginKey: listing.pluginKey,

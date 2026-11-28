@@ -115,7 +115,7 @@ export const claudeScriptedChild: ScriptedAgentChildFactory = () => {
           connection.closed = true
           closes += 1
           connection.exitVerdict = { root: 'exited', tree: 'exited' }
-          handlers.onExit?.(new Error('closed by Orca'))
+          handlers.onExit?.(new Error('closed by Teamerge'))
         }
         return true
       }

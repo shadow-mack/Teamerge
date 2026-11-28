@@ -28,7 +28,7 @@ const INVOLVEMENT_PARAM: Record<GitLabMRInvolvement, string> = {
 }
 
 const SIGN_IN_REQUIRED_MESSAGE =
-  "GitLab isn't signed in here, so Orca can't filter merge requests by you. Run glab auth login in this environment, then refresh."
+  "GitLab isn't signed in here, so Teamerge can't filter merge requests by you. Run glab auth login in this environment, then refresh."
 
 class GitLabSignInRequiredError extends Error {}
 
@@ -109,7 +109,7 @@ export async function listMergeRequests(
         error: {
           type: 'unknown',
           message:
-            "Orca couldn't identify this repository's GitLab project, so it can't filter its merge requests by you."
+            "Teamerge couldn't identify this repository's GitLab project, so it can't filter its merge requests by you."
         }
       }
     }

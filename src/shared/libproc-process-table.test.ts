@@ -372,8 +372,8 @@ describe('runPsInProcess', () => {
       row({
         pid: 700,
         ppid: 1,
-        comm: 'Orca',
-        command: '/Applications/Orca',
+        comm: 'Teamerge',
+        command: '/Applications/Teamerge',
         commandIncomplete: false
       }),
       row({ pid: 701, ppid: 700, comm: 'helper', command: '/usr/libexec/helper' })

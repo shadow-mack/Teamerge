@@ -82,7 +82,7 @@ describe('a WSL bridge pane whose distro was terminated, after a relaunch', () =
     return Boolean(restored.coldRestore)
   }
 
-  it('restores when the distro stopped while Orca was quit and the daemon kept running', async () => {
+  it('restores when the distro stopped while Teamerge was quit and the daemon kept running', async () => {
     const app = launch()
     const bridge = await openBridgePane(app)
     await app.disconnectOnly()

@@ -80,7 +80,10 @@ async function chooseView(page: Page, label: string): Promise<void> {
   await page.getByRole('radio', { name: label, exact: true }).click()
 }
 
-test('plugin custom editor edits and saves through Orca', async ({ orcaPage, seededRepoPath }) => {
+test('plugin custom editor edits and saves through Teamerge', async ({
+  orcaPage,
+  seededRepoPath
+}) => {
   const pluginRoot = await mkdtemp(join(tmpdir(), 'orca-custom-editor-'))
   const filePath = join(seededRepoPath, FILE)
   try {
@@ -141,7 +144,7 @@ orca.document.onDidChange((doc) => {
     'v' + doc.version + ' ' + doc.fileType + ' ' + doc.readOnly + ' ' + bytes.length + ':' +
     Array.from(bytes.slice(0, 4), (byte) => byte.toString(16)).join(' ') +
     ' name=' + (window.name.includes('hexbook') ? 'leaks' : 'opaque')
-  // A text edit is the wrong kind for a bytes document: Orca refuses it.
+  // A text edit is the wrong kind for a bytes document: Teamerge refuses it.
   orca.document.applyEdit({ baseVersion: version, content: { kind: 'text', text: 'x' } }).catch(() => {})
 })
 document.getElementById('append').addEventListener('click', () => {

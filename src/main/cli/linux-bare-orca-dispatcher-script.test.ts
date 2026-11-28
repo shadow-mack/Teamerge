@@ -79,7 +79,7 @@ function runOrca(
 }
 
 describe.runIf(process.platform !== 'win32')('the bare orca dispatcher as a shell runs it', () => {
-  it("leaves another `orca` on PATH (GNOME's screen reader) to everyone but Orca's children", async () => {
+  it("leaves another `orca` on PATH (GNOME's screen reader) to everyone but Teamerge's children", async () => {
     const fixture = await makeFixture()
     const binDir = join(fixture.homePath, '.local', 'bin')
 
@@ -104,7 +104,7 @@ describe.runIf(process.platform !== 'win32')('the bare orca dispatcher as a shel
   }
 
   it.each(['ORCA_PANE_KEY', 'ORCA_CLI_BIN_DIR', 'ORCA_USER_DATA_PATH'])(
-    'never starts the screen reader for Orca children (%s) once Orca is gone',
+    'never starts the screen reader for Teamerge children (%s) once Teamerge is gone',
     async (variable) => {
       const fixture = await makeFixture()
       const otherBin = await addSecondDispatcher(fixture)
@@ -117,7 +117,7 @@ describe.runIf(process.platform !== 'win32')('the bare orca dispatcher as a shel
       )
       expect(result.status).toBe(127)
       expect(result.stdout).toBe('')
-      expect(result.stderr).toContain('Orca is no longer installed')
+      expect(result.stderr).toContain('Teamerge is no longer installed')
     }
   )
 
@@ -128,12 +128,12 @@ describe.runIf(process.platform !== 'win32')('the bare orca dispatcher as a shel
 
     const result = runOrca(fixture, [join(fixture.homePath, '.local', 'bin'), otherBin])
     expect(result.status).toBe(127)
-    expect(result.stderr).toContain('Orca is no longer installed')
+    expect(result.stderr).toContain('Teamerge is no longer installed')
   })
 })
 
 describe.runIf(process.platform !== 'win32')('removing the bare orca dispatcher', () => {
-  it("removes Orca's dispatcher and keeps a user's own `orca`", async () => {
+  it("removes Teamerge's dispatcher and keeps a user's own `orca`", async () => {
     const fixture = await makeFixture()
 
     await expect(removeLinuxBareOrcaDispatcher(fixture.homePath)).resolves.toBe(true)

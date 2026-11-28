@@ -264,7 +264,7 @@ export class WslOrcadConnectionManager {
         distro,
         remotePort: launch.port,
         localPort: preferredLocalPort,
-        label: `Orca server in WSL: ${label}`
+        label: `Teamerge server in WSL: ${label}`
       },
       this.dependencies.listen
     )

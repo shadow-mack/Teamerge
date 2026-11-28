@@ -102,7 +102,7 @@ export function useRuntimeServerRowState(
       : serverReplaced
         ? translate(
             'auto.components.settings.RuntimeEnvironmentsPane.serverReplaced',
-            '{{value0}} is not the Orca server this computer paired with: Orca connects to the host as a different SSH user, or its server was reinstalled. Open the ⋯ menu here and choose Forget…, then connect the SSH host to pair with its current server.',
+            '{{value0}} is not the Teamerge server this computer paired with: Teamerge connects to the host as a different SSH user, or its server was reinstalled. Open the ⋯ menu here and choose Forget…, then connect the SSH host to pair with its current server.',
             { value0: environment.name }
           )
         : getHostDetailsDescription(effectiveDetails),
@@ -121,7 +121,7 @@ function getRevokedDescription(name: string, repairRoute: RuntimePairingRepairRo
     // Managed SSH pairing normally happens automatically; reaching this error means it failed.
     return translate(
       'auto.components.settings.RuntimeEnvironmentsPane.managedAccessRevoked',
-      "{{value0}} no longer accepts this computer, and Orca couldn't pair with it again over SSH. Connect to try again.",
+      "{{value0}} no longer accepts this computer, and Teamerge couldn't pair with it again over SSH. Connect to try again.",
       { value0: name }
     )
   }

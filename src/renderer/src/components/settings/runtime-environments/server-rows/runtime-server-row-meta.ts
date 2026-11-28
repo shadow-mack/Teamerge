@@ -107,7 +107,7 @@ export function getRuntimeServerProblemLine({
     return {
       text: translate(
         'auto.components.settings.serverList.manualUpdate',
-        'Update Orca on the server host'
+        'Update Teamerge on the server host'
       ),
       destructive: false
     }

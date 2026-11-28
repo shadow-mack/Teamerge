@@ -74,7 +74,7 @@ function unfencedBlock(): AutomationActionBlock {
     reason: 'unfenced',
     message: translate(
       'auto.components.automations.capturedOwner.unfenced',
-      'Orca on this host needs an update before you can view run history or manage this automation. Scheduled runs may still continue on the host.'
+      'Teamerge on this host needs an update before you can view run history or manage this automation. Scheduled runs may still continue on the host.'
     ),
     recovery: 'update-server'
   }

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Placeholder Teamerge app icon: the merge mark on the landing page's indigo-to-blue tile. -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5e5ce6"/>
+      <stop offset="1" stop-color="#0071e3"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".22"/>
+      <stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#tile)"/>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#sheen)"/>
+  <g transform="translate(192 182) scale(10)" fill="none" stroke-linecap="round" stroke-width="4.5">
+    <g opacity=".72">
+      <path d="M44 14v14c0 5-3 9-8 11" stroke="#fff"/>
+      <circle cx="44" cy="14" r="5.5" fill="#fff" stroke="none"/>
+    </g>
+    <path d="M20 14v14c0 8 6 12 12 14 6 2 12 5 12 10" stroke="#fff"/>
+    <circle cx="20" cy="14" r="5.5" fill="#fff"/>
+    <circle cx="44" cy="52" r="5.5" fill="#fff"/>
+  </g>
+</svg>

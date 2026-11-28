@@ -135,7 +135,7 @@ export function ConnectionDiagnosticsView({
                                 )
                               : t(
                                   'diagnostics.connectionDiagnosticsView.sendDiagnostics',
-                                  'Send diagnostics to Orca'
+                                  'Send diagnostics to Teamerge'
                                 )}
                       </Text>
                     </Pressable>

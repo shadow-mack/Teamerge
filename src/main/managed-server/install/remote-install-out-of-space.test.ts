@@ -58,7 +58,7 @@ describe('a failed install write on a full host', () => {
     )
     await expect(upload).rejects.toBeInstanceOf(RemoteInstallOutOfSpaceError)
     await expect(upload).rejects.toThrow(
-      /out of disk space: the filesystem holding \/root\/\.orca-remote\/orcad-0\.1\.0\+abc has 12 KB free, and Orca needs about 2\.0 MB/
+      /out of disk space: the filesystem holding \/root\/\.orca-remote\/orcad-0\.1\.0\+abc has 12 KB free, and Teamerge needs about 2\.0 MB/
     )
     expect(vi.mocked(execHostCommand).mock.calls[0]?.[2]).toBe(
       remoteFreeSpaceProbeCommand('/root/.orca-remote/orcad-0.1.0+abc')

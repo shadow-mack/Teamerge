@@ -40,7 +40,7 @@ describe('translateSshArgsToSftpArgs', () => {
     ])
   })
 
-  it('refuses any other -S, which would hand sftp an ssh binary Orca did not choose', () => {
+  it('refuses any other -S, which would hand sftp an ssh binary Teamerge did not choose', () => {
     expect(() => translateSshArgsToSftpArgs(['-S', '/tmp/ctl.sock'])).toThrow(
       SftpArgTranslationError
     )

@@ -321,7 +321,7 @@ describe('WslHostService', () => {
     await expect(service.add({ distro: 'Debian' })).resolves.toEqual({
       ok: false,
       kind: 'server-files-missing',
-      message: 'This build of Orca can’t run WSL hosts (server files missing).',
+      message: 'This build of Teamerge can’t run WSL hosts (server files missing).',
       errorCode: 'serverFilesMissing'
     })
     expect(connector.listDistros).not.toHaveBeenCalled()
@@ -778,8 +778,8 @@ describe('WslHostService', () => {
   it.each([
     [
       'unsupported-distro',
-      () => new OrcadHostUnsupportedError('No Orca runtime supports linux-arm64-glibc.'),
-      'No Orca runtime supports linux-arm64-glibc.'
+      () => new OrcadHostUnsupportedError('No Teamerge runtime supports linux-arm64-glibc.'),
+      'No Teamerge runtime supports linux-arm64-glibc.'
     ],
     [
       'unsupported-distro',

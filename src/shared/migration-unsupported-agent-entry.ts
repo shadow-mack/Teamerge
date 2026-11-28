@@ -27,7 +27,7 @@ export function migrationUnsupportedToAgentStatusEntry(
         terminalTitle: 'Migration unsupported',
         stateHistory: [],
         lastAssistantMessage:
-          'Restart this terminal so Orca can attach a stable UUID pane key to agent hooks.'
+          'Restart this terminal so Teamerge can attach a stable UUID pane key to agent hooks.'
       }
 
   cachedMigrationUnsupportedEntries.set(entry, converted)

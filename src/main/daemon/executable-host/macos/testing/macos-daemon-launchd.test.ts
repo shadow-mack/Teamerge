@@ -46,7 +46,7 @@ vi.mock('@orca/process-host', () => ({ runProcess: runProcessMock }))
 vi.mock('../../../../../shared/app-environment', () => ({
   hasAppEnvironment: () => true,
   getAppEnvironment: () => ({
-    getAppPath: () => '/Applications/Orca.app/Contents/Resources/app.asar',
+    getAppPath: () => '/Applications/Teamerge.app/Contents/Resources/app.asar',
     getPath: () => state.root,
     getVersion: () => '1.2.3',
     isPackaged: () => state.packaged
@@ -144,8 +144,8 @@ beforeEach(async () => {
   copyDir = join(state.root, 'daemon-host', 'macos', 'terminal-host-abc')
   await mkdir(copyDir, { recursive: true })
   options = {
-    entryPath: '/Applications/Orca.app/Contents/Resources/daemon-entry.js',
-    forkEntryPath: '/Applications/Orca.app/Contents/Resources/daemon-entry.js',
+    entryPath: '/Applications/Teamerge.app/Contents/Resources/daemon-entry.js',
+    forkEntryPath: '/Applications/Teamerge.app/Contents/Resources/daemon-entry.js',
     userDataPath: state.root,
     runtimeDir: join(state.root, 'daemon'),
     socketPath: join(state.root, 'daemon.sock'),

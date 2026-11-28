@@ -55,15 +55,15 @@ describe('findOrphanedOrcaSshForward', () => {
     ).toBeNull()
   })
 
-  it("never picks a forward whose Orca is still running (another instance's tunnel)", () => {
+  it("never picks a forward whose Teamerge is still running (another instance's tunnel)", () => {
     const rows = [
-      row(400, 1, '/Applications/Orca.app/Contents/MacOS/Orca'),
+      row(400, 1, '/Applications/Teamerge.app/Contents/MacOS/Teamerge'),
       row(900, 400, ORCA_FORWARD)
     ]
     expect(findOrphanedOrcaSshForward(rows, EXPECTED, 'darwin')).toBeNull()
   })
 
-  it("never picks the user's own ssh on the port, even an orphaned daemon in Orca's flag order", () => {
+  it("never picks the user's own ssh on the port, even an orphaned daemon in Teamerge's flag order", () => {
     const rows = [
       row(900, 1, 'ssh -N -L 127.0.0.1:47123:127.0.0.1:6768 devbox'),
       row(
@@ -96,7 +96,7 @@ describe('findOrphanedOrcaSshForward', () => {
     ).toBe(900)
     expect(
       findOrphanedOrcaSshForward(
-        [row(400, 4, 'C:\\Orca\\Orca.exe', 500), row(900, 400, command, 1_000)],
+        [row(400, 4, 'C:\\Teamerge\\Teamerge.exe', 500), row(900, 400, command, 1_000)],
         EXPECTED,
         'win32'
       )

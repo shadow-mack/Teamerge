@@ -172,7 +172,7 @@ describe('terminal link action routing', () => {
     expect(context.request).not.toHaveBeenCalled()
   })
 
-  it('routes an explicit Orca Browser action to the owning runtime', () => {
+  it('routes an explicit Teamerge Browser action to the owning runtime', () => {
     const request = vi.fn()
 
     handleTerminalHttpLink('https://example.com/path', plainEvent(), {
@@ -195,7 +195,7 @@ describe('terminal link action routing', () => {
     expect(createBrowserTab).not.toHaveBeenCalled()
   })
 
-  it('routes an explicit Orca Browser action through the owning SSH workspace', () => {
+  it('routes an explicit Teamerge Browser action through the owning SSH workspace', () => {
     const request = vi.fn()
     const url = 'http://0.0.0.0:8000/'
 

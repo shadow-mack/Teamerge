@@ -75,7 +75,7 @@ function panelProps(
 ): ComponentProps<typeof AgentSkillSetupPanel> {
   return {
     title: 'CLI skill',
-    description: 'Enables agents to use Orca workflows.',
+    description: 'Enables agents to use Teamerge workflows.',
     skillNames: ['orca-cli'],
     installed: false,
     loading: false,

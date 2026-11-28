@@ -26,12 +26,12 @@ describe('resolveWatcherProcessEntryPath', () => {
   })
 
   it('uses the unpacked nested entry for packaged apps', () => {
-    const appPath = path.join('C:', 'Orca', 'resources', 'app.asar')
+    const appPath = path.join('C:', 'Teamerge', 'resources', 'app.asar')
 
     expect(resolveWatcherProcessEntryPath(appPath, true, () => true)).toBe(
       path.join(
         'C:',
-        'Orca',
+        'Teamerge',
         'resources',
         'app.asar.unpacked',
         'out',
@@ -60,7 +60,7 @@ describe('resolveWatcherProcessEntryPath', () => {
   })
 
   it('uses resourcesPath for packaged Electron-as-Node serve processes', () => {
-    const resourcesPath = path.join('Applications', 'Orca.app', 'Contents', 'Resources')
+    const resourcesPath = path.join('Applications', 'Teamerge.app', 'Contents', 'Resources')
     const packagedEntry = path.join(
       resourcesPath,
       'app.asar.unpacked',

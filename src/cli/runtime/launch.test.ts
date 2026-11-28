@@ -90,7 +90,7 @@ describe('serveOrcaApp', () => {
   beforeEach(() => {
     spawnMock.mockReset()
     spawnSyncMock.mockReset()
-    process.env.ORCA_APP_EXECUTABLE = '/Applications/Orca.app/Contents/MacOS/Orca'
+    process.env.ORCA_APP_EXECUTABLE = '/Applications/Teamerge.app/Contents/MacOS/Teamerge'
     // Test Electron here; launch-serve-runtime.test.ts covers orcad selection.
     process.env.ORCA_SERVE_RUNTIME = 'electron'
     process.env.ORCA_USER_DATA_PATH = PROFILE
@@ -112,8 +112,8 @@ describe('serveOrcaApp', () => {
     async () => {
       const root = await mkdtemp(join(tmpdir(), 'orca-serve-update-'))
       temporaryDirectories.push(root)
-      const appPath = join(root, 'Orca.app')
-      const executable = join(appPath, 'Contents', 'MacOS', 'Orca')
+      const appPath = join(root, 'Teamerge.app')
+      const executable = join(appPath, 'Contents', 'MacOS', 'Teamerge')
       const infoPlistPath = join(appPath, 'Contents', 'Info.plist')
       const userDataPath = join(root, 'user-data')
       await mkdir(join(appPath, 'Contents', 'MacOS'), { recursive: true })
@@ -181,8 +181,8 @@ describe('serveOrcaApp', () => {
     async () => {
       const root = await mkdtemp(join(tmpdir(), 'orca-serve-update-mismatch-'))
       temporaryDirectories.push(root)
-      const appPath = join(root, 'Orca.app')
-      const executable = join(appPath, 'Contents', 'MacOS', 'Orca')
+      const appPath = join(root, 'Teamerge.app')
+      const executable = join(appPath, 'Contents', 'MacOS', 'Teamerge')
       const userDataPath = join(root, 'user-data')
       await mkdir(join(appPath, 'Contents', 'MacOS'), { recursive: true })
       await mkdir(userDataPath, { recursive: true })
@@ -235,8 +235,8 @@ describe('serveOrcaApp', () => {
     async () => {
       const root = await mkdtemp(join(tmpdir(), 'orca-serve-update-spawn-failure-'))
       temporaryDirectories.push(root)
-      const appPath = join(root, 'Orca.app')
-      const executable = join(appPath, 'Contents', 'MacOS', 'Orca')
+      const appPath = join(root, 'Teamerge.app')
+      const executable = join(appPath, 'Contents', 'MacOS', 'Teamerge')
       const userDataPath = join(root, 'user-data')
       await mkdir(join(appPath, 'Contents', 'MacOS'), { recursive: true })
       await mkdir(userDataPath, { recursive: true })
@@ -283,8 +283,8 @@ describe('serveOrcaApp', () => {
       vi.useFakeTimers()
       const root = await mkdtemp(join(tmpdir(), 'orca-serve-update-no-readiness-'))
       temporaryDirectories.push(root)
-      const appPath = join(root, 'Orca.app')
-      const executable = join(appPath, 'Contents', 'MacOS', 'Orca')
+      const appPath = join(root, 'Teamerge.app')
+      const executable = join(appPath, 'Contents', 'MacOS', 'Teamerge')
       const userDataPath = join(root, 'user-data')
       await mkdir(join(appPath, 'Contents', 'MacOS'), { recursive: true })
       await mkdir(userDataPath, { recursive: true })
@@ -390,7 +390,7 @@ describe('serveOrcaApp', () => {
 
     await expect(result).rejects.toMatchObject({
       code: 'runtime_serve_failed',
-      message: 'Orca serve exited before printing valid recipe JSON with code 0.'
+      message: 'Teamerge serve exited before printing valid recipe JSON with code 0.'
     })
     expect(stdoutSpy).not.toHaveBeenCalled()
     expect(stderrSpy).toHaveBeenCalledTimes(5)

@@ -68,7 +68,7 @@ describe('worktree remote runtime mutations', () => {
       })
 
       if (!supported) {
-        await expect(create(...args)).rejects.toThrow('Update Orca on the workspace host')
+        await expect(create(...args)).rejects.toThrow('Update Teamerge on the workspace host')
         expect(runtimeEnvironmentCall).not.toHaveBeenCalled()
         return
       }
@@ -141,7 +141,7 @@ describe('worktree remote runtime mutations', () => {
         ]
         args[12] = 'feature/test'
         args[25] = { branchIntent }
-        await expect(create(...args)).rejects.toThrow('Update Orca on the workspace host')
+        await expect(create(...args)).rejects.toThrow('Update Teamerge on the workspace host')
         expect(mockApi.worktrees.create).not.toHaveBeenCalled()
       } finally {
         setLocalRuntimeCapabilitiesForTests(null)

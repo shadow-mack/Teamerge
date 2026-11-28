@@ -74,7 +74,7 @@ function configureCloudEnv(): void {
   vi.stubEnv('ORCA_CLOUD_CLIENT_ID', 'desktop-client')
 }
 
-describe('Orca cloud org members service (configured)', () => {
+describe('Teamerge cloud org members service (configured)', () => {
   beforeEach(() => {
     userDataPath = mkdtempSync(join(tmpdir(), 'orca-org-members-'))
     runWithFreshOrcaCloudSessionMock.mockReset()

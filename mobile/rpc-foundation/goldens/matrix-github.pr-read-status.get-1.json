@@ -341,7 +341,7 @@
     },
     "18e26718de53": {
       "assignable": {
-        "error": "The Orca server connection changed. Try again.",
+        "error": "The Teamerge server connection changed. Try again.",
         "ok": false
       },
       "check-details": {
@@ -1173,7 +1173,7 @@
       "startedAt": 0,
       "settledAt": 0,
       "value": {
-        "error": "Update Orca on the executing server to edit this item or load its repository options.",
+        "error": "Update Teamerge on the executing server to edit this item or load its repository options.",
         "ok": false
       }
     },
@@ -1804,7 +1804,7 @@
     },
     "c19ceb5edc47": {
       "assignable": {
-        "error": "Update Orca on the executing server to edit this item or load its repository options.",
+        "error": "Update Teamerge on the executing server to edit this item or load its repository options.",
         "ok": false
       },
       "check-details": {
@@ -2246,7 +2246,7 @@
       "startedAt": 0,
       "settledAt": 0,
       "value": {
-        "error": "The Orca server connection changed. Try again.",
+        "error": "The Teamerge server connection changed. Try again.",
         "ok": false
       }
     },

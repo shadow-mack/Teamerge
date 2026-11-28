@@ -130,7 +130,7 @@ describe('OpenCode question forms', () => {
         q1: 'SQLite',
         q2: 'SQLite',
         q3: 'SQLite',
-        q4_custom: 'Not shown to the user: Orca shows at most 4 questions at once. Ask again.'
+        q4_custom: 'Not shown to the user: Teamerge shows at most 4 questions at once. Ask again.'
       }
     })
   })

@@ -24,7 +24,7 @@ fn main() {
     let (major, minor, patch) = numeric_version_parts(&version);
 
     let mut resource = winresource::WindowsResource::new();
-    resource.set("ProductName", "Orca");
+    resource.set("ProductName", "Teamerge");
     resource.set("FileDescription", "Orca CLI Launcher");
     resource.set("CompanyName", "Stably AI");
     resource.set(

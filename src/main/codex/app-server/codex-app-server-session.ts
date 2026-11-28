@@ -294,7 +294,7 @@ export async function runCodexAppServerSession<T>(
   try {
     const session = async (): Promise<T> => {
       await requestRpc('initialize', {
-        clientInfo: { name: 'orca_desktop', title: 'Orca', version: '0.0.0' },
+        clientInfo: { name: 'orca_desktop', title: 'Teamerge', version: '0.0.0' },
         ...(invocation.experimentalApi ? { capabilities: { experimentalApi: true } } : {})
       })
       notify('initialized')

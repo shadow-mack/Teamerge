@@ -32,7 +32,7 @@ import { i18n, translate } from '@/i18n/i18n'
 import { SettingsRow, SettingsSegmentedControl } from '../form-controls/SettingsFormControls'
 
 const KEEP_LOCAL_MAIN_UP_TO_DATE_DESCRIPTION =
-  'When you create a workspace, Orca refreshes the remote base and safely fast-forwards your matching local branch, such as main or master. This keeps commands like git diff main...HEAD from comparing against stale history. Orca skips the update if that branch has uncommitted changes or local-only commits.'
+  'When you create a workspace, Teamerge refreshes the remote base and safely fast-forwards your matching local branch, such as main or master. This keeps commands like git diff main...HEAD from comparing against stale history. Teamerge skips the update if that branch has uncommitted changes or local-only commits.'
 const KEEP_LOCAL_MAIN_UP_TO_DATE_KEYWORDS = [
   'main',
   'master',
@@ -265,7 +265,7 @@ export function GitPane({
               i18n={i18n}
               defaults={translate(
                 'auto.components.settings.GitPane.refreshLocalBaseDescription',
-                'When you create a workspace, Orca refreshes the remote base and safely fast-forwards your matching local branch, such as <mainBranch>main</mainBranch> or <masterBranch>master</masterBranch>. This keeps commands like <diffCommand>git diff main...HEAD</diffCommand> from comparing against stale history. Orca skips the update if that branch has uncommitted changes or local-only commits.'
+                'When you create a workspace, Teamerge refreshes the remote base and safely fast-forwards your matching local branch, such as <mainBranch>main</mainBranch> or <masterBranch>master</masterBranch>. This keeps commands like <diffCommand>git diff main...HEAD</diffCommand> from comparing against stale history. Teamerge skips the update if that branch has uncommitted changes or local-only commits.'
               )}
               components={{
                 mainBranch: <code />,

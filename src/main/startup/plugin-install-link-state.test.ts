@@ -7,7 +7,7 @@ const LINK = 'orca://plugins/acme.dusk?catalog=community'
 describe('PluginInstallLinkState', () => {
   it('queues a cold-start link until the renderer pulls it', () => {
     const state = new PluginInstallLinkState()
-    expect(state.capture(['/Applications/Orca.app/Contents/MacOS/Orca', LINK])).toBe(true)
+    expect(state.capture(['/Applications/Teamerge.app/Contents/MacOS/Teamerge', LINK])).toBe(true)
     expect(state.consume()).toBe(LINK)
     expect(state.consume()).toBeNull()
   })

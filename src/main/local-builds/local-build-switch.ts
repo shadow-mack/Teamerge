@@ -9,12 +9,12 @@ export async function chooseLocalBuild(
   getMainWindow: () => BrowserWindow | null
 ): Promise<LocalBuildCandidate | null> {
   const openDialogOptions: Electron.OpenDialogOptions = {
-    title: translateMain('localBuild.chooseTitle', 'Choose a Local Orca Build'),
+    title: translateMain('localBuild.chooseTitle', 'Choose a Local Teamerge Build'),
     buttonLabel: translateMain('localBuild.chooseButton', 'Choose Build'),
     properties: ['openFile'],
     filters: [
       {
-        name: translateMain('localBuild.manifestFilter', 'Orca update manifest'),
+        name: translateMain('localBuild.manifestFilter', 'Teamerge update manifest'),
         extensions: ['yml']
       }
     ]
@@ -51,7 +51,7 @@ export async function chooseLocalBuild(
           )
     const messageBoxOptions: Electron.MessageBoxOptions = {
       type: 'question',
-      title: translateMain('localBuild.confirmTitle', 'Use Local Orca Build?'),
+      title: translateMain('localBuild.confirmTitle', 'Use Local Teamerge Build?'),
       message: `${app.getVersion()} → ${candidate.version}`,
       detail: [
         terminalSummary,
@@ -63,7 +63,7 @@ export async function chooseLocalBuild(
         '',
         translateMain(
           'localBuild.signatureRequirement',
-          'The build must have the same valid code signature as Orca or installation will stop.'
+          'The build must have the same valid code signature as Teamerge or installation will stop.'
         )
       ].join('\n'),
       buttons: [

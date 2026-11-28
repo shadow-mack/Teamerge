@@ -30,8 +30,8 @@ describe('parkServeSupervisorsForInstall', () => {
 
   beforeEach(async () => {
     root = await mkdtemp(join(tmpdir(), 'orca-install-park-'))
-    const bundle = join(root, 'Orca.app')
-    executable = join(bundle, 'Contents', 'MacOS', 'Orca')
+    const bundle = join(root, 'Teamerge.app')
+    executable = join(bundle, 'Contents', 'MacOS', 'Teamerge')
     await mkdir(join(bundle, 'Contents', 'MacOS'), { recursive: true })
     await writeFile(join(bundle, 'Contents', 'Info.plist'), 'v1')
     dir = bundleCoordinationDir(realpathSync(bundle), join(root, 'data'))

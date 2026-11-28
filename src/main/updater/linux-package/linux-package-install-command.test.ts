@@ -40,8 +40,8 @@ describe('quotePosixShellDoubleQuotedApostrophe', () => {
   })
 
   it('quotes spaces', () => {
-    expect(quotePosixShellDoubleQuotedApostrophe('/tmp/Orca Setup.deb')).toBe(
-      "'/tmp/Orca Setup.deb'"
+    expect(quotePosixShellDoubleQuotedApostrophe('/tmp/Teamerge Setup.deb')).toBe(
+      "'/tmp/Teamerge Setup.deb'"
     )
   })
 

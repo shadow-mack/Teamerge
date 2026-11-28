@@ -88,7 +88,7 @@ describe('mountWorker', () => {
     expect(await mounted.command('board.count')).toBe(2)
 
     await expect(mounted.emit('agent.status.changed', { paneKey: 1 })).rejects.toThrow(
-      /not one Orca sends/
+      /not one Teamerge sends/
     )
     await expect(mounted.emit('workspace.created', {})).rejects.toThrow(/not in contributes.events/)
     await expect(mounted.command('board.missing')).rejects.toThrow(/registered no/)
@@ -103,7 +103,7 @@ describe('mountWorker', () => {
     expect(worker.stopped()).toBe(true)
   })
 
-  it('records calls Orca would refuse even when the worker catches them', async () => {
+  it('records calls Teamerge would refuse even when the worker catches them', async () => {
     const host = mockHost({ capabilities: [] })
     const mounted = await mountWorker(
       {
@@ -135,7 +135,7 @@ describe('mountWorker', () => {
     ).rejects.toThrow(/registered undeclared command other/)
   })
 
-  it('fires hooks as Orca would and returns what the chain decided', async () => {
+  it('fires hooks as Teamerge would and returns what the chain decided', async () => {
     const mounted = await mountWorker(
       {
         default(orca: HookedOrca) {
@@ -168,7 +168,7 @@ describe('mountWorker', () => {
     })
     expect(mounted.logs.at(-1)).toMatch(/hook terminal\.send skipped after \d+ms: hook failed/)
     await expect(mounted.hooks.fire('terminal.send', { text: 1 })).rejects.toThrow(
-      /not one Orca sends/
+      /not one Teamerge sends/
     )
     await expect(mounted.hooks.fire('workspace.create.after', {})).rejects.toThrow(
       /not in contributes.hooks/
@@ -177,7 +177,7 @@ describe('mountWorker', () => {
 })
 
 describe('panel refusals', () => {
-  it('lists host calls Orca refuses even when the panel catches them', async () => {
+  it('lists host calls Teamerge refuses even when the panel catches them', async () => {
     const host = mockHost({ capabilities: [] })
     panel = await mount(
       () =>

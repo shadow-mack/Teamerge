@@ -603,7 +603,7 @@ describe('account CLI handlers', () => {
       })
 
       await expect(ACCOUNT_HANDLERS['account add'](context(agent))).rejects.toThrow(
-        'The running Orca runtime is too old to add accounts from the CLI.'
+        'The running Teamerge runtime is too old to add accounts from the CLI.'
       )
       expect(callMock).toHaveBeenCalledOnce()
       expect(callMock).toHaveBeenCalledWith('status.get')
@@ -829,7 +829,7 @@ describe('account CLI handlers', () => {
 
       await expect(
         ACCOUNT_HANDLERS['account select'](selectionContext('claude', 'system'))
-      ).rejects.toThrow('Select the Claude system default for a WSL distro in Orca Settings')
+      ).rejects.toThrow('Select the Claude system default for a WSL distro in Teamerge Settings')
       expect(callMock).not.toHaveBeenCalled()
     })
   })

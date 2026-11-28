@@ -98,7 +98,7 @@ describe('handleOscLink', () => {
     expect(openFileMock).not.toHaveBeenCalled()
   })
 
-  it('opens #L file URL links in Orca and preserves anchors', async () => {
+  it('opens #L file URL links in Teamerge and preserves anchors', async () => {
     setPlatform('Macintosh')
 
     handleOscLink('file:///tmp/test.txt#L42', { metaKey: true, ctrlKey: false }, deps)

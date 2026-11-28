@@ -13,7 +13,7 @@ const isManaged = (command: string | undefined): boolean =>
   typeof command === 'string' && command.includes('agent-hooks/kimi-hook.sh')
 
 const END_MARKER_LINE = '# <<< orca-managed-kimi-hooks <<<'
-const START_MARKER = '# >>> orca-managed-kimi-hooks (managed by Orca; do not edit) >>>'
+const START_MARKER = '# >>> orca-managed-kimi-hooks (managed by Teamerge; do not edit) >>>'
 
 /** Drops only the `# <<< ... <<<` line, the hand-edit that orphans the block. */
 function deleteEndMarker(text: string): string {
@@ -161,7 +161,7 @@ describe('orphaned managed block ownership (#18861)', () => {
     expect(text).toBe('default_model = "x"\n[user.table]\nvalue = "keep"\n')
   })
 
-  it('does not treat a user [[hooks]] table as Orca-owned content', () => {
+  it('does not treat a user [[hooks]] table as Teamerge-owned content', () => {
     const orphan = [
       START_MARKER,
       '[[hooks]]',

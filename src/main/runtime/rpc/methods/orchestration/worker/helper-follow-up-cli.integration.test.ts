@@ -167,7 +167,7 @@ describe('helper follow-ups through CLI argv, RPC and SQLite', () => {
           'no agent to start': 'worker_not_restartable'
         }[refusal],
         message: expect.stringContaining(
-          `Orca had already asked to close the shell Dispatch ${helper.dispatchId}'s finished agent left behind.`
+          `Teamerge had already asked to close the shell Dispatch ${helper.dispatchId}'s finished agent left behind.`
         ),
         data: { effectsApplied: true }
       })

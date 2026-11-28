@@ -90,7 +90,7 @@ describe('mailbox delivery into a pane awaiting the user', () => {
   it.each([
     ['sent', 'driving', '\x1b[2J\x1b[H', 5000],
     ['abandoned past the cap', 'driving', '', USER_INPUT_HOLD_CAP_MS],
-    ["not for Orca's own launch draft", 'launch', '', 0]
+    ["not for Teamerge's own launch draft", 'launch', '', 0]
   ] as const)(
     'holds the pointer while the composer has an unsent draft; %s',
     async (_label, inputKind, screenAfter, waitAfterMs) => {
@@ -158,11 +158,11 @@ describe('mailbox delivery into a pane awaiting the user', () => {
     ['a draft typed before the restart', 'please refactor the auth'],
     // Orca died between typing a pointer and its Enter: the new pointer follows it and both submit.
     [
-      "Orca's own unsent pointer",
+      "Teamerge's own unsent pointer",
       'You have 1 orchestration message. Run `orca orchestration check`.'
     ]
   ] as const)(
-    'after an Orca restart reattaches the agent, holds mail behind %s until the cap',
+    'after a Teamerge restart reattaches the agent, holds mail behind %s until the cap',
     async (_label, composerText) => {
       vi.useFakeTimers()
       const db = createDatabase('orca-restored-draft-delivery-hold-')
@@ -190,7 +190,7 @@ describe('mailbox delivery into a pane awaiting the user', () => {
     }
   )
 
-  it('after an Orca restart, holds mail while the restored screen is still loading', async () => {
+  it('after a Teamerge restart, holds mail while the restored screen is still loading', async () => {
     vi.useFakeTimers()
     const db = createDatabase('orca-restoring-screen-delivery-hold-')
     const { runtime } = createRuntime(db, {

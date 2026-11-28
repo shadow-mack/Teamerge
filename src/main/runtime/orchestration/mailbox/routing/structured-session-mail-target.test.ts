@@ -120,7 +120,7 @@ afterEach(() => {
   db.close()
 })
 
-describe('a Run whose coordinator is a chat (an Orca session id, no handle)', () => {
+describe('a Run whose coordinator is a chat (a Teamerge session id, no handle)', () => {
   it('delivers its mailbox to that session', () => {
     // Chat coordinators lack handles; both delivery lanes must claim their Run through session identity.
     installStore(chatRecord())
@@ -161,7 +161,7 @@ describe('a Run whose coordinator is a chat (an Orca session id, no handle)', ()
     expect(probe().target(`run:${runId}`)).toBeNull()
   })
 
-  it('does not deliver to an Orca session id written at an earlier generation of the Run', () => {
+  it('does not deliver to a Teamerge session id written at an earlier generation of the Run', () => {
     // An older binary's rebind or unbind bumps the generation and leaves the id behind.
     installStore(chatRecord())
     const runId = chatCoordinatedRun()
@@ -171,7 +171,7 @@ describe('a Run whose coordinator is a chat (an Orca session id, no handle)', ()
     expect(probe().target(`run:${runId}`)).toBeNull()
   })
 
-  it('ignores an Orca session id left beside a PTY handle; the handle owns the Run', () => {
+  it('ignores a Teamerge session id left beside a PTY handle; the handle owns the Run', () => {
     installStore(chatRecord())
     const runId = db.createRun({
       objective: 'o',

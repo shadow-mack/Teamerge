@@ -8,7 +8,7 @@ function themeListing(
 ): PluginMarketplaceHostListing {
   return {
     marketplaceSourceId: 'official',
-    marketplaceName: 'Orca Official Plugins',
+    marketplaceName: 'Teamerge Official Plugins',
     marketplaceOwner: 'stablyai',
     marketplaceCommit: 'abc123',
     pluginKey,

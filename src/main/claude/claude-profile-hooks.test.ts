@@ -97,7 +97,7 @@ describe('Claude hooks at an explicit profile', () => {
     expect(readFileSync(join(f.defaultDir, 'settings.json'), 'utf8')).toBe(before)
     expect(f.settings(f.profile)).toEqual({ model: 'profile', hooks: JSON.parse(before).hooks })
   })
-  it("shares the user's hooks, Orca's hooks and statusline as plain keys that installs leave in sync", async () => {
+  it("shares the user's hooks, Teamerge's hooks and statusline as plain keys that installs leave in sync", async () => {
     const f = fixture()
     const { hook, setStop, stop, orcaCount } = stopHooks(f)
     f.service.install(CURRENT)
